@@ -1,0 +1,77 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+module.exports = {
+  mode: 'jit',
+  // These paths are just examples, customize them to match your project structure
+  purge: [
+    './components/**/*.{vue,js}',
+    './layouts/**/*.vue',
+    './pages/**/*.vue',
+    './plugins/**/*.{js,ts}',
+    './nuxt.config.{js,ts}',
+  ],
+  darkMode: false, // or 'media' or 'class'
+  theme: {
+    ripple: (theme) => ({
+      colors: theme('colors'),
+      darken: 0.1,
+    }),
+    screens: {
+      sm: { min: '600px' },
+      md: { min: '960px' },
+      lg: { min: '1264px' },
+      xl: { min: '1904px' },
+    },
+    fill: (theme) => ({
+      secondary: theme('colors.secondary'),
+      accent: theme('colors.accent'),
+      accent2: theme('colors.accent2'),
+    }),
+    extend: {
+      fontSize: {
+        xxs: '.428rem',
+        // tinier: '.813rem',
+        // '1xl': '1.375rem',
+        // '2-5xl': '1.75rem',
+        // '3-5xl': '2rem',
+        // '4-5xl': '2.5rem',
+        // 'xxs-important': '.625rem !important',
+        // 'tinier-important': '.813rem !important',
+        // 'sm-important': '.875rem !important',
+        // '1xl-important': '1.375rem !important',
+        // '2-5xl-important': '1.75rem !important',
+        // '3-5xl-important': '2rem !important',
+        // '4-5xl-important': '2.5rem !important',
+      },
+      colors: {
+        primary: {
+          DEFAULT: '#4361EE',
+          light: '#7389F2',
+          lighter: '#A1B0F7',
+          lightest: '#D0D8FB',
+        },
+        secondary: {
+          DEFAULT: '#232323',
+          dark: '#14142B',
+          light: '#575757',
+          lighter: '#8A8A8A',
+          lightest: '#BDBDBD',
+        },
+        accent: {
+          DEFAULT: '#D03E7E',
+          light: '#DA679A',
+          lighter: '#E490B5',
+          lightest: '#EEB9D0',
+        },
+      },
+      fontFamily: {
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+        lato: ['Lato', ...defaultTheme.fontFamily.sans],
+        lora: ['Lora', ...defaultTheme.fontFamily.sans],
+      },
+    },
+  },
+  variants: {
+    extend: {},
+  },
+  plugins: [require('@tailwindcss/ui'), require('tailwindcss-ripple')()],
+}
