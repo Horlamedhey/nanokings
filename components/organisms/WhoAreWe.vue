@@ -8,7 +8,7 @@
         sizes=" lg:50vw xl:50vw xxl:50vw 2xl:50vw"
       />
     </div>
-    <div class="px-10 py-20 lg:py-24 bg-pattern1">
+    <div class="px-10 py-20 lg:py-24 bg-pattern1 bg-opacity-30">
       <div class="relative mx-auto who-are-we w-[fit-content]">
         <h2 class="text-center lora-bold-32">
           <span class="text-primary accent-cross-dash">Who</span> are we?

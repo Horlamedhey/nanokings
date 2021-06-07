@@ -12,6 +12,78 @@ select,
 a {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+.formulate-input[data-classification='box'] .formulate-input-wrapper {
+  @apply flex;
+}
+.formulate-input[data-classification='box'] .formulate-input-element-decorator {
+  @apply mt-[5px] mr-1 relative border-2 border-secondary-light rounded h-4 w-4 block;
+}
+.formulate-input[data-classification='box']
+  .formulate-input-element-decorator:before {
+  content: '';
+  background-position: 100%;
+  @apply top-[-0.1rem] left-[-0.1rem] absolute box-border bg-contain block w-4 h-4;
+}
+.formulate-input[data-classification='box']
+  .formulate-input-element
+  input[type='checkbox']:checked
+  ~ .formulate-input-element-decorator {
+  @apply border-primary;
+}
+.formulate-input[data-classification='box']
+  .formulate-input-element
+  input[type='checkbox']:checked
+  ~ .formulate-input-element-decorator:before {
+  -webkit-mask-image: url('/images/check.svg');
+  mask-image: url('/images/check.svg');
+  @apply bg-primary;
+}
+/* Formulate */
+.formulate-input {
+  @apply mt-6;
+}
+.formulate-input-label {
+  @apply text-secondary-lighter lato-normal-14 sm:lato-normal-20;
+}
+.my-formulate-input-field {
+  @apply w-full px-4 py-4 mt-3 transition duration-500 border rounded outline-none border-secondary-lightest lato-normal-16 sm:lato-normal-20 text-secondary-light placeholder-secondary-lightest focus:border-primary focus-visible:border-primary focus:border-2;
+}
+button.my-formulate-input-field {
+  @apply mt-0 rounded-[15px] text-white lato-bold-16 sm:lato-bold-20 outline-none ripple-bg-primary-DEFAULT;
+}
+.formulate-input[data-classification='box'] .formulate-input-element input {
+  /* display: inline; */
+  position: absolute;
+  left: -999px;
+  opacity: 0;
+  pointer-events: none;
+}
+.my-formulate-input-field[type='checkbox'] {
+  @apply w-auto;
+}
+.formulate-input[data-classification='select'] select {
+  @apply pr-6 appearance-none;
+}
+.formulate-input[data-classification='select']
+  select[data-placeholder-selected] {
+  @apply text-secondary-lightest;
+}
+.formulate-input[data-classification='select'] select option {
+  @apply text-secondary-light;
+}
+.formulate-input[data-classification='select'] .formulate-input-element {
+  position: relative;
+}
+.formulate-input[data-classification='select'] .formulate-input-element:before {
+  content: '';
+  background-image: url('/images/chevron-down.svg');
+  width: 24px;
+  height: 24px;
+  top: 50%;
+  margin-top: -0.1em;
+  right: 1em;
+  position: absolute;
+}
 @layer base {
   @font-face {
     font-family: 'Lato';
@@ -66,9 +138,13 @@ a {
   .lora-bold-20 {
     @apply text-[20px] font-bold font-lora;
   }
+  .lora-bold-24 {
+    @apply text-2xl font-bold font-lora;
+  }
   .lora-bold-29 {
     @apply text-[29.16px] font-bold font-lora;
   }
+  /* display-3 */
   .lora-bold-32 {
     @apply text-[32px] font-bold font-lora;
   }
@@ -90,11 +166,18 @@ a {
   .lato-normal-14 {
     @apply text-sm font-normal font-lato;
   }
+  .lato-normal-16 {
+    @apply text-base font-normal font-lato;
+  }
   .lato-normal-18 {
     @apply text-lg font-normal font-lato;
   }
+  /* display-4 */
   .lato-normal-20 {
     @apply text-xl font-normal font-lato;
+  }
+  .lato-normal-24 {
+    @apply text-2xl font-normal font-lato;
   }
   /* Medium */
   .lato-medium-12 {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="pt-20 pb-40 bg-landscape">
+    <div class="pt-20 pb-40 bg-landscape bg-opacity-20">
       <h2 class="text-center lora-bold-32">
         <span class="text-primary">Our</span>
         <span class="text-accent">Services</span>

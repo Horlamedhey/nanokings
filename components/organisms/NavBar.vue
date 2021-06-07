@@ -73,7 +73,7 @@
         <div class="items-center hidden py-2 -mx-1 md:flex md:mx-0">
           <AtomsNavItem
             class="block w-1/2 px-3 py-2 mx-1 leading-5 text-center rounded lato-semibold-16 text-primary hover:bg-opacity-90 md:mx-2 md:w-auto"
-            to="#"
+            to="/login"
           >
             Login
           </AtomsNavItem>
