@@ -1,66 +1,135 @@
 /* ./assets/css/tailwind.css */
 @tailwind base;
-@font-face {
-  font-family: 'Lato';
-  src: url('/fonts/Lato-Regular.ttf');
-  font-weight: 400;
-  font-display: fallback;
+html,
+body,
+#__nuxt {
+  overflow-x: hidden !important;
+}
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+@layer base {
+  @font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Regular.ttf');
+    font-weight: 400;
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Medium.ttf');
+    font-weight: 500;
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Semibold.ttf');
+    font-weight: 600;
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Bold.ttf');
+    font-weight: 700;
+    font-display: fallback;
+  }
+
+  @font-face {
+    font-family: 'Lora';
+    src: url('/fonts/Lora-Bold.ttf');
+    font-weight: 500;
+    font-display: fallback;
+  }
+}
+@layer components {
+  .stylish-text {
+    @apply text-3xl font-bold sm:text-7xl font-lora;
+  }
+  .display1-text {
+    @apply font-bold font-lora text-7xl;
+  }
+  /* Lora */
+  /* Bold */
+  .lora-bold-16 {
+    @apply text-base font-bold font-lora;
+  }
+  .lora-bold-18 {
+    @apply text-lg font-bold font-lora;
+  }
+  .lora-bold-20 {
+    @apply text-[20px] font-bold font-lora;
+  }
+  .lora-bold-29 {
+    @apply text-[29.16px] font-bold font-lora;
+  }
+  .lora-bold-32 {
+    @apply text-[32px] font-bold font-lora;
+  }
+  .lora-bold-42 {
+    @apply text-[42px] font-bold font-lora;
+  }
+  .lora-bold-48 {
+    @apply text-5xl font-bold font-lora;
+  }
+  .lora-bold-56 {
+    @apply font-bold font-lora text-[56px];
+  }
+  /*  */
+  /* Lato */
+  /* Normal */
+  .lato-normal-11 {
+    @apply text-[11.39px] font-normal font-lato;
+  }
+  .lato-normal-14 {
+    @apply text-sm font-normal font-lato;
+  }
+  .lato-normal-18 {
+    @apply text-lg font-normal font-lato;
+  }
+  .lato-normal-20 {
+    @apply text-xl font-normal font-lato;
+  }
+  /* Medium */
+  .lato-medium-12 {
+    @apply text-xs font-bold font-lato;
+  }
+  .lato-medium-14 {
+    @apply text-sm font-medium font-lato;
+  }
+  .lato-medium-16 {
+    @apply text-base font-medium font-lato;
+  }
+  /* Semibold */
+  .lato-semibold-16 {
+    @apply text-base font-semibold font-lato;
+  }
+  .lato-semibold-22 {
+    @apply text-[22px] font-semibold font-lato;
+  }
+  /* Bold */
+  .lato-bold-16 {
+    @apply text-base font-bold font-lato;
+  }
+  .lato-bold-18 {
+    @apply text-lg font-bold font-lato;
+  }
+  .lato-bold-20 {
+    @apply text-xl font-bold font-lato;
+  }
+  .lato-bold-48 {
+    @apply text-5xl font-bold font-lato;
+  }
+  .lato-bold-32 {
+    @apply text-[32px] font-bold font-lato;
+  }
 }
 
-@font-face {
-  font-family: 'Lato';
-  src: url('/fonts/Lato-Medium.ttf');
-  font-weight: 500;
-  font-display: fallback;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('/fonts/Lato-Semibold.ttf');
-  font-weight: 600;
-  font-display: fallback;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('/fonts/Lato-Bold.ttf');
-  font-weight: 700;
-  font-display: fallback;
-}
-
-@font-face {
-  font-family: 'Lora';
-  src: url('/fonts/Lora-Bold.ttf');
-  font-weight: 500;
-  font-display: fallback;
-}
-
-.stylish-text {
-  @apply text-3xl font-bold sm:text-7xl font-lora;
-}
-.body-text {
-  @apply text-base font-semibold font-lato;
-}
-.btn-text {
-  @apply text-xl font-bold font-lato;
-}
-.display1-text {
-  @apply font-bold font-lora text-7xl;
-}
-.display2-text {
-  @apply text-5xl font-bold font-lora;
-}
-.display3-text {
-  @apply text-3xl font-bold font-lora;
-}
-.display4-text {
-  @apply text-xl font-normal font-lato;
-}
-.display5-text {
-  @apply text-sm font-medium font-lato;
-}
-.display6-text {
-  @apply text-base font-medium font-lato;
-}
 @tailwind components;
 @tailwind utilities;

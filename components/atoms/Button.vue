@@ -4,6 +4,7 @@
     :id="id"
     :class="{
       contentClass,
+      'rounded-full': rounded,
       'opacity-50': disabled,
       'cursor-not-allowed': disabled,
       'cursor-default': cursorDisabled,
@@ -12,6 +13,7 @@
     :href="href"
     :to="to"
     :target="target"
+    :title="title"
     :type="type"
     class="focus:outline-none"
     @click.stop="$emit('click')"
@@ -19,11 +21,15 @@
     <component
       :is="icon"
       v-if="icon && addOnBefore"
-      class="w-5 h-5"
+      class="inline-block w-5 h-5 mr-1"
     ></component>
     <!-- @slot Main slot used for text -->
     <slot></slot>
-    <component :is="icon" v-if="icon && addOnAfter" class="w-5 h-5"></component>
+    <component
+      :is="icon"
+      v-if="icon && addOnAfter"
+      class="inline-block w-5 h-5 ml-1"
+    ></component>
   </component>
 </template>
 
@@ -34,24 +40,26 @@ export default defineComponent({
   name: 'Button',
   props: {
     /** "href" for link - renders an <a> component */
-    href: { type: String, default: '' },
+    href: { type: String, default: undefined },
     /** Type attribute for button - ie type="submit" */
-    type: { type: String, default: '' },
+    type: { type: String, default: undefined },
     /** ID attribute */
-    id: { type: String, default: '' },
+    id: { type: String, default: undefined },
     /** "to" prop for vue-router - renders a <router-link> */
     to: {
       type: [String, Object],
-      default: '',
+      default: undefined,
     },
     // additional icon component
-    icon: { type: [Object, Function], default: () => ({}) },
+    icon: { type: String, default: '' },
     /** target attrbitue for the <a> tag */
-    target: { type: String, default: '' },
+    target: { type: String, default: undefined },
+    title: { type: String, default: '' },
     color: { type: String, default: '' },
     fill: Boolean,
     outlined: Boolean,
     text: Boolean,
+    rounded: Boolean,
     /** Disabled mode */
     disabled: Boolean,
     cursorDisabled: Boolean,

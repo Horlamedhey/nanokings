@@ -16,7 +16,7 @@
       "@/*": ["./*"]
     },
     "typeRoots": ["./@types"],
-    "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node"]
+    "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node", "@nuxt/image"]
   },
   "exclude": ["node_modules", ".nuxt", "dist"]
 }

@@ -1,11 +1,31 @@
 <template>
   <div>
-    <no-ssr>
-      <OrganismsNavBar></OrganismsNavBar>
-    </no-ssr>
-    <Nuxt />
+    <OrganismsNavBar ref="el"></OrganismsNavBar>
+    <div :style="{ height: `${navBarHeight}px` }"></div>
+    <AtomsOverlay></AtomsOverlay>
+    <div class="transition duration-300">
+      <Nuxt />
+    </div>
+    <!-- Footer -->
+    <OrganismsFooter class="" />
   </div>
 </template>
+
+<script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { useElementSize, useWindowScroll, useMediaQuery } from '@vueuse/core'
+export default defineComponent({
+  name: 'Default',
+  setup() {
+    const el = ref(null)
+    const isLargeScreen = useMediaQuery('(min-width: 960px)')
+    const { y: scrollY } = useWindowScroll()
+    const navBarHeight = useElementSize(el).height
+    return { navBarHeight, el, scrollY, isLargeScreen }
+  },
+})
+</script>
+
 
 <style>
 html {

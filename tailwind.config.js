@@ -15,11 +15,24 @@ module.exports = {
       colors: theme('colors'),
       darken: 0.1,
     }),
+    container: {
+      padding: {
+        // xs: '1rem',
+        // sm: '1rem',
+        // lg: '1rem',
+        // xl: '1rem',
+        // xxl: '1rem',
+        // 2xl: '1rem'
+      },
+    },
     screens: {
-      sm: { min: '600px' },
-      md: { min: '960px' },
-      lg: { min: '1264px' },
-      xl: { min: '1904px' },
+      xs: { min: '320px' },
+      sm: { min: '640px' },
+      md: { min: '768px' },
+      lg: { min: '1024px' },
+      xl: { min: '1280px' },
+      xxl: { min: '1536px' },
+      '2xl': { min: '1904px' },
     },
     fill: (theme) => ({
       secondary: theme('colors.secondary'),
@@ -27,6 +40,13 @@ module.exports = {
       accent2: theme('colors.accent2'),
     }),
     extend: {
+      backgroundImage: (theme) => ({
+        pattern1: "url('/images/bgs/pattern1.png')",
+        pattern2: "url('/images/bgs/pattern2.svg')",
+        pattern3: "url('/images/bgs/pattern3.svg')",
+        landscape: "url('/images/bgs/rough-landscape.jpg')",
+        login: "url('/images/bgs/login-signup.svg')",
+      }),
       fontSize: {
         xxs: '.428rem',
         // tinier: '.813rem',
@@ -45,6 +65,8 @@ module.exports = {
       colors: {
         primary: {
           DEFAULT: '#4361EE',
+          dark: '#1240DD',
+          alt: '#7693F4',
           light: '#7389F2',
           lighter: '#A1B0F7',
           lightest: '#D0D8FB',

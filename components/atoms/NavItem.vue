@@ -1,5 +1,5 @@
 <template>
-  <li class="list-none" @click="$emit('click', $event)">
+  <li class="list-none cursor-pointer" @click="$emit('click', $event)">
     <a v-if="href" :href="href" :target="target" :class="contentClass">
       <component
         :is="icon"
@@ -19,6 +19,7 @@
       :exact="true"
       :class="contentClass"
       :active-class="activeClass"
+      @click="$emit('click')"
     >
       <component
         :is="icon"
@@ -83,4 +84,13 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.active-navbar-link {
+  @apply relative;
+}
+.active-navbar-link:first-child::after {
+  content: '';
+  position: absolute;
+  @apply md:w-[80%] w-[60%] h-1 bg-accent bottom-[-4px] left-[20%] md:left-[10%] rounded-full;
+}
+</style>
