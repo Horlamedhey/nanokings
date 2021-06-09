@@ -141,6 +141,9 @@ button.my-formulate-input-field {
   .lora-bold-24 {
     @apply text-2xl font-bold font-lora;
   }
+  .lora-bold-28 {
+    @apply text-[28px] font-bold font-lora;
+  }
   .lora-bold-29 {
     @apply text-[29.16px] font-bold font-lora;
   }
@@ -183,6 +186,7 @@ button.my-formulate-input-field {
   .lato-medium-12 {
     @apply text-xs font-bold font-lato;
   }
+  /* display-5 */
   .lato-medium-14 {
     @apply text-sm font-medium font-lato;
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="box-border mx-auto mt-20 sm:container bg-[#FAFBFF]" id="about">
+  <div class="box-border mx-auto mt-20 sm:container bg-[#FAFBFF]">
     <!-- Landing -->
     <OrganismsLanding />
 

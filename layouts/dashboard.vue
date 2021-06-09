@@ -1,0 +1,53 @@
+<template>
+  <!-- <div :style="{ height: `${navBarHeight}px` }"></div> -->
+  <!-- <AtomsOverlay></AtomsOverlay> -->
+  <div
+    class="transition duration-300 bg-[#F6F7FE] h-screen overflow-hidden flex"
+  >
+    <OrganismsDashSideMenuMobile
+      :sideMenuOpen="sideMenuOpen"
+      @close="sideMenuOpen = false"
+    />
+    <!-- Static sidebar for desktop -->
+    <OrganismsDashSideMenu class="hidden w-64 md:flex md:flex-shrink-0" />
+    <div class="flex flex-col flex-1 w-0">
+      <OrganismsDashNavBar @openSideMenu="sideMenuOpen = true" />
+      <Nuxt />
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { useElementSize, useWindowScroll, useMediaQuery } from '@vueuse/core'
+export default defineComponent({
+  name: 'Dashboard',
+  setup() {
+    const el = ref(null)
+    const isLargeScreen = useMediaQuery('(min-width: 960px)')
+    const { y: scrollY } = useWindowScroll()
+    const navBarHeight = useElementSize(el).height
+    const sideMenuOpen = ref(false)
+    return { navBarHeight, el, scrollY, isLargeScreen, sideMenuOpen }
+  },
+})
+</script>
+
+
+<style >
+html {
+  word-spacing: 1px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+</style>

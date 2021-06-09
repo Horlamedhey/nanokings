@@ -6,7 +6,7 @@
     subFooter="Sign up"
     subFooterLink="/create-account"
   >
-    <FormulateForm v-model="form">
+    <FormulateForm v-model="form" @submit="$router.push('/dashboard')">
       <div class="flex-wrap justify-between sm:flex">
         <div class="w-full">
           <FormulateInput

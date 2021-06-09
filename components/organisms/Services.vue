@@ -6,13 +6,31 @@
         <span class="text-accent">Services</span>
       </h2>
       <p
-        class="px-5 mt-4 text-center sm:px-20 sm:lato-normal-20 lato-normal-14 text-secondary-light"
+        class="
+          px-5
+          mt-4
+          text-center
+          sm:px-20
+          sm:lato-normal-20
+          lato-normal-14
+          text-secondary-light
+        "
       >
         License, distribute and monetize your music. All in one place. You can
         upload your music and have it delivered globally to all major platforms.
       </p>
       <div
-        class="flex flex-wrap justify-center grid-cols-2 gap-16 px-5 mt-10 sm:px-20 lg:grid-cols-3 xl:grid-cols-4"
+        class="
+          flex flex-wrap
+          justify-center
+          grid-cols-2
+          gap-16
+          px-5
+          mt-10
+          sm:px-20
+          lg:grid-cols-3
+          xl:grid-cols-4
+        "
       >
         <div
           v-for="(service, i) in services"
