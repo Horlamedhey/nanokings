@@ -163,6 +163,9 @@ button.my-formulate-input-field {
   /*  */
   /* Lato */
   /* Normal */
+  .lato-normal-8 {
+    @apply text-[8px] font-normal font-lato;
+  }
   .lato-normal-11 {
     @apply text-[11.39px] font-normal font-lato;
   }
@@ -193,9 +196,15 @@ button.my-formulate-input-field {
   .lato-medium-16 {
     @apply text-base font-medium font-lato;
   }
+  .lato-medium-20 {
+    @apply text-xl font-medium font-lato;
+  }
   /* Semibold */
   .lato-semibold-16 {
     @apply text-base font-semibold font-lato;
+  }
+  .lato-semibold-20 {
+    @apply text-xl font-semibold font-lato;
   }
   .lato-semibold-22 {
     @apply text-[22px] font-semibold font-lato;
@@ -210,11 +219,11 @@ button.my-formulate-input-field {
   .lato-bold-20 {
     @apply text-xl font-bold font-lato;
   }
-  .lato-bold-48 {
-    @apply text-5xl font-bold font-lato;
-  }
   .lato-bold-32 {
     @apply text-[32px] font-bold font-lato;
+  }
+  .lato-bold-48 {
+    @apply text-5xl font-bold font-lato;
   }
 }
 

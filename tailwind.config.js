@@ -46,6 +46,7 @@ module.exports = {
         pattern3: "url('/images/bgs/pattern3.svg')",
         landscape: "url('/images/bgs/rough-landscape.jpg')",
         login: "url('/images/bgs/login-signup.svg')",
+        'wallet-balance': "url('/images/bgs/wallet-balance.svg')",
       }),
       fontSize: {
         xxs: '.428rem',
