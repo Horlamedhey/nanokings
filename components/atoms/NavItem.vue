@@ -16,7 +16,7 @@
     <n-link
       v-else-if="to"
       :to="to"
-      :exact="true"
+      :exact="exact"
       :class="contentClass"
       :active-class="activeClass"
       @click="$emit('click')"
@@ -69,6 +69,7 @@ export default defineComponent({
     icon: { type: [Object, Function], default: () => ({}) },
     // class(es) of the content of the list item(the main component - a/n-link/button)
     contentClass: { type: [String, Array], default: '' },
+    exact: Boolean,
     // class(es) of the active link
     activeClass: { type: [String, Array], default: '' },
     // if icon should come after

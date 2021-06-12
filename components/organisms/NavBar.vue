@@ -35,7 +35,7 @@
           <!-- Mobile menu button -->
           <AtomsButton
             type="button"
-            class="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600 md:hidden"
+            class="focus:outline-none md:hidden"
             aria-label="toggle menu"
             @click="setMenu(true)"
           >
@@ -45,7 +45,26 @@
 
         <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
         <div
-          class="items-center transition duration-300 w-64 transform bg-white md:flex md:transform-none md:w-auto md:relative md:ml-[unset] fixed right-0 top-0 bottom-0 z-10 ml-auto md:z-auto"
+          class="
+            items-center
+            transition
+            duration-300
+            w-64
+            transform
+            bg-white
+            md:flex
+            md:transform-none
+            md:w-auto
+            md:relative
+            md:ml-[unset]
+            fixed
+            right-0
+            top-0
+            bottom-0
+            z-10
+            ml-auto
+            md:z-auto
+          "
           :class="[overlay ? '  translate-x-0  ' : ' translate-x-full ']"
         >
           <AtomsButton
@@ -72,13 +91,13 @@
         </div>
         <div class="items-center hidden py-2 -mx-1 md:flex md:mx-0">
           <AtomsNavItem
-            class="block w-1/2 px-3 py-2 mx-1 leading-5 text-center rounded lato-semibold-16 text-primary hover:bg-opacity-90 md:mx-2 md:w-auto"
+            class="block w-1/2 px-3 py-2 mx-1 leading-5 text-center rounded  lato-semibold-16 text-primary hover:bg-opacity-90 md:mx-2 md:w-auto"
             to="/login"
           >
             Login
           </AtomsNavItem>
           <AtomsNavItem
-            class="block w-1/2 px-3 py-2 mx-1 leading-5 text-center text-white rounded lato-semibold-16 bg-primary md:mx-2 ripple-bg-primary-DEFAULT md:w-auto"
+            class="block w-1/2 px-3 py-2 mx-1 leading-5 text-center text-white rounded  lato-semibold-16 bg-primary md:mx-2 ripple-bg-primary-DEFAULT md:w-auto"
             to="/create-account"
           >
             Create Account

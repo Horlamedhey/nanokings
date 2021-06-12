@@ -86,7 +86,32 @@
       <div class="max-w-sm mx-auto mt-10">
         <AtomsButton
           to="/confirm-email"
-          class="mt-0 rounded-[15px] text-white lato-bold-16 sm:lato-bold-20 outline-none ripple-bg-primary-DEFAULT block w-full px-4 py-4 mt-3 transition duration-500 border outline-none border-secondary-lightest text-center lato-normal-16 sm:lato-normal-20 placeholder-secondary-lightest focus:border-primary focus-visible:border-primary focus:border-2"
+          class="
+            mt-0
+            rounded-[15px]
+            text-white
+            lato-bold-16
+            sm:lato-bold-20
+            outline-none
+            ripple-bg-primary-DEFAULT
+            block
+            w-full
+            px-4
+            py-4
+            mt-3
+            transition
+            duration-500
+            border
+            outline-none
+            border-secondary-lightest
+            text-center
+            lato-normal-16
+            sm:lato-normal-20
+            placeholder-secondary-lightest
+            focus:border-primary
+            focus-visible:border-primary
+            focus:border-2
+          "
         >
           Create Account
         </AtomsButton>

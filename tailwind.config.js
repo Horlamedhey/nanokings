@@ -85,6 +85,7 @@ module.exports = {
           lighter: '#E490B5',
           lightest: '#EEB9D0',
         },
+        curtain: 'rgba(0,0,0,0.4)',
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],

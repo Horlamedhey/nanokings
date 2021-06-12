@@ -5,7 +5,15 @@
       <span class="text-accent">Stores</span>
     </h2>
     <p
-      class="px-5 mt-4 text-center sm:px-20 sm:lato-normal-20 lato-normal-14 text-secondary-light"
+      class="
+        px-5
+        mt-4
+        text-center
+        sm:px-20
+        sm:lato-normal-20
+        lato-normal-14
+        text-secondary-light
+      "
     >
       Reach over a million users worldwide. Sign up and start uploading music in
       less than 5 minutes.

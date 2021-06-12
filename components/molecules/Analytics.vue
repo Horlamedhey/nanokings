@@ -10,7 +10,14 @@
       <div class="relative ml-4 sm:ml-6">
         <div>
           <AtomsButton
-            class="flex items-center max-w-xs text-sm  focus:outline-none text-secondary-lighter"
+            class="
+              flex
+              items-center
+              max-w-xs
+              text-sm
+              focus:outline-none
+              text-secondary-lighter
+            "
             id="filter-menu-button"
             aria-expanded="false"
             aria-haspopup="true"
@@ -26,24 +33,72 @@
         <transition name="slide-y">
           <div
             v-show="filterMenu"
-            class="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md  my-shadow ring-1 ring-black ring-opacity-5 focus:outline-none"
+            class="
+              absolute
+              right-0
+              w-48
+              py-1
+              mt-2
+              origin-top-right
+              bg-white
+              rounded-md
+              my-shadow
+              ring-1 ring-black ring-opacity-5
+              focus:outline-none
+            "
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="filter-menu-button"
             tabindex="-1"
           >
             <AtomsButton
-              class="flex w-full px-4 py-2 space-x-3 transition duration-300  hover:ripple-bg-primary-DEFAULT text-primary hover:text-whitelato-semibold-16"
+              class="
+                flex
+                w-full
+                px-4
+                py-2
+                space-x-3
+                transition
+                duration-300
+                hover:ripple-bg-primary-DEFAULT
+                text-primary
+                hover:text-white
+                lato-semibold-16
+              "
             >
               <span class="">Today</span>
             </AtomsButton>
             <AtomsButton
-              class="flex w-full px-4 py-2 space-x-3 transition duration-300  hover:ripple-bg-primary-DEFAULT text-primary hover:text-whitelato-semibold-16"
+              class="
+                flex
+                w-full
+                px-4
+                py-2
+                space-x-3
+                transition
+                duration-300
+                hover:ripple-bg-primary-DEFAULT
+                text-primary
+                hover:text-white
+                lato-semibold-16
+              "
             >
               <span class="">This Week</span>
             </AtomsButton>
             <AtomsButton
-              class="flex w-full px-4 py-2 space-x-3 transition duration-300  hover:ripple-bg-primary-DEFAULT text-primary hover:text-whitelato-semibold-16"
+              class="
+                flex
+                w-full
+                px-4
+                py-2
+                space-x-3
+                transition
+                duration-300
+                hover:ripple-bg-primary-DEFAULT
+                text-primary
+                hover:text-white
+                lato-semibold-16
+              "
             >
               <span class="">This Month</span>
             </AtomsButton>

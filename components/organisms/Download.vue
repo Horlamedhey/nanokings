@@ -5,7 +5,7 @@
       <span class="text-accent">App</span>
     </h2>
     <p
-      class="px-5 mt-4 text-center sm:px-20 sm:lato-normal-20 lato-normal-14 text-secondary-light"
+      class="px-5 mt-4 text-center  sm:px-20 sm:lato-normal-20 lato-normal-14 text-secondary-light"
     >
       License, distribute and monetize your music. All in one place. You can
       upload your music and have it delivered globally to all major platforms.
@@ -14,7 +14,7 @@
       <AtomsButton
         addOnAfter
         icon="AtomsIconsPlaystore"
-        class="block px-5 py-3 m-auto mb-6 text-white rounded sm:mr-3 sm:mb-0 sm:inline-block lato-semibold-16 bg-primary ripple-bg-primary-DEFAULT"
+        class="block px-5 py-3 m-auto mb-6 text-white rounded  sm:mr-3 sm:mb-0 sm:inline-block lato-semibold-16 bg-primary ripple-bg-primary-DEFAULT"
         content-class="mr-2"
       >
         Get on Playstore
@@ -22,7 +22,7 @@
       <AtomsButton
         addOnAfter
         icon="AtomsIconsAppstore"
-        class="block px-5 py-3 m-auto bg-white border rounded sm:inline-block text-primary hover:text-white lato-semibold-16 border-primary ripple-bg-primary-DEFAULT"
+        class="block px-5 py-3 m-auto bg-white border rounded  sm:inline-block text-primary hover:text-white lato-semibold-16 border-primary ripple-bg-primary-DEFAULT"
       >
         Get on App Store
       </AtomsButton>

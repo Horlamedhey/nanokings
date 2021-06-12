@@ -1,5 +1,4 @@
 <template>
-  <!-- <div class="box-border mx-auto mt-20 sm:container bg-[#F6F7FE]"></div> -->
       <main class="relative flex-1 overflow-y-auto focus:outline-none">
         <div class="py-6">
           <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">

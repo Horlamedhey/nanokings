@@ -15,6 +15,7 @@
                 v-for="(navLink, i) in navLinks"
                 :key="`navLink-${i}`"
                 :to="navLink.to"
+                :exact="navLink.exact || false"
                 content-class="flex items-center px-2 py-4 text-white transition duration-300 rounded-md lato-bold-16 hover:bg-white hover:bg-opacity-30"
                 active-class="bg-white bg-opacity-30"
                 @click="$emit('selected')"
@@ -40,7 +41,12 @@ export default {
   data() {
     return {
       navLinks: [
-        { name: 'Dashboard', icon: 'AtomsIconsDashboard', to: '/dashboard' },
+        {
+          name: 'Dashboard',
+          icon: 'AtomsIconsDashboard',
+          to: '/dashboard',
+          exact: true,
+        },
         {
           name: 'My Music',
           icon: 'AtomsIconsMusic',
