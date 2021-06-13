@@ -32,7 +32,7 @@
     </FormulateForm>
     <template v-slot:extra-footer>
       <h4
-        class="mt-2 text-center lato-normal-18 sm:lato-normal-20 text-secondary-light"
+        class="mt-2 text-center  lato-normal-18 sm:lato-normal-20 text-secondary-light"
       >
         Forgot password?
         <nuxt-link
@@ -47,9 +47,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, reactive } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'Login',
+  setup() {
+    const form = reactive({})
+    return { form }
+  },
 })
 </script>

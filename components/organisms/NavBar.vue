@@ -2,26 +2,10 @@
   <header
     ref="el"
     class="z-[2] mx-auto bg-white fixed top-0 right-0 left-0"
-    :class="
-      !overlay
-        ? [
-            {
-              'transform opacity-0 shadow-lg': scrollY >= navBarHeight + 20,
-            },
-            {
-              '-translate-y-full  duration-500 transition ease-out':
-                scrollY >= navBarHeight + 50,
-            },
-            {
-              ' opacity-100': scrollY >= navBarHeight + 100,
-            },
-            {
-              'translate-y-0 duration-500 transition ease-in':
-                scrollY >= navBarHeight + 120,
-            },
-          ]
-        : []
-    "
+    :class="{
+      'duration-500 transition ease-out shadow-lg':
+        scrollY >= navBarHeight + 20 && !overlay,
+    }"
   >
     <nav class="px-6 py-3 mx-auto sm:container">
       <div class="flex flex-col md:flex-row md:justify-between md:items-center">
@@ -79,6 +63,7 @@
             <AtomsNavItem
               v-for="(navLink, i) in navLinks"
               :key="`navLink-${i}`"
+              exact
               class="mx-2 my-2 lato-semibold-16 text-secondary-lighter md:my-0"
               content-class="px-6 py-1 md:px-2"
               active-class="text-primary active-navbar-link"
@@ -91,13 +76,41 @@
         </div>
         <div class="items-center hidden py-2 -mx-1 md:flex md:mx-0">
           <AtomsNavItem
-            class="block w-1/2 px-3 py-2 mx-1 leading-5 text-center rounded  lato-semibold-16 text-primary hover:bg-opacity-90 md:mx-2 md:w-auto"
+            class="
+              block
+              w-1/2
+              px-3
+              py-2
+              mx-1
+              leading-5
+              text-center
+              rounded
+              lato-semibold-16
+              text-primary
+              hover:bg-opacity-90
+              md:mx-2
+              md:w-auto
+            "
             to="/login"
           >
             Login
           </AtomsNavItem>
           <AtomsNavItem
-            class="block w-1/2 px-3 py-2 mx-1 leading-5 text-center text-white rounded  lato-semibold-16 bg-primary md:mx-2 ripple-bg-primary-DEFAULT md:w-auto"
+            class="
+              block
+              w-1/2
+              px-3
+              py-2
+              mx-1
+              leading-5
+              text-center text-white
+              rounded
+              lato-semibold-16
+              bg-primary
+              md:mx-2
+              ripple-bg-primary-DEFAULT
+              md:w-auto
+            "
             to="/create-account"
           >
             Create Account

@@ -6,7 +6,17 @@
     "artists": "Ovi",
     "performingArtists": "Heavens",
     "type": "Song",
-    "format": "Single"
+    "format": "Single",
+    "platforms": [
+      "apple-music",
+      "vevo",
+      "deezer",
+      "spotify",
+      "mtn-music",
+      "youtube",
+      "shazam",
+      "vuclip"
+    ]
   },
   {
     "title": "See Me Now",
@@ -15,7 +25,17 @@
     "artists": "Ovi",
     "performingArtists": "Heavens",
     "type": "Song",
-    "format": "Single"
+    "format": "Single",
+    "platforms": [
+      "apple-music",
+      "vevo",
+      "deezer",
+      "spotify",
+      "mtn-music",
+      "youtube",
+      "shazam",
+      "vuclip"
+    ]
   },
   {
     "title": "Riverfalls",
@@ -24,7 +44,17 @@
     "artists": "Ovi",
     "performingArtists": "Heavens",
     "type": "Song",
-    "format": "Single"
+    "format": "Single",
+    "platforms": [
+      "apple-music",
+      "vevo",
+      "deezer",
+      "spotify",
+      "mtn-music",
+      "youtube",
+      "shazam",
+      "vuclip"
+    ]
   },
   {
     "title": "Amazing",
@@ -33,7 +63,17 @@
     "artists": "Ovi",
     "performingArtists": "Heavens",
     "type": "Song",
-    "format": "Single"
+    "format": "Single",
+    "platforms": [
+      "apple-music",
+      "vevo",
+      "deezer",
+      "spotify",
+      "mtn-music",
+      "youtube",
+      "shazam",
+      "vuclip"
+    ]
   },
   {
     "title": "Always You",
@@ -42,7 +82,17 @@
     "artists": "Ovi",
     "performingArtists": "Heavens",
     "type": "Song",
-    "format": "Single"
+    "format": "Single",
+    "platforms": [
+      "apple-music",
+      "vevo",
+      "deezer",
+      "spotify",
+      "mtn-music",
+      "youtube",
+      "shazam",
+      "vuclip"
+    ]
   },
   {
     "title": "Blossom",
@@ -51,7 +101,17 @@
     "artists": "Ovi",
     "performingArtists": "Heavens",
     "type": "Song",
-    "format": "Single"
+    "format": "Single",
+    "platforms": [
+      "apple-music",
+      "vevo",
+      "deezer",
+      "spotify",
+      "mtn-music",
+      "youtube",
+      "shazam",
+      "vuclip"
+    ]
   },
   {
     "title": "Ablaze",
@@ -60,7 +120,17 @@
     "artists": "Ovi",
     "performingArtists": "Heavens",
     "type": "Song",
-    "format": "Single"
+    "format": "Single",
+    "platforms": [
+      "apple-music",
+      "vevo",
+      "deezer",
+      "spotify",
+      "mtn-music",
+      "youtube",
+      "shazam",
+      "vuclip"
+    ]
   },
   {
     "title": "Catch Me Now",
@@ -69,7 +139,17 @@
     "artists": "Ovi",
     "performingArtists": "Heavens",
     "type": "Song",
-    "format": "Single"
+    "format": "Single",
+    "platforms": [
+      "apple-music",
+      "vevo",
+      "deezer",
+      "spotify",
+      "mtn-music",
+      "youtube",
+      "shazam",
+      "vuclip"
+    ]
   },
   {
     "title": "Flawless",
@@ -78,7 +158,17 @@
     "artists": "Ovi",
     "performingArtists": "Heavens",
     "type": "Song",
-    "format": "Single"
+    "format": "Single",
+    "platforms": [
+      "apple-music",
+      "vevo",
+      "deezer",
+      "spotify",
+      "mtn-music",
+      "youtube",
+      "shazam",
+      "vuclip"
+    ]
   },
   {
     "title": "Grace",
@@ -87,6 +177,16 @@
     "artists": "Ovi",
     "performingArtists": "Heavens",
     "type": "Song",
-    "format": "Single"
+    "format": "Single",
+    "platforms": [
+      "apple-music",
+      "vevo",
+      "deezer",
+      "spotify",
+      "mtn-music",
+      "youtube",
+      "shazam",
+      "vuclip"
+    ]
   }
 ]

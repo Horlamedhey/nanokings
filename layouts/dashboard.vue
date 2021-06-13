@@ -12,6 +12,8 @@
     <OrganismsDashSideMenu class="hidden w-64 md:flex md:flex-shrink-0" />
     <div class="flex flex-col flex-1 w-0">
       <OrganismsDashNavBar @openSideMenu="sideMenuOpen = true" />
+      <div style="height: 70px"></div>
+
       <Nuxt />
     </div>
   </div>
@@ -19,16 +21,11 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
-import { useElementSize, useWindowScroll, useMediaQuery } from '@vueuse/core'
 export default defineComponent({
   name: 'Dashboard',
   setup() {
-    const el = ref(null)
-    const isLargeScreen = useMediaQuery('(min-width: 960px)')
-    const { y: scrollY } = useWindowScroll()
-    const navBarHeight = useElementSize(el).height
     const sideMenuOpen = ref(false)
-    return { navBarHeight, el, scrollY, isLargeScreen, sideMenuOpen }
+    return { sideMenuOpen }
   },
 })
 </script>

@@ -42,14 +42,40 @@ a {
 .formulate-input {
   @apply mt-6;
 }
-.formulate-input-label {
-  @apply text-secondary-lighter lato-normal-14 sm:lato-normal-20;
+.formulate-input-label,
+.formulate-input-help {
+  @apply capitalize text-secondary-lighter lato-normal-14 sm:lato-normal-20;
+}
+
+.account-settings .formulate-input[data-classification='group'] {
+  @apply w-full lg:w-9/12 lg:m-auto xl:m-0 xl:w-5/12;
+}
+.account-settings .formulate-input[data-classification='group'] label {
+  @apply lato-semibold-14 text-secondary-lighter;
+}
+.account-settings
+  .formulate-input[data-classification='group']
+  .formulate-input[data-classification='text']
+  label {
+  @apply lato-medium-14 text-secondary-light;
+}
+.account-settings
+  .formulate-input[data-classification='group']
+  .my-formulate-input-field {
+  @apply text-secondary lato-semibold-14;
 }
 .my-formulate-input-field {
   @apply w-full px-4 py-4 mt-3 transition duration-500 border rounded outline-none border-secondary-lightest lato-normal-16 sm:lato-normal-20 text-secondary-light placeholder-secondary-lightest focus:border-primary focus-visible:border-primary focus:border-2;
 }
 button.my-formulate-input-field {
   @apply mt-0 rounded-[15px] text-white lato-bold-16 sm:lato-bold-20 outline-none ripple-bg-primary-DEFAULT;
+}
+.account-settings button.my-formulate-input-field {
+  @apply mt-0 rounded-[5px] text-white lato-bold-14 outline-none ripple-bg-success-light px-10 py-3 border-none;
+}
+.formulate-input[data-classification='file'][data-type='file']
+  .my-formulate-input-field {
+  margin: 0;
 }
 .formulate-input[data-classification='box'] .formulate-input-element input {
   /* display: inline; */
@@ -83,6 +109,33 @@ button.my-formulate-input-field {
   margin-top: -0.1em;
   right: 1em;
   position: absolute;
+}
+.formulate-input[data-classification='file'][data-type='image'] {
+  width: 287.3px;
+  height: 361px;
+  position: absolute;
+  bottom: 0;
+}
+.formulate-input[data-classification='file'][data-type='file']
+  .formulate-input-upload-area {
+  position: relative;
+}
+.formulate-input[data-classification='file']
+  .formulate-input-upload-area
+  input {
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
 }
 @layer base {
   @font-face {
@@ -137,6 +190,9 @@ button.my-formulate-input-field {
   }
   .lora-bold-20 {
     @apply text-[20px] font-bold font-lora;
+  }
+  .lora-bold-22 {
+    @apply text-[22px] font-bold font-lora;
   }
   .lora-bold-24 {
     @apply text-2xl font-bold font-lora;
@@ -203,8 +259,14 @@ button.my-formulate-input-field {
     @apply text-xl font-medium font-lato;
   }
   /* Semibold */
+  .lato-semibold-14 {
+    @apply text-sm font-semibold font-lato;
+  }
   .lato-semibold-16 {
     @apply text-base font-semibold font-lato;
+  }
+  .lato-semibold-18 {
+    @apply text-lg font-semibold font-lato;
   }
   .lato-semibold-20 {
     @apply text-xl font-semibold font-lato;
@@ -216,8 +278,8 @@ button.my-formulate-input-field {
   .lato-bold-10 {
     @apply text-[10px] font-bold font-lato;
   }
-  .lato-bold-12 {
-    @apply text-[12px] font-bold font-lato;
+  .lato-bold-14 {
+    @apply text-sm font-bold font-lato;
   }
   .lato-bold-16 {
     @apply text-base font-bold font-lato;

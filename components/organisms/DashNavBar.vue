@@ -1,6 +1,10 @@
 <template>
-  <div class="relative z-10 flex items-center flex-shrink-0 h-16">
-    <AtomsIconsLogo class="ml-4 md:hidden" />
+  <header
+    class="fixed top-0 left-0 right-0 z-10 flex items-center flex-shrink-0 h-16"
+  >
+    <AtomsButton class="ml-4 md:hidden" to="/">
+      <AtomsIconsLogo />
+    </AtomsButton>
     <AtomsButton
       class="px-4 ml-2 text-primary focus:outline-none md:hidden"
       @click="$emit('openSideMenu')"
@@ -60,7 +64,14 @@
                 alt=""
               />
               <span
-                class="hidden ml-1 mr-3  sm:inline lato-semibold-16 text-secondary-light"
+                class="
+                  hidden
+                  ml-1
+                  mr-3
+                  sm:inline
+                  lato-semibold-16
+                  text-secondary-light
+                "
               >
                 VaryAble
               </span>
@@ -72,6 +83,7 @@
           </transition>
         </div>
         <AtomsButton
+          to="/"
           class="
             p-1
             transition
@@ -89,18 +101,19 @@
         </AtomsButton>
       </div>
     </div>
-  </div>
+  </header>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { useWindowScroll } from '@vueuse/core'
 export default defineComponent({
   name: 'DashNavBar',
-
   setup() {
     const notificationsMenu = ref(false)
     const userMenu = ref(false)
-    return { notificationsMenu, userMenu }
+    const { y: scrollY } = useWindowScroll()
+    return { notificationsMenu, userMenu, scrollY }
   },
   watch: {
     notificationsMenu(newVal) {

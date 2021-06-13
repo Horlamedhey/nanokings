@@ -1,18 +1,30 @@
 <template>
-  <!-- <div class="box-border mx-auto mt-20 sm:container bg-[#F6F7FE]"></div> -->
       <main class="relative flex-1 overflow-y-auto focus:outline-none">
+        <AtomsModal :modal="withdrawModal">
+          <div class="min-w-[300px]">
+            <MoleculesWithdrawalConfirm @close="withdrawModal = false" @processWithdrawal="processWithdrawal"/>
+          </div>
+        </AtomsModal>
+        <MoleculesBasicModal :modal="withdrawSuccessModal" icon="AtomsIconsCircledCheck" content="Withdrawal Successful" state="success" @close="withdrawSuccessModal=false"/>
         <div class="py-6">
           <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
-            <h1 class="text-2xl font-semibold text-gray-900">Wallet</h1>
+        <h1 class="lora-bold-20 sm:lora-bold-28 text-secondary">Wallet</h1>
           </div>
           <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
-            <!-- Replace with your content -->
-            <div class="py-4">
-              <div
-                class="border-4 border-gray-200 border-dashed rounded-lg h-96"
-              ></div>
-            </div>
-            <!-- /End replace -->
+        <div class="text-right">
+          <AtomsButton
+            icon="AtomsIconsNaira"
+            addOnAfter
+            class="items-center inline-block px-10 py-3 mt-6 ml-auto text-white rounded lato-bold-16 ripple-bg-primary-DEFAULT"
+            @click="withdrawModal=!withdrawModal"
+          >
+            Withdraw funds
+          </AtomsButton>
+        </div>
+            <!-- Statistics -->
+            <OrganismsAmountCardsArea :amountCards="amountCards"/>
+            <!-- Table -->
+            <MoleculesDataTableWithAltHead class="mt-10" lastColumnClass="text-success text-error" tableHeadingTitle="Latest Transactions" :tableHeadings="tableHeadings" :tableBody="tableBody" />
           </div>
         </div>
       </main>
@@ -25,33 +37,67 @@ import { defineComponent, ref } from '@nuxtjs/composition-api'
 export default defineComponent({
   name: 'Wallet',
   layout: 'dashboard',
-  // props: {
-  //   user: {
-  //     type: Object as () => User,
-  //     required: true,
-  //   },
-  // },
 
   setup() {
-    const platforms = ref([
-      'apple-music',
-      'vevo',
-      'deezer',
-      'spotify',
-      'mtn-music',
-      'youtube',
-      'shazam',
-      'vuclip',
+    const amountCards = ref([
+      {
+        title: 'Total Sales',
+        amount: '129,000',
+        color: 'bg-primary',
+      },
+      {
+        title: 'Total Sales',
+        amount: '529,000',
+        color: 'bg-success-light',
+      },
+      {
+        title: 'Total Sales',
+        amount: '409,000',
+        color: 'bg-accent-light',
+      },
     ])
-    return { platforms }
+    const tableHeadings = ref(['Date', 'Status', 'Amount (NGN)'])
+    const tableBody = ref([
+      {
+        date: 'Yesterday',
+        status: 'Withdrawal completed',
+        amount: 'N12,360',
+      },
+      {
+        date: 'Yesterday',
+        status: 'Withdrawal initiated',
+        amount: '-N12,360',
+      },
+      {
+        date: '02 April 2021',
+        status: 'Withdrawal completed',
+        amount: 'N12,360',
+      },
+      {
+        date: '02 April 2021',
+        status: 'Withdrawal initiated',
+        amount: '-N12,360',
+      },
+      {
+        date: '14 March 2021',
+        status: 'Withdrawal completed',
+        amount: 'N12,360',
+      },
+    ])
+    const withdrawModal = ref(false)
+    const withdrawSuccessModal = ref(false)
+    const processWithdrawal = () => {
+      withdrawModal.value = false
+      withdrawSuccessModal.value = true
+    }
+    return {
+      amountCards,
+      tableHeadings,
+      tableBody,
+      withdrawModal,
+      withdrawSuccessModal,
+      processWithdrawal,
+    }
   },
 })
 </script>
-
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
-. {
-@apply min-h-screen flex justify-center items-center text-center ;
-}
-*/
-</style>

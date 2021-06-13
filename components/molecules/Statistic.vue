@@ -27,3 +27,9 @@ export default {
   },
 }
 </script>
+<style scoped>
+.my-stroke {
+  text-shadow: -1px -1px 0 #4361ee, 1px -1px 0 #4361ee, -1px 1px 0 #4361ee,
+    1px 1px 0 #4361ee;
+}
+</style>

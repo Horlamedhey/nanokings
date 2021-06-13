@@ -4,7 +4,9 @@
       <!-- Sidebar component, swap this element with another sidebar if you like -->
       <div class="flex flex-col flex-grow pt-6 pb-4 overflow-y-auto">
         <div class="flex items-center justify-center flex-shrink-0 px-4">
-          <AtomsIconsLogoVariant />
+          <AtomsButton to="/">
+            <AtomsIconsLogoVariant />
+          </AtomsButton>
 
           <slot></slot>
         </div>

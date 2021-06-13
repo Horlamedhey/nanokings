@@ -7,12 +7,8 @@
           </div>
           <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
             <!-- Statistics -->
-            <div class="flex flex-col mt-16 space-y-12 xl:space-y-0 xl:flex-row xl:space-x-12">
-              <MoleculesWalletBalance balance="129,000"/>
-              <div class="flex flex-col justify-between flex-1 space-y-12 lg:space-y-0 lg:flex-row">
-                <MoleculesStatistic v-for="(statistic, i) in statistics" :key="`statistic-${i}`" :statistic="statistic"/>
-              </div>
-            </div>
+            <OrganismsStatisticsArea :amountCard="amountCardDetails" :statistics="statistics"/>
+
             <div class="flex flex-col-reverse mt-12 xl:flex-row xl:space-x-12">
             <div class="mt-24 xl:mt-0">
               <h2 class="lato-semibold-20 text-secondary-light">Recent Releases</h2>
@@ -29,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, reactive } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'DashboardHome',
@@ -52,14 +48,12 @@ export default defineComponent({
       { title: 'Jackpot', time: '3mins', image: 'release2' },
       { title: 'Jackpot', time: '3mins', image: 'release3' },
     ])
-    return { statistics, releases }
+    const amountCardDetails = reactive({
+      title: 'Wallet Balance',
+      amount: '129,000',
+      color: 'bg-primary',
+    })
+    return { statistics, releases, amountCardDetails }
   },
 })
 </script>
-
-<style>
-.my-stroke {
-  text-shadow: -1px -1px 0 #4361ee, 1px -1px 0 #4361ee, -1px 1px 0 #4361ee,
-    1px 1px 0 #4361ee;
-}
-</style>

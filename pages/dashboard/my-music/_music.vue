@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
-        <div class="bg-white rounded-2xl mt-[275px] px-6">
+        <div class="bg-white rounded-2xl mt-[275px] px-6 pb-10">
           <div class="relative flex justify-center pt-[126px]">
             <MoleculesMusicCard
               :song="song"
@@ -25,23 +25,12 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  useRoute,
-  computed,
-} from '@nuxtjs/composition-api'
+import { defineComponent, useRoute, computed } from '@nuxtjs/composition-api'
 import songs from '@/static/data/songs.json'
 
 export default defineComponent({
   name: 'Music',
   layout: 'dashboard',
-  // props: {
-  //   user: {
-  //     type: Object as () => User,
-  //     required: true,
-  //   },
-  // },
   setup() {
     const route = useRoute()
     const song = computed(() =>

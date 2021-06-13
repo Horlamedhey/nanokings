@@ -2,7 +2,15 @@
   <div class="relative ml-4 sm:ml-6">
     <div>
       <AtomsButton
-        class="flex items-center max-w-xs text-sm  focus:outline-none text-secondary-lighter"
+        class="
+          flex
+          items-center
+          max-w-xs
+          text-sm
+          focus:outline-none
+          text-secondary-lighter
+        "
+        :class="buttonClasses"
         :id="id"
         aria-expanded="false"
         aria-haspopup="true"
@@ -20,7 +28,19 @@
     <transition name="slide-y">
       <div
         v-show="show"
-        class="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md  my-shadow ring-1 ring-black ring-opacity-5 focus:outline-none"
+        class="
+          absolute
+          right-0
+          w-48
+          py-1
+          mt-2
+          origin-top-right
+          bg-white
+          rounded-md
+          my-shadow
+          ring-1 ring-black ring-opacity-5
+          focus:outline-none
+        "
         role="menu"
         aria-orientation="vertical"
         :aria-labelledby="id"
@@ -30,7 +50,17 @@
           <span
             v-if="item.notButton"
             :key="`${id}-item-${i}`"
-            class="block px-4 py-2 transition duration-300  lato-semibold-16 text-secondary-light hover:bg-secondary-lighter hover:text-white"
+            class="
+              block
+              px-4
+              py-2
+              transition
+              duration-300
+              lato-semibold-16
+              text-secondary-light
+              hover:bg-secondary-lighter
+              hover:text-white
+            "
             :class="[
               itemsClasses,
               item.classes,
@@ -42,7 +72,18 @@
           <AtomsButton
             v-else
             :key="`${id}-item-${i}`"
-            class="w-full px-4 py-2 text-left transition duration-300  hover:bg-secondary-lighter text-secondary-light hover:text-white lato-semibold-16"
+            class="
+              w-full
+              px-4
+              py-2
+              text-left
+              transition
+              duration-300
+              hover:bg-secondary-lighter
+              text-secondary-light
+              hover:text-white
+              lato-semibold-16
+            "
             :class="[
               itemsClasses,
               item.classes,
@@ -65,6 +106,7 @@ export default {
     id: { type: String, required: true },
     show: { type: Boolean, required: true },
     title: { type: String, required: true },
+    buttonClasses: { type: String, default: '' },
     itemsClasses: { type: String, default: '' },
     items: { type: Array, required: true },
   },

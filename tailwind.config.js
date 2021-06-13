@@ -27,6 +27,7 @@ module.exports = {
     },
     screens: {
       xs: { min: '320px' },
+      sxs: { min: '380px' },
       sm: { min: '640px' },
       md: { min: '768px' },
       lg: { min: '1024px' },
@@ -46,7 +47,8 @@ module.exports = {
         pattern3: "url('/images/bgs/pattern3.svg')",
         landscape: "url('/images/bgs/rough-landscape.jpg')",
         login: "url('/images/bgs/login-signup.svg')",
-        'wallet-balance': "url('/images/bgs/wallet-balance.svg')",
+        'amount-card': "url('/images/bgs/amount-card.svg')",
+        profile: "url('/images/bgs/profile.svg')",
       }),
       fontSize: {
         xxs: '.428rem',
@@ -86,6 +88,9 @@ module.exports = {
           lightest: '#EEB9D0',
         },
         curtain: 'rgba(0,0,0,0.4)',
+        success: '#27AE60',
+        'success-light': '#00C48C',
+        error: '#EB5757',
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],

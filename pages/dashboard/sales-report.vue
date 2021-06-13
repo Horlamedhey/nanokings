@@ -1,18 +1,24 @@
 <template>
-  <!-- <div class="box-border mx-auto mt-20 sm:container bg-[#F6F7FE]"></div> -->
       <main class="relative flex-1 overflow-y-auto focus:outline-none">
         <div class="py-6">
           <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
-            <h1 class="text-2xl font-semibold text-gray-900">Sales Report</h1>
+        <h1 class="lora-bold-20 sm:lora-bold-28 text-secondary">Sales Report</h1>
           </div>
           <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
-            <!-- Replace with your content -->
-            <div class="py-4">
-              <div
-                class="border-4 border-gray-200 border-dashed rounded-lg h-96"
-              ></div>
-            </div>
-            <!-- /End replace -->
+        <div class="text-right">
+          <AtomsButton
+            icon="AtomsIconsCircledArrowDown"
+            addOnAfter
+            class="items-center inline-block px-10 py-3 mt-6 ml-auto text-white rounded lato-bold-16 ripple-bg-primary-DEFAULT"
+          >
+            Download sheets
+          </AtomsButton>
+        </div>
+            <!-- Statistics -->
+            <OrganismsStatisticsArea :amountCard="amountCardDetails" :statistics="statistics"/>
+            <!-- Table -->
+            <h2 class="mt-16 lora-bold-18 sm:lora-bold-22 text-secondary">Sales History</h2>
+            <MoleculesDataTable class="mt-8" lastColumnClass="text-success" :tableHeadings="tableHeadings" :tableBody="tableBody" />
           </div>
         </div>
       </main>
@@ -20,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, reactive, ref } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'SalesReport',
@@ -33,17 +39,68 @@ export default defineComponent({
   // },
 
   setup() {
-    const platforms = ref([
-      'apple-music',
-      'vevo',
-      'deezer',
-      'spotify',
-      'mtn-music',
-      'youtube',
-      'shazam',
-      'vuclip',
+    const statistics = ref([
+      { title: 'Downloads', value: '1,700', image: 'downloads' },
+      { title: 'Streams', value: '17,000+', addon: '+28%', image: 'streams' },
+      { title: 'Views', value: '37,000+', addon: '+70%', image: 'views' },
     ])
-    return { platforms }
+    const amountCardDetails = reactive({
+      title: 'Total Sales',
+      amount: '529,000',
+      color: 'bg-success-light',
+    })
+    const tableHeadings = ref([
+      'Date',
+      'Streams',
+      'Downloads',
+      'Views',
+      'Total (NGN)',
+    ])
+    const tableBody = ref([
+      {
+        date: 'April 2021',
+        streams: '2,432',
+        downloads: '12,432',
+        views: '7,432',
+        total: 'N7,432',
+      },
+      {
+        date: 'March 2021',
+        streams: '2,432',
+        downloads: '12,432',
+        views: '7,432',
+        total: 'N7,432',
+      },
+      {
+        date: 'Febuary 2021',
+        streams: '2,432',
+        downloads: '12,432',
+        views: '7,432',
+        total: 'N7,432',
+      },
+      {
+        date: 'January 2021',
+        streams: '2,432',
+        downloads: '12,432',
+        views: '7,432',
+        total: 'N7,432',
+      },
+      {
+        date: 'December 2020',
+        streams: '2,432',
+        downloads: '12,432',
+        views: '7,432',
+        total: 'N7,432',
+      },
+      {
+        date: 'November 2020',
+        streams: '2,432',
+        downloads: '12,432',
+        views: '7,432',
+        total: 'N7,432',
+      },
+    ])
+    return { statistics, amountCardDetails, tableHeadings, tableBody }
   },
 })
 </script>
