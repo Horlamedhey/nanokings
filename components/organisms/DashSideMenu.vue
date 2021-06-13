@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-primary rounded-r-[20px] relative">
+  <div class="bg-primary rounded-r-[20px] relative z-20">
     <div class="flex flex-col w-full">
       <!-- Sidebar component, swap this element with another sidebar if you like -->
       <div class="flex flex-col flex-grow pt-6 pb-4 overflow-y-auto">

@@ -73,44 +73,32 @@
               {{ navLink.name }}
             </AtomsNavItem>
           </ul>
+          <div class="mx-4 mt-4 space-y-4 md:hidden">
+            <AtomsNavItem
+              class="block px-3 py-2 mx-1 leading-5 text-center rounded  lato-semibold-16 text-primary hover:bg-opacity-90 md:mx-2 md:w-auto"
+              to="/login"
+              @click="setMenu(false)"
+            >
+              Login
+            </AtomsNavItem>
+            <AtomsNavItem
+              class="block px-3 py-2 mx-1 leading-5 text-center text-white rounded  lato-semibold-16 bg-primary md:mx-2 ripple-bg-primary-DEFAULT md:w-auto"
+              to="/create-account"
+              @click="setMenu(false)"
+            >
+              Create Account
+            </AtomsNavItem>
+          </div>
         </div>
         <div class="items-center hidden py-2 -mx-1 md:flex md:mx-0">
           <AtomsNavItem
-            class="
-              block
-              w-1/2
-              px-3
-              py-2
-              mx-1
-              leading-5
-              text-center
-              rounded
-              lato-semibold-16
-              text-primary
-              hover:bg-opacity-90
-              md:mx-2
-              md:w-auto
-            "
+            class="block w-1/2 px-3 py-2 mx-1 leading-5 text-center rounded  lato-semibold-16 text-primary hover:bg-opacity-90 md:mx-2 md:w-auto"
             to="/login"
           >
             Login
           </AtomsNavItem>
           <AtomsNavItem
-            class="
-              block
-              w-1/2
-              px-3
-              py-2
-              mx-1
-              leading-5
-              text-center text-white
-              rounded
-              lato-semibold-16
-              bg-primary
-              md:mx-2
-              ripple-bg-primary-DEFAULT
-              md:w-auto
-            "
+            class="block w-1/2 px-3 py-2 mx-1 leading-5 text-center text-white rounded  lato-semibold-16 bg-primary md:mx-2 ripple-bg-primary-DEFAULT md:w-auto"
             to="/create-account"
           >
             Create Account
