@@ -28,7 +28,11 @@
         </FormulateInput>
       </div>
     </FormulateForm>
-    <AtomsButton v-if="verifySuccess" to="/login" class="mt-56 action-button">
+    <AtomsButton
+      v-if="verifySuccess"
+      to="/login"
+      class="mt-56 action-button sm:w-full"
+    >
       Proceed to Login
     </AtomsButton>
   </OrganismsAccount>
@@ -126,29 +130,3 @@ export default defineComponent({
   fetchOnServer: false,
 })
 </script>
-
-<style scoped>
-.action-button {
-  @apply rounded-[15px]
-            text-white
-            lato-bold-16
-            sm:lato-bold-20
-            ripple-bg-primary-DEFAULT
-            block
-            w-full
-            px-4
-            py-4
-            transition
-            duration-500
-            border
-            outline-none
-            border-secondary-lightest
-            text-center
-            lato-normal-16
-            sm:lato-normal-20
-            placeholder-secondary-lightest
-            focus:border-primary
-            focus-visible:border-primary
-            focus:border-2;
-}
-</style>

@@ -154,8 +154,7 @@ button.my-formulate-input-field {
             block
             w-full
             sm:w-1/2
-            px-4
-            py-4
+            p-4
             transition
             duration-500
             border
