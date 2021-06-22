@@ -42,6 +42,9 @@ a {
 .formulate-input {
   @apply mt-6;
 }
+.formulate-input-errors {
+  @apply text-error;
+}
 .formulate-input-label,
 .formulate-input-help {
   @apply capitalize text-secondary-lighter lato-normal-14 sm:lato-normal-20;
@@ -65,7 +68,7 @@ a {
   @apply text-secondary lato-semibold-14;
 }
 .my-formulate-input-field {
-  @apply w-full px-4 py-4 mt-3 transition duration-500 border rounded outline-none border-secondary-lightest lato-normal-16 sm:lato-normal-20 text-secondary-light placeholder-secondary-lightest focus:border-primary focus-visible:border-primary focus:border-2;
+  @apply w-full px-4 py-4 mt-3 transition duration-500 bg-transparent border rounded outline-none border-secondary-lightest lato-normal-16 sm:lato-normal-20 text-secondary-light placeholder-secondary-lightest focus:border-primary focus-visible:border-primary focus:border-2;
 }
 button.my-formulate-input-field {
   @apply mt-0 rounded-[15px] text-white lato-bold-16 sm:lato-bold-20 outline-none ripple-bg-primary-DEFAULT;
@@ -109,6 +112,7 @@ button.my-formulate-input-field {
   margin-top: -0.1em;
   right: 1em;
   position: absolute;
+  z-index: -1;
 }
 .formulate-input[data-classification='file'][data-type='image'] {
   width: 287.3px;
@@ -136,6 +140,9 @@ button.my-formulate-input-field {
   width: 100%;
   height: 100%;
   z-index: 5;
+}
+.formulate-form-error {
+  @apply capitalize text-error;
 }
 @layer base {
   @font-face {

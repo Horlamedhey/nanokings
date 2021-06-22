@@ -4,7 +4,7 @@
     <div :style="{ height: `${navBarHeight}px` }"></div>
     <AtomsOverlay></AtomsOverlay>
     <div class="transition duration-300">
-      <Nuxt />
+      <Nuxt keep-alive />
     </div>
     <!-- Footer -->
     <OrganismsFooter class="" />

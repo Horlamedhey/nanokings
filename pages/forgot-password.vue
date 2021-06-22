@@ -1,25 +1,26 @@
 <template>
   <OrganismsAccount
-    heading="Reset password,"
-    subHeading="Input your new desired password below."
+    heading="Forgot password? We got you covered,"
+    :subHeading="subHeading"
   >
+    <template v-slot:extra-header>
+      <div>
+        <div v-if="prevRoute === 'login'" class="flex items-center space-x-3">
+          <AtomsButton @click="$router.back()">
+            <AtomsIconsCircledArrowLeft class="w-10 h-10 text-primary" />
+          </AtomsButton>
+          <span class="lato-normal-24 text-secondary-light"> Back </span>
+        </div>
+      </div>
+    </template>
     <FormulateForm v-model="form" class="mt-48" :form-errors="formErrors">
       <div class="w-full">
         <FormulateInput
-          type="password"
-          label="Password"
-          placeholder="Password"
-          name="password"
-          validation="bail|required|min:6,length"
-        />
-      </div>
-      <div class="w-full">
-        <FormulateInput
-          type="password"
-          label="Confirm Password"
-          placeholder="Confirm Password"
-          name="password_confirm"
-          validation="bail|required|min:6,length|confirm"
+          type="email"
+          label="Email"
+          placeholder="Johndoe@gmail.com"
+          name="email"
+          validation="bail|required|email"
         />
       </div>
       <div
@@ -28,9 +29,9 @@
         <AtomsButton
           class="action-button"
           :loading="loading"
-          @click="resetPassword"
+          @click="forgotPassword"
         >
-          <span :class="{ 'opacity-0': loading }"> Reset password</span>
+          <span :class="{ 'opacity-0': loading }"> Send reset link </span>
         </AtomsButton>
         <AtomsButton to="/login" class="action-button">
           Proceed to Login
@@ -44,62 +45,58 @@
 import {
   defineComponent,
   ref,
-  useRouter,
+  useRoute,
   useContext,
+  computed,
 } from '@nuxtjs/composition-api'
 
 interface Form {
-  password?: string
-  password_confirm?: string
+  email?: string
 }
 export default defineComponent({
-  name: 'ResetPassword',
+  name: 'ForgotPassword',
 
   setup() {
-    const router = useRouter()
+    const prevRoute = ref('')
     const context = useContext()
     const loading = ref(false)
     const realmApp = context.app.$realmApp
     const form = ref({} as Form)
     const formErrors = ref([] as Array<string>)
-    const resetPassword = async () => {
+    const subHeadingText = ref('')
+    const subHeading = computed(() =>
+      subHeadingText.value.length > 0
+        ? subHeadingText.value
+        : 'Input your email below to request for a password reset link.'
+    )
+    const forgotPassword = async () => {
+      formErrors.value = []
       loading.value = true
       try {
-        const params = new URLSearchParams(window.location.search)
-        const token = params.get('token')
-        const tokenId = params.get('tokenId')
-        if (!token || !tokenId) {
-          throw new Error('Invalid link')
-        }
-        await realmApp.emailPasswordAuth.resetPassword(
-          token,
-          tokenId,
-          form.value.password
+        await realmApp.emailPasswordAuth.sendResetPasswordEmail(
+          form.value.email
         )
-        setTimeout(() => {
-          router.replace('/login')
-        }, 1000)
+        subHeadingText.value = 'Check your mail for the password reset link.'
       } catch (err) {
-        if ((err.error || err.message).includes('invalid')) {
-          formErrors.value.push(
-            'The link is invalid/expired, redirecting you back to the "Forgot Password" page to request for another link...'
-          )
-          setTimeout(() => {
-            router.replace('/forgot-password')
-          }, 5000)
-        } else {
-          formErrors.value.push(err.error)
-        }
+        formErrors.value.push(err.error)
+        console.log(err.error)
       } finally {
         loading.value = false
       }
     }
     return {
+      subHeading,
       loading,
       form,
       formErrors,
-      resetPassword,
+      prevRoute,
+      forgotPassword,
     }
+  },
+  beforeRouteEnter(to: any, from: any, next: any) {
+    next((vm: any) => {
+      vm.prevRoute = from.name
+    })
   },
 })
 </script>

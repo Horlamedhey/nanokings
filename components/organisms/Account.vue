@@ -10,7 +10,7 @@
       </div>
 
       <div
-        class="flex flex-col justify-center max-w-lg px-10 py-5 mx-auto my-6 shadow-none 2xl:max-w-2xl lg:w-1/2"
+        class="flex flex-col justify-around max-w-lg px-10 py-5 mx-auto my-6 shadow-none  2xl:max-w-2xl lg:w-1/2"
       >
         <slot name="extra-header"></slot>
         <div>
@@ -20,24 +20,28 @@
             {{ heading }}
           </h1>
           <h3
-            class="mt-6 lato-normal-14 sm:lato-normal-20 text-secondary-light"
-          >
-            {{ subHeading }}
-          </h3>
+            v-html="subHeading"
+            class="mt-6 lato-normal-14 sm:lato-normal-20"
+            :class="`${errorStatus ? 'text-error' : 'text-secondary-light'}`"
+          ></h3>
         </div>
         <slot></slot>
-        <h4
-          class="mt-6 text-center lato-normal-18 sm:lato-normal-20 text-secondary-light"
-        >
-          {{ footer }}
-          <nuxt-link
-            :to="subFooterLink"
-            class="text-primary sm:lato-bold-20 lato-bold-18"
+        <div>
+          <h4
+            v-if="footer"
+            class="mt-6 text-center  lato-normal-18 sm:lato-normal-20 text-secondary-light"
           >
-            {{ subFooter }}
-          </nuxt-link>
-        </h4>
-        <slot name="extra-footer"></slot>
+            {{ footer }}
+            <nuxt-link
+              v-if="subFooter"
+              :to="subFooterLink"
+              class="text-primary sm:lato-bold-20 lato-bold-18"
+            >
+              {{ subFooter }}
+            </nuxt-link>
+          </h4>
+          <slot name="extra-footer"></slot>
+        </div>
       </div>
     </div>
   </div>
@@ -59,15 +63,19 @@ export default defineComponent({
     },
     footer: {
       type: String,
-      required: true,
+      default: '',
+    },
+    errorStatus: {
+      type: Boolean,
+      default: false,
     },
     subFooter: {
-      type: String,
-      required: true,
+      type: [String, Boolean],
+      default: '',
     },
     subFooterLink: {
       type: String,
-      required: true,
+      default: '',
     },
   },
 })

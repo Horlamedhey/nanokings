@@ -1,6 +1,7 @@
 import { de } from '@braid/vue-formulate-i18n'
 
 export default {
+  validationNameStrategy: ['validationName', 'label', 'name', 'type'],
   classes: {
     input: 'my-formulate-input-field',
   },

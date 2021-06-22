@@ -12,24 +12,34 @@
     }"
     :href="href"
     :to="to"
+    :disabled="loading"
     :target="target"
     :title="title"
     :type="type"
-    class="focus:outline-none"
+    class="relative focus:outline-none"
     @click.stop="$emit('click')"
   >
-    <component
-      :is="icon"
-      v-if="icon && addOnBefore"
-      class="inline-block w-5 h-5 mr-1"
-    ></component>
-    <!-- @slot Main slot used for text -->
-    <slot></slot>
-    <component
-      :is="icon"
-      v-if="icon && addOnAfter"
-      class="inline-block w-5 h-5 ml-1"
-    ></component>
+    <div
+      v-if="tag === 'button' && loading"
+      class="absolute inset-0 flex items-center justify-center"
+    >
+      <AtomsLoading />
+    </div>
+
+    <template>
+      <component
+        :is="icon"
+        v-if="icon && addOnBefore"
+        class="inline-block w-5 h-5 mr-1"
+      ></component>
+      <!-- @slot Main slot used for text -->
+      <slot></slot>
+      <component
+        :is="icon"
+        v-if="icon && addOnAfter"
+        class="inline-block w-5 h-5 ml-1"
+      ></component>
+    </template>
   </component>
 </template>
 
@@ -60,6 +70,7 @@ export default defineComponent({
     outlined: Boolean,
     text: Boolean,
     rounded: Boolean,
+    loading: Boolean,
     /** Disabled mode */
     disabled: Boolean,
     cursorDisabled: Boolean,

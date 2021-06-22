@@ -6,22 +6,28 @@
     subFooter="Login"
     subFooterLink="/login"
   >
-    <FormulateForm v-model="form" @submit="$router.push('/confirm-email')">
+    <FormulateForm
+      v-model="form"
+      @submit="createAccount"
+      :form-errors="formErrors"
+    >
       <div class="flex-wrap justify-between sm:flex">
         <div class="w-full sm:w-[48%]">
           <FormulateInput
             type="text"
-            label="First name"
+            label="First Name"
             placeholder="John"
             name="firstName"
+            validation="bail|required|alpha"
           />
         </div>
         <div class="w-full sm:w-[48%]">
           <FormulateInput
             type="text"
-            label="Last name"
+            label="Last Name"
             placeholder="Doe"
             name="lastName"
+            validation="bail|required|alpha"
           />
         </div>
         <div class="w-full sm:w-[48%]">
@@ -31,6 +37,7 @@
             placeholder="Select country"
             name="country"
             :options="countries"
+            validation="bail|required"
           />
         </div>
         <div class="w-full sm:w-[48%]">
@@ -48,6 +55,7 @@
             label="Email"
             placeholder="Johndoe@gmail.com"
             name="email"
+            validation="bail|required|email"
           />
         </div>
         <div class="w-full">
@@ -56,13 +64,25 @@
             label="Password"
             placeholder="Password"
             name="password"
+            validation="bail|required|min:6,length"
           />
+          <div class="w-full">
+            <FormulateInput
+              type="password"
+              label="Confirm Password"
+              placeholder="Confirm Password"
+              name="password_confirm"
+              validation="bail|required|min:6,length|confirm"
+            />
+          </div>
         </div>
         <FormulateInput
           type="checkbox"
           label="By creating an account you are agreeing to our"
           name="terms"
           label-class="formulate-input-element-decorator"
+          validation="accepted"
+          validationName="terms and policy to continue"
         >
           <template v-slot:label>
             <label for="terms">
@@ -82,26 +102,78 @@
           </template>
         </FormulateInput>
       </div>
-
       <div class="max-w-sm mx-auto mt-10">
-        <FormulateInput type="submit" name="Create account" />
+        <FormulateInput type="submit" name="Create account">
+          <AtomsLoading v-if="loading" />
+        </FormulateInput>
       </div>
     </FormulateForm>
   </OrganismsAccount>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  useContext,
+  useRouter,
+} from '@nuxtjs/composition-api'
 import countries from '@/static/data/countries.json'
 
+interface Form {
+  firstName?: string
+  lastName?: string
+  country?: string
+  email?: string
+  password?: string
+  password_confirm?: string
+  terms?: boolean
+}
 export default defineComponent({
   name: 'CreateAccount',
-
   setup() {
-    const form = reactive({})
+    const router = useRouter()
+    const context = useContext()
+    const form = ref({} as Form)
+    const formErrors = ref([] as Array<string>)
+    const loading = ref(false)
+    const formFilled = ref([] as Array<string>)
+    const realmApp = context.app.$realmApp
+
+    const createAccount = async () => {
+      formErrors.value = []
+      const { terms, password_confirm, ...formData } = form.value
+      if (formData.email && formFilled.value.includes(formData.email)) {
+        router.push(`/confirm-email?email=${formData.email}`)
+      } else {
+        try {
+          loading.value = true
+          await realmApp.emailPasswordAuth.registerUser(
+            form.value.email?.toLowerCase(),
+            form.value.password
+          )
+          await realmApp.logIn(context.app.$apiKeyCredentials)
+          const mongodb = realmApp.currentUser.mongoClient('mongodb-atlas')
+          await mongodb.db('nanokings').collection('users').insertOne(formData)
+          if (formData.email) {
+            formFilled.value.push(formData.email)
+          }
+          router.push(`/confirm-email?email=${formData.email}`)
+          // console.log(uid, accessToken)
+        } catch (err) {
+          formErrors.value.push(err.error)
+          console.log(err)
+        } finally {
+          loading.value = false
+        }
+      }
+    }
     return {
       form,
+      formErrors,
+      loading,
       countries: countries.map((v) => `${v.flag} ${v.countryName}`),
+      createAccount,
     }
   },
 })
