@@ -48,9 +48,10 @@ import {
   useFetch,
   computed,
 } from '@nuxtjs/composition-api'
+// import { realmApp } from '~/helpers/realmAuth'
 
 interface Form {
-  email?: string
+  email: string
 }
 export default defineComponent({
   name: 'VerifyEmail',
@@ -62,7 +63,6 @@ export default defineComponent({
     const verifySuccess = ref(true)
     const loading = ref(false)
     const email = route.value.query.email
-    const realmApp = context.app.$realmApp
     const form = ref({} as Form)
     const subHeadingText = ref('')
     const heading = computed(() =>
@@ -79,9 +79,11 @@ export default defineComponent({
     )
     const resendEmail = async () => {
       loading.value = true
+
       try {
-        await realmApp.emailPasswordAuth.resendConfirmationEmail(
-          form.value.email
+        const { email } = form.value
+        await context.app.$realmApp.emailPasswordAuth.resendConfirmationEmail(
+          email
         )
         router.push(`/confirm-email?email=${form.value.email}`)
       } catch (err) {
@@ -100,9 +102,12 @@ export default defineComponent({
       }
     }
     const { fetchState } = useFetch(async () => {
-      if (route.value.query.token && route.value.query.tokenId) {
+      if (
+        typeof route.value.query.token === 'string' &&
+        typeof route.value.query.tokenId === 'string'
+      ) {
         try {
-          await realmApp.emailPasswordAuth.confirmUser(
+          await context.app.$realmApp.emailPasswordAuth.confirmUser(
             route.value.query.token,
             route.value.query.tokenId
           )

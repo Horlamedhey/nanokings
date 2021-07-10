@@ -24,7 +24,16 @@
         />
       </div>
       <div
-        class="flex flex-wrap items-center max-w-md gap-3 mx-auto mt-10  md:flex-nowrap sm:gap-8"
+        class="
+          flex flex-wrap
+          items-center
+          max-w-md
+          gap-3
+          mx-auto
+          mt-10
+          md:flex-nowrap
+          sm:gap-8
+        "
       >
         <AtomsButton
           class="action-button"
@@ -42,6 +51,7 @@
 </template>
 
 <script lang="ts">
+// import { realmApp } from '@/helpers/realmAuth'
 import {
   defineComponent,
   ref,
@@ -51,7 +61,7 @@ import {
 } from '@nuxtjs/composition-api'
 
 interface Form {
-  email?: string
+  email: string
 }
 export default defineComponent({
   name: 'ForgotPassword',
@@ -60,7 +70,6 @@ export default defineComponent({
     const prevRoute = ref('')
     const context = useContext()
     const loading = ref(false)
-    const realmApp = context.app.$realmApp
     const form = ref({} as Form)
     const formErrors = ref([] as Array<string>)
     const subHeadingText = ref('')
@@ -72,9 +81,10 @@ export default defineComponent({
     const forgotPassword = async () => {
       formErrors.value = []
       loading.value = true
+      const { email } = form.value
       try {
-        await realmApp.emailPasswordAuth.sendResetPasswordEmail(
-          form.value.email
+        await context.app.$realmApp.emailPasswordAuth.sendResetPasswordEmail(
+          email
         )
         subHeadingText.value = 'Check your mail for the password reset link.'
       } catch (err) {

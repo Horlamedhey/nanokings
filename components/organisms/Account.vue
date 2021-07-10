@@ -1,7 +1,7 @@
 <template>
   <div class="bg-pattern1">
     <div class="flex min-h-screen bg-white bg-opacity-50">
-      <div class="relative hidden w-1/2 bg-cover lg:block bg-login">
+      <div class="relative hidden w-1/2 bg-center bg-cover lg:block bg-login">
         <div
           class="absolute top-0 bottom-0 left-0 right-0 bg-[rgba(0,0,0,0.37)]"
         >
@@ -10,7 +10,7 @@
       </div>
 
       <div
-        class="flex flex-col justify-around max-w-lg px-10 py-5 mx-auto my-6 shadow-none  2xl:max-w-2xl lg:w-1/2"
+        class="flex flex-col justify-around max-w-xl px-10 py-5 mx-auto my-6 shadow-none  lg:px-8 2xl:max-w-2xl lg:w-1/2"
       >
         <slot name="extra-header"></slot>
         <div>

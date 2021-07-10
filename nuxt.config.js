@@ -1,3 +1,4 @@
+require('dotenv').config()
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -19,7 +20,9 @@ export default {
       },
     ],
   },
-
+  // privateRuntimeConfig: {
+  //   appID: process.env.APP_ID,
+  // },
   generate: {
     // choose to suit your project
     interval: 7000,
@@ -29,7 +32,11 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['plugins/realmAuth.ts'],
+  plugins: [
+    'plugins/formulate-phone-input.ts',
+    'plugins/phone-input.js',
+    'plugins/realmAuth.ts',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -53,6 +60,7 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/apollo',
+    '@nuxtjs/cloudinary',
   ],
   image: {
     // The screen sizes predefined by `@nuxt/image`:
@@ -128,6 +136,10 @@ export default {
        */
       secure: false,
     },
+  },
+  cloudinary: {
+    cloudName: 'befittinglife',
+    apiKey: '169241722441159',
   },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},

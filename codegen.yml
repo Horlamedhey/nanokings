@@ -1,0 +1,14 @@
+overwrite: true
+schema:
+  - ? https://us-east-1.aws.stitch.mongodb.com/api/client/v2.0/app/nanokings-vtaum/graphql
+    : headers:
+        apiKey: GYMqpCeKrZrrLqkAp0mPZ7JMJYnev9W2wrRyCoDfONMEhMw0GJCysSGSKffjtd6B
+documents: 'graphs/**/*.graphql'
+generates:
+  types/graphql.d.ts:
+    plugins:
+      - typescript-graphql-files-modules
+  types/types.ts:
+    plugins:
+      - typescript
+      - typescript-operations

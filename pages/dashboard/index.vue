@@ -25,7 +25,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  reactive,
+  useContext,
+} from '@nuxtjs/composition-api'
+// import { realmApp } from '~/helpers/realmAuth'
 
 export default defineComponent({
   name: 'DashboardHome',
@@ -36,7 +42,6 @@ export default defineComponent({
   //     required: true,
   //   },
   // },
-
   setup() {
     const statistics = ref([
       { title: 'Releases', value: '17', image: 'releases' },

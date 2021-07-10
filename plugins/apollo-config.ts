@@ -11,10 +11,8 @@ export default () => {
 
   // middleware
   const middlewareLink = new ApolloLink((operation, forward) => {
-    Cookies.get('apollo-token')
     const headers = {
-      Authorization: `Bearer GYMqpCeKrZrrLqkAp0mPZ7JMJYnev9W2wrRyCoDfONMEhMw0GJCysSGSKffjtd6B`,
-      // Authorization: `'Bearer ${Cookies.get('apollo-token')}`,
+      authorization: `Bearer ${Cookies.get('apollo-token')}`,
     }
     operation.setContext({
       headers,

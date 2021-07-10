@@ -5,7 +5,6 @@
         <h1 class="lora-bold-20 sm:lora-bold-28 text-secondary">Sales Report</h1>
           </div>
           <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
-        <div class="text-right">
           <AtomsButton
             icon="AtomsIconsCircledArrowDown"
             addOnAfter
@@ -13,7 +12,6 @@
           >
             Download sheets
           </AtomsButton>
-        </div>
             <!-- Statistics -->
             <OrganismsStatisticsArea :amountCard="amountCardDetails" :statistics="statistics"/>
             <!-- Table -->

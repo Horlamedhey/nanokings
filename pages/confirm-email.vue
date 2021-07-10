@@ -21,7 +21,16 @@
     </template>
     <FormulateForm class="mt-48" @submit="resendEmail">
       <div
-        class="flex flex-wrap items-center max-w-md gap-3 mx-auto mt-10  md:flex-nowrap sm:gap-8"
+        class="
+          flex flex-wrap
+          items-center
+          max-w-md
+          gap-3
+          mx-auto
+          mt-10
+          md:flex-nowrap
+          sm:gap-8
+        "
       >
         <AtomsButton
           class="action-button"
@@ -39,6 +48,7 @@
 </template>
 
 <script lang="ts">
+// import { realmApp } from '@/helpers/realmAuth'
 import {
   defineComponent,
   ref,
@@ -50,20 +60,23 @@ export default defineComponent({
   name: 'ConfirmEmail',
 
   setup() {
-    const route = useRoute()
     const context = useContext()
+    const route = useRoute()
     const loading = ref(false)
     const prevRoute = ref('')
     const email = route.value.query.email
-    const realmApp = context.app.$realmApp
     const resendEmail = async () => {
-      loading.value = true
-      try {
-        await realmApp.emailPasswordAuth.resendConfirmationEmail(email)
-      } catch (err) {
-        console.log(err)
-      } finally {
-        loading.value = false
+      if (email && typeof email === 'string') {
+        loading.value = true
+        try {
+          await context.app.$realmApp.emailPasswordAuth.resendConfirmationEmail(
+            email
+          )
+        } catch (err) {
+          console.log(err)
+        } finally {
+          loading.value = false
+        }
       }
     }
 

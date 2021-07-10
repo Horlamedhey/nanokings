@@ -20,13 +20,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  useContext,
+  useFetch,
+} from '@nuxtjs/composition-api'
+// import apollo from '~/helpers/apollo'
 export default defineComponent({
   name: 'Dashboard',
   setup() {
     const sideMenuOpen = ref(false)
     return { sideMenuOpen }
   },
+  // fetchOnServer: false,
 })
 </script>
 

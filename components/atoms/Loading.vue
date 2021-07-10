@@ -1,7 +1,7 @@
 <template>
   <div class="loadingio-spinner-eclipse-434wf2pon3a">
     <div class="ldio-qsi76kw0mz9">
-      <div></div>
+      <div :style="{ boxShadow: `0 5px 0 0 ${color}` }"></div>
     </div>
   </div>
 </template>
@@ -9,6 +9,7 @@
 <script>
 export default {
   name: 'Loading',
+  props: { color: { type: String, default: '#ffffff' } },
 }
 </script>
 
@@ -48,7 +49,6 @@ export default {
   top: 10px;
   left: 10px;
   border-radius: 50%;
-  box-shadow: 0 5px 0 0 #ffffff;
   transform-origin: 40px 41px;
 }
 </style>

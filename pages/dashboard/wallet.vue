@@ -11,7 +11,6 @@
         <h1 class="lora-bold-20 sm:lora-bold-28 text-secondary">Wallet</h1>
           </div>
           <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
-        <div class="text-right">
           <AtomsButton
             icon="AtomsIconsNaira"
             addOnAfter
@@ -20,7 +19,6 @@
           >
             Withdraw funds
           </AtomsButton>
-        </div>
             <!-- Statistics -->
             <OrganismsAmountCardsArea :amountCards="amountCards"/>
             <!-- Table -->
@@ -41,7 +39,7 @@ export default defineComponent({
   setup() {
     const amountCards = ref([
       {
-        title: 'Total Sales',
+        title: 'Available Balance',
         amount: '129,000',
         color: 'bg-primary',
       },
@@ -51,7 +49,7 @@ export default defineComponent({
         color: 'bg-success-light',
       },
       {
-        title: 'Total Sales',
+        title: 'Total Withdrawn',
         amount: '409,000',
         color: 'bg-accent-light',
       },

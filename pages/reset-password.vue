@@ -23,7 +23,16 @@
         />
       </div>
       <div
-        class="flex flex-wrap items-center max-w-md gap-3 mx-auto mt-10  md:flex-nowrap sm:gap-8"
+        class="
+          flex flex-wrap
+          items-center
+          max-w-md
+          gap-3
+          mx-auto
+          mt-10
+          md:flex-nowrap
+          sm:gap-8
+        "
       >
         <AtomsButton
           class="action-button"
@@ -47,19 +56,19 @@ import {
   useRouter,
   useContext,
 } from '@nuxtjs/composition-api'
+// import { realmApp } from '~/helpers/realmAuth'
 
 interface Form {
-  password?: string
+  password: string
   password_confirm?: string
 }
 export default defineComponent({
   name: 'ResetPassword',
 
   setup() {
-    const router = useRouter()
     const context = useContext()
+    const router = useRouter()
     const loading = ref(false)
-    const realmApp = context.app.$realmApp
     const form = ref({} as Form)
     const formErrors = ref([] as Array<string>)
     const resetPassword = async () => {
@@ -71,10 +80,12 @@ export default defineComponent({
         if (!token || !tokenId) {
           throw new Error('Invalid link')
         }
-        await realmApp.emailPasswordAuth.resetPassword(
+
+        const { password } = form.value
+        await context.app.$realmApp.emailPasswordAuth.resetPassword(
           token,
           tokenId,
-          form.value.password
+          password
         )
         setTimeout(() => {
           router.replace('/login')

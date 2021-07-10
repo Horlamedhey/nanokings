@@ -2,7 +2,7 @@
   <header
     class="fixed top-0 left-0 right-0 z-10 flex items-center flex-shrink-0 h-16"
   >
-    <AtomsButton class="ml-4 md:hidden" to="/">
+    <AtomsButton class="ml-4 md:hidden" @click="logout">
       <AtomsIconsLogo />
     </AtomsButton>
     <AtomsButton
@@ -64,14 +64,7 @@
                 alt=""
               />
               <span
-                class="
-                  hidden
-                  ml-1
-                  mr-3
-                  sm:inline
-                  lato-semibold-16
-                  text-secondary-light
-                "
+                class="hidden ml-1 mr-3  sm:inline lato-semibold-16 text-secondary-light"
               >
                 VaryAble
               </span>
@@ -83,7 +76,7 @@
           </transition>
         </div>
         <AtomsButton
-          to="/"
+          @click="logout"
           class="
             p-1
             transition
@@ -105,15 +98,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  useRouter,
+  useContext,
+} from '@nuxtjs/composition-api'
 import { useWindowScroll } from '@vueuse/core'
+// import { realmApp } from '~/helpers/realmAuth'
 export default defineComponent({
   name: 'DashNavBar',
   setup() {
+    const context = useContext()
+    const router = useRouter()
     const notificationsMenu = ref(false)
     const userMenu = ref(false)
     const { y: scrollY } = useWindowScroll()
-    return { notificationsMenu, userMenu, scrollY }
+    const logout = () => {
+      context.app.$apolloHelpers.onLogout()
+      context.app.$realmApp
+        .currentUser!.logOut()
+        .then(() => router.replace('/'))
+    }
+    return { notificationsMenu, userMenu, scrollY, logout }
   },
   watch: {
     notificationsMenu(newVal) {

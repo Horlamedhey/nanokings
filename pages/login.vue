@@ -6,6 +6,7 @@
     subFooter="Sign up"
     subFooterLink="/create-account"
   >
+    <!-- TODO: Improve form submission using formulate default -->
     <FormulateForm v-model="form" @submit="login" :form-errors="formErrors">
       <div class="flex-wrap justify-between sm:flex">
         <div class="w-full">
@@ -48,6 +49,7 @@
 </template>
 
 <script lang="ts">
+// import { credentials, mongodb, realmApp } from '@/helpers/realmAuth'
 import {
   defineComponent,
   ref,
@@ -56,7 +58,7 @@ import {
 } from '@nuxtjs/composition-api'
 
 interface Form {
-  email?: string
+  email: string
   password?: string
 }
 export default defineComponent({
@@ -72,16 +74,27 @@ export default defineComponent({
         formErrors.value = []
         loading.value = true
         const { email, password } = form.value
-        await context.app.$realmApp.logIn(
+        const { id, customData } = await context.app.$realmApp.logIn(
           context.app.$credentials.emailPassword(email, password)
         )
+        // if (Object.keys(customData).length > 0) {
         router.push('/dashboard')
+        // } else {
+        //   await context.app.$realmApp
+        //     .currentUser!.mongoClient('mongodb-atlas')
+        //     .db('nanokings')
+        //     .collection('users')
+        //     .updateOne({ email }, { $set: { uid: id } })
+        //   await context.app.$realmApp.currentUser?.refreshCustomData()
+        //   router.push('/dashboard')
+        // }
       } catch (err) {
         formErrors.value.push(err.error)
         console.log(err.error)
         if (err.error.includes('confirm')) {
+          const { email } = form.value
           await context.app.$realmApp.emailPasswordAuth.resendConfirmationEmail(
-            form.value.email
+            email
           )
           router.push(`/confirm-email?email=${form.value.email}`)
         }

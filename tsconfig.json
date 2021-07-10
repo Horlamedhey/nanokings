@@ -17,7 +17,13 @@
       "@/*": ["./*"]
     },
     "typeRoots": ["./@types"],
-    "types": ["@nuxt/types", "@nuxtjs/axios", "@types/node", "@nuxt/image"]
+    "types": [
+      "@nuxt/types",
+      "@nuxtjs/axios",
+      "@types/node",
+      "@nuxt/image",
+      "vue-apollo/types"
+    ]
   },
   "exclude": ["node_modules", ".nuxt", "dist"]
 }

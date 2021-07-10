@@ -6,11 +6,7 @@
     subFooter="Login"
     subFooterLink="/login"
   >
-    <FormulateForm
-      v-model="form"
-      @submit="createAccount"
-      :form-errors="formErrors"
-    >
+    <FormulateForm v-model="form" @submit="createAccount">
       <div class="flex-wrap justify-between sm:flex">
         <div class="w-full sm:w-[48%]">
           <FormulateInput
@@ -38,15 +34,15 @@
             name="country"
             :options="countries"
             validation="bail|required"
+            @change="setPhoneCountry"
           />
         </div>
         <div class="w-full sm:w-[48%]">
           <FormulateInput
-            type="select"
-            label="Country"
-            placeholder="Select country"
-            name="country"
-            :options="countries"
+            type="phone"
+            name="phone"
+            label="Phone Number"
+            validation="bail|required"
           />
         </div>
         <div class="w-full">
@@ -112,6 +108,7 @@
 </template>
 
 <script lang="ts">
+// import { apiKeyCredentials, mongodb, realmApp } from '@/helpers/realmAuth'
 import {
   defineComponent,
   ref,
@@ -129,18 +126,31 @@ interface Form {
   password_confirm?: string
   terms?: boolean
 }
+type HTMLElementEvent<T extends HTMLElement> = Event & {
+  target: T
+}
 export default defineComponent({
   name: 'CreateAccount',
   setup() {
     const router = useRouter()
     const context = useContext()
+    const realmApp = context.app.$realmApp
     const form = ref({} as Form)
     const formErrors = ref([] as Array<string>)
     const loading = ref(false)
     const formFilled = ref([] as Array<string>)
-    const realmApp = context.app.$realmApp
 
-    const createAccount = async () => {
+    const setPhoneCountry = (evt: HTMLElementEvent<HTMLInputElement>) => {
+      const selectPhoneCountry = <HTMLInputElement>(
+        document.getElementById('phone-country')
+      )
+      selectPhoneCountry.value = countries.find(
+        (v, i) => v.flag === evt.target.value.split(' ')[0]
+      )!.dialCode
+      selectPhoneCountry.dispatchEvent(new Event('change'))
+    }
+
+    const createAccount = async (): Promise<void> => {
       formErrors.value = []
       const { terms, password_confirm, ...formData } = form.value
       if (formData.email && formFilled.value.includes(formData.email)) {
@@ -149,12 +159,29 @@ export default defineComponent({
         try {
           loading.value = true
           await realmApp.emailPasswordAuth.registerUser(
-            form.value.email?.toLowerCase(),
-            form.value.password
+            form.value.email?.toLowerCase()!,
+            form.value.password!
           )
-          await realmApp.logIn(context.app.$apiKeyCredentials)
-          const mongodb = realmApp.currentUser.mongoClient('mongodb-atlas')
-          await mongodb.db('nanokings').collection('users').insertOne(formData)
+          await realmApp.logIn(context.app.$anonymousCredentials)
+          const { password, ...rest } = formData
+          await realmApp
+            .currentUser!.mongoClient('mongodb-atlas')
+            .db('nanokings')
+            .collection('users')
+            .insertOne({
+              ...rest,
+              createdAt: new Date(),
+              downloads: 0,
+              notifications: [],
+              pendingNotifications: false,
+              sales: 0,
+              songs: [],
+              streams: 0,
+              transactions: [],
+              updatedAt: new Date(),
+              views: 0,
+            })
+          await realmApp.currentUser.logOut()
           if (formData.email) {
             formFilled.value.push(formData.email)
           }
@@ -173,6 +200,7 @@ export default defineComponent({
       formErrors,
       loading,
       countries: countries.map((v) => `${v.flag} ${v.countryName}`),
+      setPhoneCountry,
       createAccount,
     }
   },

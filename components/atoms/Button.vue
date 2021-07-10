@@ -5,18 +5,16 @@
     :class="{
       contentClass,
       'rounded-full': rounded,
-      'opacity-50': disabled,
-      'cursor-not-allowed': disabled,
       'cursor-default': cursorDisabled,
       'cursor-pointer': !cursorDisabled,
     }"
     :href="href"
     :to="to"
-    :disabled="loading"
+    :disabled="loading || disabled"
     :target="target"
     :title="title"
     :type="type"
-    class="relative focus:outline-none"
+    class="relative focus:outline-none my-button"
     @click.stop="$emit('click')"
   >
     <div

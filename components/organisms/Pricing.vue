@@ -5,7 +5,7 @@
         <span class="text-primary">Pricing</span>
       </h2>
       <p
-        class="px-5 mt-4 text-center sm:px-20 sm:lato-normal-20 lato-normal-14 text-secondary-light"
+        class="px-5 mt-4 text-center  sm:px-20 sm:lato-normal-20 lato-normal-14 text-secondary-light"
       >
         Distribute your music & monitor your activities. Get your music on all
         major platforms. View analytics on your dashboard.
@@ -13,12 +13,12 @@
       <!-- component -->
       <div class="container px-6 py-8 mx-auto">
         <div
-          class="flex flex-col items-center justify-center space-y-8 lg:-mx-4 lg:flex-row lg:items-stretch lg:space-y-0"
+          class="flex flex-col items-center justify-center space-y-8  lg:-mx-4 lg:flex-row lg:items-stretch lg:space-y-0"
         >
           <div
             v-for="(pricing, i) in pricings"
             :key="`pricing-${i}`"
-            class="flex flex-col justify-between w-full max-w-sm p-8 border-4 rounded-lg border-primary lg:mx-4"
+            class="flex flex-col justify-between w-full max-w-sm p-8 border-4 rounded-lg  border-primary lg:mx-4"
             :class="i === 1 ? 'text-white bg-primary' : 'text-primary'"
           >
             <div>
@@ -53,7 +53,7 @@
             </div>
 
             <AtomsButton
-              class="px-4 py-2 border-2 rounded-lg lato-bold-18 text-primary border-primary ripple-bg-primary-DEFAULT hover:text-white"
+              class="px-4 py-2 border-2 rounded-lg  lato-bold-18 text-primary border-primary ripple-bg-primary-DEFAULT hover:text-white"
               :class="
                 i === 1
                   ? 'ripple-bg-accent-DEFAULT bg-accent text-white'
@@ -99,7 +99,7 @@ export default {
           ],
         },
         {
-          tier: 'Standard',
+          tier: 'Premium',
           price: 25,
           features: [
             'Unlimited singles',

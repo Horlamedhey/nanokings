@@ -1,0 +1,52 @@
+mutation InsertOneSong(
+  $artwork: String!
+  $musicFile: String!
+  $lyricsFile: String
+  $songTitle: String!
+  $artistName: String!
+  $musicLink: String!
+  $musicType: String!
+  $primaryGenre: String!
+  $secondaryGenre: String!
+  $releasedOn: DateTime!
+  $labelName: String
+  $upcean: String
+  $recordLocation: String
+  $writer: String!
+  $creatives: String!
+  $worldwide: Boolean
+  $previouslyReleased: Boolean
+  $user: ObjectId!
+  $createdAt: DateTime!
+  $updatedAt: DateTime!
+) {
+  insertOneSong(
+    data: {
+      artWork: $artwork
+      music: $musicFile
+      lyrics: $lyricsFile
+      title: $songTitle
+      artiste: $artistName
+      musicLink: $musicLink
+      type: $musicType
+      genre: $primaryGenre
+      secondaryGenre: $secondaryGenre
+      releasedOn: $releasedOn
+      label: $labelName
+      upcEan: $upcean
+      location: $recordLocation
+      writer: $writer
+      creatives: $creatives
+      worldwide: $worldwide
+      previouslyReleased: $previouslyReleased
+      user: { link: $user }
+      createdAt: $createdAt
+      updatedAt: $updatedAt
+    }
+  ) {
+    title
+    user {
+      firstName
+    }
+  }
+}

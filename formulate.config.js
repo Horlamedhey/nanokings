@@ -10,4 +10,14 @@ export default {
   rules: {
     // foobar: ({ value }) => ['foo', 'bar'].includes(value),
   },
+  library: {
+    phone: {
+      classification: 'text',
+      component: 'FormulatePhoneInput',
+    },
+    // phone: {
+    //   classification: 'text',
+    //   component: 'Formulatephone',
+    // },
+  },
 }
