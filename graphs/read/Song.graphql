@@ -1,0 +1,11 @@
+query Songs($title: String!) {
+  song(query: { title: $title }) {
+    artWork
+    artiste
+    creatives
+    music
+    releasedOn
+    title
+    type
+  }
+}

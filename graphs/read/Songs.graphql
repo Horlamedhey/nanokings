@@ -1,0 +1,6 @@
+query Songs($user: ObjectId!) {
+  songs(query: { user: { _id: $user } }) {
+    title
+    artWork
+  }
+}

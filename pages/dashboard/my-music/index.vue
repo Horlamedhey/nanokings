@@ -29,18 +29,23 @@
             />
           </div>
         </div>
-        <div
-          class="flex flex-wrap justify-center gap-10  sm:justify-between my-14 xl:mb-0"
-        >
-          <MoleculesMusicCard
-            v-for="(song, i) in songs"
-            :key="`song-${i}`"
-            :song="song"
-            viewDetails
-            showInfo
-            class="w-[191px] h-[240px] rounded-[7px]"
-          />
-        </div>
+        <client-only>
+          <div v-if="$apollo.loading">Loading...</div>
+          <div
+            class="flex flex-wrap justify-center gap-10  sm:justify-start my-14 xl:mb-0"
+          >
+            <MoleculesMusicCard
+              v-for="(song, i) in songs"
+              :key="`song-${i}`"
+              :song="song"
+              viewDetails
+              showInfo
+              :width="191"
+              :height="240"
+              class="w-[191px] h-[240px] rounded-[7px]"
+            />
+          </div>
+        </client-only>
         <div class="xl:hidden">
           <MoleculesPagination :totalCount="50" :pageNumber="1" />
         </div>
@@ -49,28 +54,71 @@
   </main>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
-import songs from '@/static/data/songs.json'
+<script>
+// <script lang="ts">
+import {
+  defineComponent,
+  ref,
+  useContext,
+  useFetch,
+} from '@nuxtjs/composition-api'
+import { useQuery, useResult } from '@vue/apollo-composable/dist'
+import SongsQuery from '@/graphs/read/Songs'
+import apollo from '~/helpers/apollo'
 
 export default defineComponent({
   name: 'MyMusic',
   layout: 'dashboard',
-  // props: {
-  //   user: {
-  //     type: Object as () => User,
-  //     required: true,
-  //   },
-  // },
-
-  setup() {
-    const filterItems = ref([
-      { title: 'All' },
-      { title: 'Songs' },
-      { title: 'Albums' },
-    ])
-    const filterMenu = ref(false)
-    return { filterItems, filterMenu, songs }
+  apollo: {
+    songs: {
+      query: SongsQuery,
+      variables() {
+        return { user: this.$realmApp.currentUser.customData._id }
+      },
+      prefetch: false,
+    },
   },
+  data() {
+    return {
+      songs: [],
+      filterItems: [{ title: 'All' }, { title: 'Songs' }, { title: 'Albums' }],
+      filterMenu: false,
+    }
+  },
+  async fetch() {
+    await apollo(this)
+  },
+  // setup() {
+  //   const context = useContext()
+  //   const filterItems = ref([
+  //     { title: 'All' },
+  //     { title: 'Songs' },
+  //     { title: 'Albums' },
+  //   ])
+  //   const filterMenu = ref(false)
+  //   useFetch(async () => {
+  //     await apollo(context)
+  //     // const { result, loading, error } = useQuery(
+  //     //   SongsQuery,
+  //     //   {},
+  //     //   {
+  //     //     fetchPolicy: 'no-cache',
+  //     //     prefetch: false,
+  //     //   }
+  //     // )
+  //     // console.log(result)
+  //   })
+  //   // const songs = ref([])
+  //   // const songs = useResult(result)
+
+  //   return {
+  //     filterItems,
+  //     filterMenu,
+  //     // songs,
+  //     // error,
+  //     // loading,
+  //   }
+  // },
+  fetchOnServer: false,
 })
 </script>

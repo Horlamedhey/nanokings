@@ -33,9 +33,11 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: 'plugins/provide-apollo-client', mode: 'client' },
     'plugins/formulate-phone-input.ts',
     'plugins/phone-input.js',
     'plugins/realmAuth.ts',
+    'plugins/vue-formulate.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -75,7 +77,6 @@ export default {
     },
   },
   // Apollo configuration
-
   apollo: {
     // Sets up the apollo client endpoints
     clientConfigs: {
@@ -152,5 +153,5 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: { transpile: ['@vue/apollo-composable'] },
 }

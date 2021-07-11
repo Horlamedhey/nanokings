@@ -21,7 +21,7 @@
           v-model="form"
           name="create-music"
           #default="{ isLoading, hasErrors }"
-          @submit="createMusic"
+          @submit="createMusic($formulate)"
         >
           <div class="bg-white rounded-2xl mt-[275px] px-6 pb-10">
             <div class="relative flex justify-center pt-[126px]">
@@ -418,13 +418,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  reactive,
-  toRef,
-  ref,
-  useContext,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 import musicTypes from '@/static/data/musicTypes.json'
 import genres from '@/static/data/genres.json'
 import {
@@ -557,7 +551,7 @@ export default defineComponent({
         return { url: public_id.split('/')[2] }
       }
     }
-    const createMusic = async () => {
+    const createMusic = async (formulate: any) => {
       try {
         const {
           dateTime,
@@ -597,7 +591,7 @@ export default defineComponent({
         })
 
         modal.value = true
-        context.app.$formulate.reset('create-music')
+        formulate.reset('create-music')
         // TODO Refresh user custom data
       } catch (err) {
         console.log(err, err.message)

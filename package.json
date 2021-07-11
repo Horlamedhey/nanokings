@@ -20,6 +20,7 @@
     "@nuxtjs/composition-api": "^0.24.0",
     "@nuxtjs/pwa": "^3.3.5",
     "@tailwindcss/ui": "^0.7.2",
+    "@vue/apollo-composable": "^4.0.0-alpha.12",
     "@vueuse/core": "^4.11.2",
     "core-js": "^3.9.1",
     "graphql-tag": "^2.12.4",

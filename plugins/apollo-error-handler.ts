@@ -13,16 +13,16 @@ export default (
   },
   context: Context
 ) => {
-  console.log(context.app.$realmApp.currentUser.refreshToken)
-  console.log('Global error handler')
-  console.log(
-    'graphQLErrors',
-    graphQLErrors,
-    'networkError',
-    networkError,
-    'operation',
-    operation,
-    'forward',
-    forward
-  )
+  // console.log(context.app.$realmApp.currentUser.refreshToken)
+  // console.log('Global error handler')
+  // console.log(
+  //   'graphQLErrors',
+  //   graphQLErrors,
+  //   'networkError',
+  //   networkError,
+  //   'operation',
+  //   operation,
+  //   'forward',
+  //   forward
+  // )
 }

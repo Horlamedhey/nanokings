@@ -4,5 +4,5 @@ export default (
   countModifier: number,
   nuxtContext: Context
 ) => {
-  console.log('Global loading', isLoading, countModifier)
+  // console.log('Global loading', isLoading, countModifier)
 }
