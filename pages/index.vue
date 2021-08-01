@@ -10,30 +10,14 @@
     />
     <!-- Who are we -->
     <OrganismsWhoAreWe
-      class="
-        mt-24
-        md:mt-16
-        lg:mt-20
-        xl:mt-28
-        xxl:mt-72
-        2xl:mt-[33rem]
-        lg:grid lg:grid-cols-2
-      "
+      class="mt-24  md:mt-16 lg:mt-20 xl:mt-28 xxl:mt-52 2xl:mt-60 lg:grid lg:grid-cols-2"
     />
     <!-- Our Services -->
     <OrganismsServices />
 
     <!-- Why choose us and  How it works -->
     <div
-      class="
-        object-fill
-        pb-24
-        bg-right-top bg-no-repeat
-        xl:pb-32
-        xxl:pb-44
-        2xl:pb-52
-        bg-pattern2 bg-clip-border
-      "
+      class="object-fill pb-24 bg-right-top bg-no-repeat  xl:pb-32 xxl:pb-44 2xl:pb-52 bg-pattern2 bg-clip-border"
     >
       <!-- Why choose us -->
       <OrganismsReasons class="grid sm:grid-cols-2" />

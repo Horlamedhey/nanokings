@@ -4,8 +4,7 @@
       <nuxt-img
         src="/images/image2.png"
         alt="image-2"
-        class="absolute bottom-0"
-        sizes=" lg:50vw xl:50vw xxl:50vw 2xl:50vw"
+        class="absolute bottom-0 lg:w-50vw"
       />
     </div>
     <div class="px-10 py-20 lg:py-24 bg-pattern1 bg-opacity-30">
