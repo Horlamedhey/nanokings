@@ -55,6 +55,8 @@ import {
   ref,
   useContext,
   useRouter,
+  useRoute,
+  useStore,
 } from '@nuxtjs/composition-api'
 
 interface Form {
@@ -66,6 +68,8 @@ export default defineComponent({
   setup() {
     const context = useContext()
     const router = useRouter()
+    const route = useRoute()
+    const store = useStore()
     const loading = ref(false)
     const form = ref({} as Form)
     const formErrors = ref([] as Array<string>)
@@ -74,11 +78,21 @@ export default defineComponent({
         formErrors.value = []
         loading.value = true
         const { email, password } = form.value
-        const { id, customData } = await context.app.$realmApp.logIn(
+        const user = await context.app.$realmApp.logIn(
           context.app.$credentials.emailPassword(email, password)
         )
+
+        context.app.$cookies.set('loggedIn', true)
+        await user.refreshCustomData()
+
+        store.commit('setUser', user.customData)
+        const redirectRoute: any = route.value.query.redirect
+        if (redirectRoute) {
+          router.push(redirectRoute)
+        } else {
+          router.push('/dashboard')
+        }
         // if (Object.keys(customData).length > 0) {
-        router.push('/dashboard')
         // } else {
         //   await context.app.$realmApp
         //     .currentUser!.mongoClient('mongodb-atlas')

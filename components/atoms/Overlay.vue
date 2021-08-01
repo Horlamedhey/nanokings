@@ -1,7 +1,23 @@
 <template>
   <div
     ref="myOverlay"
-    class="fixed top-0 bottom-0 left-0 right-0 flex justify-end transition-opacity duration-300 bg-black bg-opacity-50 opacity-0 z-[-1] overlay overflow-hidden md:hidden"
+    class="
+      fixed
+      top-0
+      bottom-0
+      left-0
+      right-0
+      flex
+      justify-end
+      transition-opacity
+      duration-300
+      bg-black bg-opacity-50
+      opacity-0
+      z-[-1]
+      overlay
+      overflow-hidden
+      lg:hidden
+    "
   >
     <AtomsButton
       class="w-full h-full overflow-hidden"
@@ -27,7 +43,7 @@ export default defineComponent({
       const timeline = this.$gsap.timeline()
       if (newVal) {
         timeline.to(this.$refs.myOverlay, {
-          zIndex: 1,
+          zIndex: 3,
           duration: 0.2,
         })
         timeline.to(this.$refs.myOverlay, {

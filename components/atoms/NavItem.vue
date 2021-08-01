@@ -34,7 +34,7 @@
         class="w-5 h-5"
       ></component>
     </n-link>
-    <BaseButton v-else :class="contentClass" @click="$emit('click')">
+    <AtomsButton v-else :class="contentClass" @click="$emit('click')">
       <component
         :is="icon"
         v-if="icon && addOnBefore"
@@ -46,7 +46,7 @@
         v-if="icon && addOnAfter"
         class="w-5 h-5"
       ></component>
-    </BaseButton>
+    </AtomsButton>
   </li>
 </template>
 
@@ -86,12 +86,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.active-navbar-link {
-  @apply relative;
+.active-navbar-link,
+.hover-navbar-link:hover {
+  @apply relative after:md:w-[80%] after:w-[60%] after:h-1 after:bg-accent after:bottom-[-4px] after:left-[20%] after:md:left-[10%] after:rounded-full after:absolute;
 }
-.active-navbar-link:first-child::after {
-  content: '';
-  position: absolute;
-  @apply md:w-[80%] w-[60%] h-1 bg-accent bottom-[-4px] left-[20%] md:left-[10%] rounded-full;
+.hover-navbar-link {
+  @apply after:transition after:duration-500;
 }
 </style>

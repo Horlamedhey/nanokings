@@ -29,6 +29,7 @@ import {
 // import apollo from '~/helpers/apollo'
 export default defineComponent({
   name: 'Dashboard',
+  middleware: ['auth'],
   setup() {
     const sideMenuOpen = ref(false)
     return { sideMenuOpen }

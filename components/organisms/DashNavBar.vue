@@ -64,7 +64,14 @@
                 alt=""
               />
               <span
-                class="hidden ml-1 mr-3  sm:inline lato-semibold-16 text-secondary-light"
+                class="
+                  hidden
+                  ml-1
+                  mr-3
+                  sm:inline
+                  lato-semibold-16
+                  text-secondary-light
+                "
               >
                 VaryAble
               </span>
@@ -118,7 +125,7 @@ export default defineComponent({
       context.app.$apolloHelpers.onLogout()
       context.app.$realmApp
         .currentUser!.logOut()
-        .then(() => router.replace('/'))
+        .then(() => router.replace('/login'))
     }
     return { notificationsMenu, userMenu, scrollY, logout }
   },

@@ -1,7 +1,7 @@
 <template>
-  <div class="box-border mx-auto mt-20 sm:container bg-[#FAFBFF]">
+  <div class="box-border mx-auto mt-20 sm:container">
     <!-- Landing -->
-    <OrganismsLanding />
+    <OrganismsLanding class="px-6 xl:px-0" />
 
     <!-- Platforms -->
     <MoleculesPlatforms

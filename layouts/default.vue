@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-[#FAFBFF]">
     <OrganismsNavBar ref="el"></OrganismsNavBar>
     <div :style="{ height: `${navBarHeight}px` }"></div>
     <AtomsOverlay></AtomsOverlay>

@@ -32,6 +32,14 @@
         <client-only>
           <div v-if="$apollo.loading">Loading...</div>
           <div
+            v-else-if="songs.length === 0"
+            class="flex items-center justify-center h-40 text-xl text-center  text-secondary-lighter"
+          >
+            You have not added any song yet.
+            <br />
+            Click on the create button to add your first "Single" for free.
+          </div>
+          <div
             class="flex flex-wrap justify-center gap-10  sm:justify-start my-14 xl:mb-0"
           >
             <MoleculesMusicCard

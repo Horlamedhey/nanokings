@@ -6,7 +6,11 @@
     subFooter="Login"
     subFooterLink="/login"
   >
-    <FormulateForm v-model="form" @submit="createAccount">
+    <FormulateForm
+      v-model="form"
+      :form-errors="formErrors"
+      @submit="createAccount"
+    >
       <div class="flex-wrap justify-between sm:flex">
         <div class="w-full sm:w-[48%]">
           <FormulateInput

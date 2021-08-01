@@ -1,17 +1,48 @@
-export type State = {
-  overlay: boolean
-}
-export const state = (): State => ({
+import { GetterTree, ActionTree, MutationTree } from 'vuex'
+
+export const state = () => ({
   overlay: false,
+  loggedIn: false,
+  authUser: null,
 })
 
-export const mutations = {
-  setOverlay(state: State, val: boolean) {
+export type RootState = ReturnType<typeof state>
+
+// export const getters: GetterTree<RootState, RootState> = {
+//   name: (state) => state.name,
+// }
+
+export const mutations: MutationTree<RootState> = {
+  setOverlay(state, val: boolean) {
     state.overlay = val
     if (val) {
       document.body.style.overflow = 'hidden !important'
     } else {
       document.body.style.overflow = 'auto'
+    }
+  },
+  setUser(state, authInfo) {
+    state.loggedIn = true
+
+    state.authUser = authInfo
+  },
+  unSetUser(state) {
+    state.loggedIn = false
+    state.authUser = null
+  },
+}
+
+export const actions: ActionTree<RootState, RootState> = {
+  async nuxtClientInit({ state, commit }, { app }) {
+    const authUser = app.$realmApp.currentUser
+    if (authUser) {
+      app.$cookies.set('loggedIn', true)
+      await authUser.refreshCustomData()
+
+      commit('setUser', authUser.customData)
+    } else {
+      app.$cookies.remove('loggedIn')
+      commit('unSetUser')
     }
   },
 }

@@ -38,6 +38,7 @@ export default {
     'plugins/phone-input.js',
     'plugins/realmAuth.ts',
     'plugins/vue-formulate.js',
+    'plugins/nuxt-client-init.client.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -63,6 +64,7 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/apollo',
     '@nuxtjs/cloudinary',
+    'cookie-universal-nuxt',
   ],
   image: {
     // The screen sizes predefined by `@nuxt/image`:
