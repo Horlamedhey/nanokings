@@ -30,9 +30,10 @@
         flex
         items-center
         justify-center
-        top-[19rem]
-        right-[5.5rem]
-        z-[3]
+        sm:top-[17rem]
+        top-[25rem]
+        right-[3rem]
+        lg:z-[3]
       "
     >
       <AtomsCircleVector
@@ -56,11 +57,17 @@
         :fill="primaryLightest"
         stroke="1"
         radius="15"
-        class="w-[22rem] h-[22rem]"
+        class="w-32 h-32 sm:w-[22rem] sm:h-[22rem]"
       />
-      <AtomsCircleVector fill="white" class="w-[13.8rem] h-[13.8rem]" />
+      <AtomsCircleVector
+        fill="white"
+        class="sm:w-[13.8rem] sm:h-[13.8rem] w-[3.8rem] h-[3.8rem]"
+      />
 
-      <AtomsCircleVector :fill="accentLightest" />
+      <AtomsCircleVector
+        :fill="accentLightest"
+        class="w-6 h-6 sm:w-auto sm:h-auto"
+      />
     </div>
   </div>
 </template>
