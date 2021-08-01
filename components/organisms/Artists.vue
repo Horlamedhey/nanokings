@@ -4,14 +4,26 @@
       <span class="text-primary">Artists</span>
     </h2>
     <p
-      class="px-5 mt-4 text-center sm:px-20 sm:lato-normal-20 lato-normal-14 text-secondary-light"
+      class="px-5 mt-4 text-center  sm:px-20 sm:lato-normal-20 lato-normal-14 text-secondary-light"
     >
       Distribute your music & monitor your activities. Get your music on all
       major platforms. View analytics on your dashboard.
     </p>
     <div class="px-4 xl:container">
       <div
-        class="flex flex-col border md:flex-row border-primary rounded-[10px] overflow-hidden mt-14 lg:w-4/5 xl:w-8/12 xxl:w-6/12 m-auto"
+        class="
+          flex flex-col
+          border
+          md:flex-row
+          border-primary
+          rounded-[10px]
+          overflow-hidden
+          mt-20
+          lg:w-4/5
+          xl:w-8/12
+          xxl:w-6/12
+          m-auto
+        "
       >
         <div
           class="relative flex-none w-full h-64 sm:h-auto md:w-1/2 xl:w-5/12"

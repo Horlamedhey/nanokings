@@ -53,9 +53,9 @@
         </div>
 
         <!-- Copyright Bar -->
-        <div class="pt-2">
+        <div class="pt-10">
           <div
-            class="flex flex-col-reverse py-5 text-sm text-center text-white  sm:border-t border-primary-lightest md:flex-row md:justify-between sm:text-left"
+            class="flex flex-col-reverse py-8 text-sm text-center text-white  sm:border-t border-primary-lightest md:flex-row md:justify-between sm:text-left"
           >
             <div class="mt-36 sm:mt-2">
               © 2019-{{ new Date().getFullYear() }} Nanokings Digital. Allrights

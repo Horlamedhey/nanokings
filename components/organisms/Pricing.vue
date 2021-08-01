@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bg-no-repeat bg-cover bg-pattern3">
+    <div class="pt-20 bg-no-repeat bg-cover bg-pattern3">
       <h2 class="text-center lora-bold-32">
         <span class="text-primary">Pricing</span>
       </h2>
@@ -11,7 +11,7 @@
         major platforms. View analytics on your dashboard.
       </p>
       <!-- component -->
-      <div class="container px-6 py-8 mx-auto">
+      <div class="container px-6 py-8 mx-auto mt-20">
         <div
           class="flex flex-col items-center justify-center space-y-8  lg:-mx-4 lg:flex-row lg:items-stretch lg:space-y-0"
         >
