@@ -1,9 +1,15 @@
 <template>
-  <nuxt-img
-    src="/images/image1.svg"
-    format="svg"
+  <img
+    src="/images/image1.png"
     alt="landing-image"
-    sizes="xs:100vw sm:100vw md:80vw lg:60vw xxl:40vw"
+    class="
+      w-[100vw]
+      md:w-[80vw]
+      lg:w-[60vw]
+      xl:w-[40vw]
+      xxl:w-[40vw]
+      before:block
+    "
   />
 </template>
 
@@ -12,6 +18,3 @@ export default {
   name: 'LandingImage',
 }
 </script>
-
-<style lang="scss" scoped>
-</style>
