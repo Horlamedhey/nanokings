@@ -2,7 +2,13 @@
   <div>
     <h1 class="stylish-text text-secondary">Your Music,</h1>
     <h1
-      class="relative inline-block  stylish-text text-primary second-stylish-text-underline"
+      class="
+        relative
+        inline-block
+        stylish-text
+        text-primary
+        second-stylish-text-underline
+      "
     >
       Worldwide
     </h1>
@@ -15,14 +21,42 @@
       <AtomsButton
         addOnAfter
         icon="AtomsIconsPlay"
-        class="block px-5 py-3 m-auto mb-6 text-white rounded  sm:mr-3 sm:mb-0 sm:inline-block lato-semibold-16 bg-primary ripple-bg-primary-DEFAULT"
+        class="
+          block
+          px-5
+          py-3
+          m-auto
+          mb-6
+          text-white
+          rounded
+          sm:mr-3
+          sm:mb-0
+          sm:inline-block
+          lato-semibold-16
+          bg-primary
+          ripple-bg-primary-DEFAULT
+        "
       >
         Get Sarted
       </AtomsButton>
       <AtomsButton
         addOnAfter
         icon="AtomsIconsArrowRight"
-        class="block px-5 py-3 m-auto bg-white border rounded  sm:inline-block text-accent hover:text-white lato-semibold-16 border-accent ripple-bg-accent-DEFAULT"
+        class="
+          block
+          px-5
+          py-3
+          m-auto
+          bg-white
+          border
+          rounded
+          sm:inline-block
+          text-accent
+          hover:text-white
+          lato-semibold-16
+          border-accent
+          ripple-bg-accent-DEFAULT
+        "
       >
         Learn More
       </AtomsButton>

@@ -7,9 +7,9 @@
       lg:mt-24
       xl:mt-32
       lg:pb-20
-      xxl:mt-40
-      2xl:mt-[22rem]
-      2xl:pb-64
+      xl:pb-12
+      xxl:mt-48
+      2xl:mt-[30rem]
       z-[2]
     "
   >
@@ -19,7 +19,16 @@
       />
     </div>
     <MoleculesLandingImage
-      class="relative lg:absolute m-auto lg:m-0 lg:z-[1] lg:right-6 xl:right-0"
+      class="
+        relative
+        lg:absolute
+        m-auto
+        lg:m-0
+        lg:z-[1]
+        lg:right-6
+        xl:right-0
+        bottom-0
+      "
     />
     <div id="who-are-we"></div>
   </div>
