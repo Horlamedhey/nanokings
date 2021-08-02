@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="`formulate-input-element formulate-input-element--${context.type} flex relative items-center`"
+    :class="`formulate-input-element formulate-input-element--${context.type} flex relative items-center border border-secondary-lightest mt-3 divide-x rounded focus-within:border-primary focus-within:border-2`"
     :data-type="context.type"
   >
     <select
@@ -10,10 +10,8 @@
         absolute
         w-[4.6rem]
         h-[58px]
-        mt-3
         ml-[2px]
         bg-transparent
-        border-0 border-r border-secondary-lightest
         focus:outline-none
         text-sm
         pr-1
@@ -39,7 +37,7 @@
       @keydown.down.prevent="increment"
       @keydown.up.prevent="decrement"
       @blur="context.blurHandler"
-      class="pl-20"
+      class="mt-0 ml-20 border-0 rounded-none focus:border-0"
     />
   </div>
 </template>

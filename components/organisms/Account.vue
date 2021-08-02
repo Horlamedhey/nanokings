@@ -1,12 +1,10 @@
 <template>
   <div class="bg-pattern1">
-    <div class="flex min-h-screen bg-white bg-opacity-50">
+    <div class="flex bg-white bg-opacity-50">
       <div class="relative hidden w-1/2 bg-center bg-cover lg:block bg-login">
         <div
           class="absolute top-0 bottom-0 left-0 right-0 bg-[rgba(0,0,0,0.37)]"
-        >
-          <AtomsIconsLogoVariant class="mx-auto mt-12" />
-        </div>
+        ></div>
       </div>
 
       <div

@@ -127,9 +127,9 @@ export default defineComponent({
     const el = ref(null)
     const navLinks = ref([
       { name: 'Home', to: '/' },
-      { name: 'About', to: '#who-are-we' },
-      { name: 'Services', to: '#services' },
-      { name: 'Pricing', to: '#pricing' },
+      { name: 'About', to: '/#who-are-we' },
+      { name: 'Services', to: '/#services' },
+      { name: 'Pricing', to: '/#pricing' },
     ])
     const isLargeScreen = useMediaQuery('(min-width: 960px)')
     const { y: scrollY } = useWindowScroll()
