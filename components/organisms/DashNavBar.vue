@@ -42,6 +42,7 @@
           <transition name="slide-y">
             <MoleculesNotificationsMenu
               v-show="notificationsMenu"
+              :notifications="user.notifications"
               @close="notificationsMenu = false"
             />
           </transition>
@@ -58,10 +59,22 @@
               @click="userMenu = !userMenu"
             >
               <span class="sr-only">Open user menu</span>
-              <nuxt-img
+              <img
                 class="rounded-full w-11 h-11 border-[3px] border-primary"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixqx=Z9sX75fYfU&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt=""
+                :src="
+                  $cloudinary.image.url(
+                    `nanokings/avatars/${user.avatar || 'avatar'}`,
+                    {
+                      format: 'webp',
+                      gravity: 'auto:subject',
+                      crop: 'fill',
+                      width: 120,
+                      height: 120,
+                      radius: 'max',
+                    }
+                  )
+                "
+                alt="avatar"
               />
               <span
                 class="
@@ -73,7 +86,7 @@
                   text-secondary-light
                 "
               >
-                VaryAble
+                {{ user.username }}
               </span>
             </AtomsButton>
           </div>
@@ -110,24 +123,35 @@ import {
   ref,
   useRouter,
   useContext,
+  useStore,
+  computed,
 } from '@nuxtjs/composition-api'
 import { useWindowScroll } from '@vueuse/core'
+
+export interface State {
+  authUser: { avatar: string; username: string; notifications: Array<any> }
+}
 // import { realmApp } from '~/helpers/realmAuth'
 export default defineComponent({
   name: 'DashNavBar',
   setup() {
     const context = useContext()
+    const store = useStore<State>()
     const router = useRouter()
     const notificationsMenu = ref(false)
     const userMenu = ref(false)
     const { y: scrollY } = useWindowScroll()
+    const user = computed(() => {
+      const { avatar, username, notifications } = store.state.authUser || {}
+      return { avatar, username, notifications }
+    })
     const logout = () => {
       context.app.$apolloHelpers.onLogout()
       context.app.$realmApp
         .currentUser!.logOut()
         .then(() => router.replace('/login'))
     }
-    return { notificationsMenu, userMenu, scrollY, logout }
+    return { notificationsMenu, userMenu, user, scrollY, logout }
   },
   watch: {
     notificationsMenu(newVal) {

@@ -10,7 +10,7 @@
         {{ statistic.title }}
       </h2>
       <div class="mt-5 my-stroke text-primary xl:lora-bold-48 lora-bold-32">
-        {{ statistic.value }}
+        {{ statistic.value || 0 }}
       </div>
       <div v-if="statistic.addon" class="text-[#0DD00D] lato-semibold-20 mt-4">
         {{ statistic.addon }}

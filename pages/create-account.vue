@@ -181,6 +181,8 @@ export default defineComponent({
               sales: 0,
               songs: [],
               streams: 0,
+              releases: 0,
+              walletBalance: 0.0,
               transactions: [],
               updatedAt: new Date(),
               views: 0,

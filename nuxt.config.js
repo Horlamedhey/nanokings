@@ -33,12 +33,15 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: 'plugins/provide-apollo-client', mode: 'client' },
+    'plugins/provide-apollo-client',
     'plugins/formulate-phone-input.ts',
     'plugins/phone-input.js',
+    'plugins/filters.js',
     'plugins/realmAuth.ts',
     'plugins/vue-formulate.js',
     'plugins/nuxt-client-init.client.js',
+    'plugins/vue-apexchart.client.js',
+    'plugins/vue-json-excel.client.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -108,6 +111,9 @@ export default {
       xl: 1280,
       xxl: 1536,
       '2xl': 1904,
+    },
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/befittinglife/image/upload/',
     },
   },
   // Apollo configuration

@@ -8,7 +8,19 @@
       </div>
 
       <div
-        class="flex flex-col justify-around max-w-xl px-10 py-5 mx-auto my-6 shadow-none  lg:px-8 2xl:max-w-2xl lg:w-1/2"
+        class="
+          flex flex-col
+          justify-around
+          max-w-xl
+          px-10
+          py-5
+          mx-auto
+          my-6
+          shadow-none
+          lg:px-8
+          2xl:max-w-2xl
+          lg:w-1/2
+        "
       >
         <slot name="extra-header"></slot>
         <div>
@@ -27,7 +39,13 @@
         <div>
           <h4
             v-if="footer"
-            class="mt-6 text-center  lato-normal-18 sm:lato-normal-20 text-secondary-light"
+            class="
+              mt-6
+              text-center
+              lato-normal-18
+              sm:lato-normal-20
+              text-secondary-light
+            "
           >
             {{ footer }}
             <nuxt-link

@@ -54,8 +54,12 @@
             class="flex flex-wrap justify-between gap-20 account-settings"
             @submit="saveSuccessModal = true"
           >
-            <div class="mx-auto mt-[-10px]">
-              <FormulateInput type="submit" name="submitButton">
+            <div class="w-full text-center">
+              <FormulateInput
+                type="submit"
+                name="submitButton"
+                class="inline-block"
+              >
                 Save Profile
               </FormulateInput>
             </div>
@@ -68,13 +72,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  reactive,
+  ref,
+  onMounted,
+  useRoute,
+  useRouter,
+} from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'MyAccount',
   layout: 'dashboard',
   setup() {
-    const editProfile = ref(false)
+    const route = useRoute()
+    const router = useRouter()
+    const editProfile = ref(!!route.value.query.edit)
     const saveSuccessModal = ref(false)
     const profileContentSections = ref([
       {
@@ -83,29 +96,33 @@ export default defineComponent({
         name: 'personalDetails',
         label: 'Personal Details',
         children: [
-          { label: 'Username', name: 'username', value: 'VaryAble' },
-          { label: 'Name', name: 'name', value: 'Jacey Wiliams' },
+          { label: 'Username', name: 'username', value: '' },
+          { label: 'Name', name: 'name', value: '' },
           {
             type: 'email',
             label: 'Email',
             name: 'email',
-            value: 'Jacey_williams@gmail.com',
+            value: '',
           },
           {
             type: 'tel',
             label: 'Phone number',
             name: 'phoneNumber',
-            value: '08099397953',
+            value: '',
           },
           {
+            type: 'select',
             label: 'Gender',
+            placeholder: 'Select Gender',
+            options: ['Male', 'Female'],
             name: 'gender',
-            value: 'Male',
+            value: '',
           },
           {
             label: 'Subscription',
             name: 'subscription',
-            value: 'Classic',
+            id: 'subscription',
+            value: '',
             addonText: {
               name: '',
               content: 'Upgrade?',
@@ -120,10 +137,10 @@ export default defineComponent({
         name: 'socialMedia',
         label: 'Social Media',
         children: [
-          { label: 'Facebook', name: 'facebook', value: '@VaryAble' },
-          { label: 'Instagram', name: 'instagram', value: '@VaryAble' },
-          { label: 'Twitter', name: 'twitter', value: '@VaryAble' },
-          { label: 'Youtube', name: 'youtube', value: '@VaryAble' },
+          { label: 'Facebook', name: 'facebook', value: '' },
+          { label: 'Instagram', name: 'instagram', value: '' },
+          { label: 'Twitter', name: 'twitter', value: '' },
+          { label: 'Youtube', name: 'youtube', value: '' },
         ],
       },
       {
@@ -131,22 +148,43 @@ export default defineComponent({
         repeatable: false,
         name: 'bankDetails',
         label: 'Bank Details',
+        id: 'bankAccount',
         children: [
-          { label: 'Bank', name: 'bank', value: 'Guarantee Trust Bank' },
+          {
+            type: 'select',
+            label: 'Bank',
+            name: 'bank',
+            placeholder: 'Select Bank',
+            options: ['GTB'],
+            value: '',
+            id: 'bank',
+          },
           {
             label: 'Account Name',
             name: 'accountName',
-            value: 'Jacey Williams',
+            value: '',
           },
           {
             label: 'Account Number',
             name: 'accountNumber',
-            value: '0213321114',
+            value: '',
           },
         ],
       },
     ])
     const form = reactive({})
+    onMounted(() => {
+      const editQuery: string = route.value.query.edit as string
+      if (editProfile.value) {
+        document!
+          .getElementById(editQuery)!
+          .scrollIntoView({ behavior: 'smooth' })
+      } else if (route!.value!.hash) {
+        document!
+          .getElementById(route!.value!.hash.split('#')[1])!
+          .scrollIntoView({ behavior: 'smooth' })
+      }
+    })
     return { editProfile, profileContentSections, form, saveSuccessModal }
   },
 })

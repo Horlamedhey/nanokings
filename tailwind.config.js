@@ -39,6 +39,7 @@ module.exports = {
       secondary: theme('colors.secondary'),
       accent: theme('colors.accent'),
       accent2: theme('colors.accent2'),
+      error: theme('colors.error'),
     }),
     extend: {
       backgroundImage: (theme) => ({

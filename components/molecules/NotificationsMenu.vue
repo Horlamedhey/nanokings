@@ -29,6 +29,9 @@
       </AtomsButton>
     </div>
     <div class="flex flex-col mt-8 lato-medium-14">
+      <h3 class="empty-content-text">
+        You do not have any notifications at the moment.
+      </h3>
       <div
         class="
           flex flex-col
@@ -54,24 +57,14 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
+interface PropsData {
+  notifications: Array<any>
+}
 export default defineComponent({
   name: 'NotificationsMenu',
-  setup() {
-    const notifications = ref([
-      {
-        content: 'You have succesfully withdrawn N12,000 from your wallet',
-        time: 'Today',
-      },
-      { content: 'Amazing succesfully created from your music', time: 'Today' },
-      {
-        content: 'Blaze succesfully created from your music',
-        time: 'Yesterday',
-      },
-      {
-        content: 'Catch Me Now succesfully created from your music',
-        time: 'Yesterday',
-      },
-    ])
+  // props: { notifications: { type: Array, default: () => [] } },
+  setup(props: PropsData) {
+    const notifications = ref(props.notifications)
     return { notifications }
   },
 })

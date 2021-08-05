@@ -1,5 +1,47 @@
 <template>
   <component
+    v-if="noStop"
+    :is="tag"
+    :id="id"
+    :class="{
+      contentClass,
+      'rounded-full': rounded,
+      'cursor-default': cursorDisabled,
+      'cursor-pointer': !cursorDisabled,
+    }"
+    :href="href"
+    :to="to"
+    :disabled="loading || disabled"
+    :target="target"
+    :title="title"
+    :type="type"
+    class="relative focus:outline-none my-button"
+    @click="$emit('click')"
+  >
+    <div
+      v-if="tag === 'button' && loading"
+      class="absolute inset-0 flex items-center justify-center"
+    >
+      <AtomsLoading />
+    </div>
+
+    <template>
+      <component
+        :is="icon"
+        v-if="icon && addOnBefore"
+        class="inline-block w-5 h-5 mr-1"
+      ></component>
+      <!-- @slot Main slot used for text -->
+      <slot></slot>
+      <component
+        :is="icon"
+        v-if="icon && addOnAfter"
+        class="inline-block w-5 h-5 ml-1"
+      ></component>
+    </template>
+  </component>
+  <component
+    v-else
     :is="tag"
     :id="id"
     :class="{
@@ -80,6 +122,7 @@ export default defineComponent({
     addOnBefore: Boolean,
     // if icon should come after
     addOnAfter: Boolean,
+    noStop: Boolean,
   },
   setup({ href, to }) {
     const tag = computed(() => {

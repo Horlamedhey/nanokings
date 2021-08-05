@@ -7,16 +7,7 @@
           <div
             v-for="(tableRow, i) in tableBody"
             :key="`tableRow-${i}`"
-            class="
-              px-6
-              py-4
-              bg-white
-              divide-y
-              rounded-md
-              shadow
-              divide-secondary-lightest
-              verflow-hidden
-            "
+            class="px-6 py-4 bg-white divide-y rounded-md shadow  divide-secondary-lightest verflow-hidden"
           >
             <div
               v-for="(tableDataValue, tableDataName, i) in tableRow"
@@ -49,13 +40,7 @@
                   v-for="(tableHeading, i) in tableHeadings"
                   :key="`tableHeading-${i}`"
                   scope="col"
-                  class="
-                    px-6
-                    py-3
-                    text-left
-                    lato-medium-14
-                    text-secondary-lighter
-                  "
+                  class="px-6 py-3 text-left  lato-medium-14 text-secondary-lighter"
                 >
                   {{ tableHeading }}
                 </th>
@@ -66,13 +51,7 @@
                 <td
                   v-for="(tableDataValue, tableDataName, i) in tableRow"
                   :key="`tableData-${tableDataName}-${i}`"
-                  class="
-                    px-6
-                    py-4
-                    text-secondary-light
-                    lato-medium-14
-                    whitespace-nowrap
-                  "
+                  class="px-6 py-4  text-secondary-light lato-medium-14 whitespace-nowrap"
                   :class="{
                     [tableDataValue[0] !== '-'
                       ? lastColumnClass.split(' ')[0]
@@ -85,6 +64,13 @@
               </tr>
             </tbody>
           </table>
+
+          <h3
+            v-if="tableBody.length === 0"
+            class="py-10 text-center empty-content-text"
+          >
+            There are no transactions to show.
+          </h3>
         </div>
       </div>
     </div>

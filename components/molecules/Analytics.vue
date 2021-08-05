@@ -18,7 +18,9 @@
           >
             <span class="sr-only">Open filter menu</span>
 
-            <span class="ml-1 mr-3 sm:inline lato-medium-14"> This week </span>
+            <span class="ml-1 mr-3 sm:inline lato-medium-14">
+              {{ filterOption }}
+            </span>
             <AtomsIconsChevronLeft class="transform -rotate-90" />
           </AtomsButton>
         </div>
@@ -34,16 +36,19 @@
           >
             <AtomsButton
               class="flex w-full px-4 py-2 space-x-3 transition duration-300  hover:ripple-bg-primary-DEFAULT text-primary hover:text-white lato-semibold-16"
+              @click="filterAnalytics('Today')"
             >
               <span class="">Today</span>
             </AtomsButton>
             <AtomsButton
               class="flex w-full px-4 py-2 space-x-3 transition duration-300  hover:ripple-bg-primary-DEFAULT text-primary hover:text-white lato-semibold-16"
+              @click="filterAnalytics('This Week')"
             >
               <span class="">This Week</span>
             </AtomsButton>
             <AtomsButton
               class="flex w-full px-4 py-2 space-x-3 transition duration-300  hover:ripple-bg-primary-DEFAULT text-primary hover:text-white lato-semibold-16"
+              @click="filterAnalytics('This Month')"
             >
               <span class="">This Month</span>
             </AtomsButton>
@@ -52,26 +57,26 @@
       </div>
     </div>
     <!-- Chart -->
-    <div class="flex flex-col justify-between mt-12 lg:flex-row">
-      <div>
+    <div
+      class="flex flex-col justify-between gap-4 mt-8  lg:items-center lg:flex-row"
+    >
+      <div class="flex-1">
         <h2 class="lato-bold-16 text-secondary-lighter">
           Views x Streams Charts
         </h2>
-        <div class="flex items-center mt-5">
-          <div class="w-4 h-4 rounded-full inline-block bg-[#0066FF]"></div>
-          <span class="ml-1 lato-medium-12 text-secondary-dark">Views</span>
-
-          <div
-            class="w-4 h-4 ml-4 rounded-full inline-block bg-[#96C0FF]"
-          ></div>
-          <span class="ml-1 lato-medium-12 text-secondary-dark">Streams</span>
-        </div>
         <!-- bar chart -->
-        <div class="h-20"></div>
+        <client-only>
+          <VueApexCharts
+            type="bar"
+            width="100%"
+            :options="chartOptions"
+            :series="series"
+          ></VueApexCharts>
+        </client-only>
       </div>
       <div class="text-center rounded-[10px] my-shadow-analytics py-4 px-5">
         <h1 class="lato-bold-16 text-secondary-dark">Total</h1>
-        <h1 class="mt-4 lato-bold-48 text-secondary-dark">120k</h1>
+        <h1 class="mt-4 lato-bold-48 text-secondary-dark">160k</h1>
         <h2 class="mt-2 lato-normal-11 text-secondary-lighter">
           Total views x Streams
         </h2>
@@ -90,20 +95,166 @@ export default {
   data() {
     return {
       filterMenu: false,
+      filterOption: 'Today',
+      series: [
+        {
+          name: 'Views',
+          data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
+        },
+        {
+          name: 'Streams',
+          data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
+        },
+      ],
+      chartOptions: {
+        colors: ['#0066FF', '#96C0FF'],
+        legend: {
+          position: 'top',
+          horizontalAlign: 'left',
+          markers: {
+            width: 8,
+            height: 8,
+            radius: 8,
+          },
+          itemMargin: {
+            horizontal: 20,
+            vertical: 0,
+          },
+        },
+
+        chart: {
+          type: 'bar',
+          toolbar: {
+            show: false,
+            // tools: {
+            // download: true,
+          },
+          // height: 350,
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '45%',
+            borderRadius: 3,
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          show: true,
+          width: 5,
+          colors: ['transparent'],
+        },
+        xaxis: {
+          categories: [
+            '00:00',
+            '02:00',
+            '04:00',
+            '06:00',
+            '08:00',
+            '10:00',
+            '12:00',
+            '14:00',
+            '16:00',
+            '18:00',
+            '20:00',
+            '22:00',
+          ],
+        },
+        yaxis: {},
+        fill: {
+          opacity: 1,
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return '$ ' + val + ' thousands'
+            },
+          },
+        },
+      },
     }
   },
-  // props: {
-  //   balance: { type: String, required: true },
-  // },
+  props: {
+    chartData: { type: Object, default: () => {} },
+  },
+  watch: {
+    filterOption(newVal) {
+      const { xaxis, ...rest } = this.chartOptions
+      switch (newVal) {
+        case 'Today':
+          this.chartOptions = {
+            xaxis: {
+              categories: [
+                '00:00',
+                '02:00',
+                '04:00',
+                '06:00',
+                '08:00',
+                '10:00',
+                '12:00',
+                '14:00',
+                '16:00',
+                '18:00',
+                '20:00',
+                '22:00',
+              ],
+            },
+            ...rest,
+          }
+          break
+        case 'This Week':
+          this.chartOptions = {
+            xaxis: {
+              categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            },
+            ...rest,
+          }
+          break
+        case 'This Month':
+          this.chartOptions = {
+            xaxis: {
+              categories: [
+                '1st',
+                '3rd',
+                '6th',
+                '9th',
+                '12th',
+                '15th',
+                '18th',
+                '21th',
+                '24th',
+                '27th',
+                '30th',
+                '31th',
+              ],
+            },
+            ...rest,
+          }
+          break
+
+        default:
+          break
+      }
+    },
+  },
+  methods: {
+    filterAnalytics(timeframe) {
+      this.filterMenu = false
+
+      this.filterOption = timeframe
+    },
+  },
 }
 </script>
 
 <style scoped>
 .my-shadow {
-  box-shadow: 0 100px 80px rgba(67, 97, 238, 0.12),
+  box-shadow: 0 100px 80px rgba(67, 97, 238, 0.16),
     0 41.78px 33.4px rgba(67, 97, 238, 0.0863),
     0 22.34px 17.87px rgba(67, 97, 238, 0.0715),
-    0 12.52px 10.02px rgba(67, 97, 238, 0.06),
+    0 16.52px 10.02px rgba(67, 97, 238, 0.06),
     0 6.65px 5.32px rgba(67, 97, 238, 0.0485),
     0 2.77px 2.21px rgba(67, 97, 238, 0.0337);
 }

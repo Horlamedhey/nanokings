@@ -7,8 +7,9 @@
       <h2 class="lato-medium-20">{{ title }}</h2>
 
       <div class="flex items-center mt-4">
-        <AtomsIconsNaira class="inline" />
-        <span class="ml-1 lora-bold-42">{{ amount }}</span>
+        <span class="ml-1 lora-bold-42">
+          {{ amount | currencyFormatter }}
+        </span>
       </div>
     </div>
   </div>
@@ -19,7 +20,7 @@ export default {
   name: 'WalletBalance',
   props: {
     title: { type: String, required: true },
-    amount: { type: String, required: true },
+    amount: { type: String, default: '0' },
     color: { type: String, default: '' },
   },
 }

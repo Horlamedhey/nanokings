@@ -12,9 +12,9 @@
           </div>
           <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
           <AtomsButton
-            icon="AtomsIconsNaira"
+            icon="AtomsIconsDollar"
             addOnAfter
-            class="items-center inline-block px-10 py-3 mt-6 ml-auto text-white rounded lato-bold-16 ripple-bg-primary-DEFAULT"
+            class="flex items-center px-10 py-3 mt-6 text-white rounded lato-bold-16 ripple-bg-primary-DEFAULT"
             @click="withdrawModal=!withdrawModal"
           >
             Withdraw funds
@@ -22,66 +22,90 @@
             <!-- Statistics -->
             <OrganismsAmountCardsArea :amountCards="amountCards"/>
             <!-- Table -->
+            <client-only>
             <MoleculesDataTableWithAltHead class="mt-10" lastColumnClass="text-success text-error" tableHeadingTitle="Latest Transactions" :tableHeadings="tableHeadings" :tableBody="tableBody" />
-          </div>
+            </client-only>
+        </div>
         </div>
       </main>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  ref,
+  useStore,
+} from '@nuxtjs/composition-api'
 
+export interface State {
+  authUser: {
+    sales: { $numberDouble: number }
+    walletBalance: { $numberDouble: number }
+    transactions: Array<any>
+  }
+}
 export default defineComponent({
   name: 'Wallet',
   layout: 'dashboard',
 
   setup() {
+    const store = useStore<State>()
+    const user = computed(() => {
+      const { sales, walletBalance, transactions } = store.state.authUser || {}
+      return { sales, walletBalance, transactions }
+    })
     const amountCards = ref([
       {
         title: 'Available Balance',
-        amount: '129,000',
+        amount: user.value.walletBalance?.$numberDouble,
         color: 'bg-primary',
       },
       {
         title: 'Total Sales',
-        amount: '529,000',
+        amount: user.value.sales?.$numberDouble,
         color: 'bg-success-light',
       },
       {
         title: 'Total Withdrawn',
-        amount: '409,000',
+        amount: (
+          user.value.walletBalance?.$numberDouble -
+          user.value.walletBalance?.$numberDouble
+        ).toString(),
         color: 'bg-accent-light',
       },
     ])
     const tableHeadings = ref(['Date', 'Status', 'Amount (NGN)'])
-    const tableBody = ref([
-      {
-        date: 'Yesterday',
-        status: 'Withdrawal completed',
-        amount: 'N12,360',
-      },
-      {
-        date: 'Yesterday',
-        status: 'Withdrawal initiated',
-        amount: '-N12,360',
-      },
-      {
-        date: '02 April 2021',
-        status: 'Withdrawal completed',
-        amount: 'N12,360',
-      },
-      {
-        date: '02 April 2021',
-        status: 'Withdrawal initiated',
-        amount: '-N12,360',
-      },
-      {
-        date: '14 March 2021',
-        status: 'Withdrawal completed',
-        amount: 'N12,360',
-      },
-    ])
+    const tableBody = ref(
+      user.value.transactions || [
+        {
+          date: 'Yesterday',
+          status: 'Withdrawal completed',
+          amount: 'N12,360',
+        },
+        {
+          date: 'Yesterday',
+          status: 'Withdrawal initiated',
+          amount: '-N12,360',
+        },
+        {
+          date: '02 April 2021',
+          status: 'Withdrawal completed',
+          amount: 'N12,360',
+        },
+        {
+          date: '02 April 2021',
+          status: 'Withdrawal initiated',
+          amount: '-N12,360',
+        },
+        {
+          date: '14 March 2021',
+          status: 'Withdrawal completed',
+          amount: 'N12,360',
+        },
+      ]
+    )
     const withdrawModal = ref(false)
     const withdrawSuccessModal = ref(false)
     const processWithdrawal = () => {

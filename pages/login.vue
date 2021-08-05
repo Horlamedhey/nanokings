@@ -84,7 +84,7 @@ export default defineComponent({
 
         context.app.$cookies.set('loggedIn', true)
         await user.refreshCustomData()
-
+        console.log(user.customData)
         store.commit('setUser', user.customData)
         const redirectRoute: any = route.value.query.redirect
         if (redirectRoute) {

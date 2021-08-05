@@ -29,6 +29,7 @@ export const mutations: MutationTree<RootState> = {
   unSetUser(state) {
     state.loggedIn = false
     state.authUser = null
+    state.overlay = false
   },
 }
 
@@ -37,9 +38,8 @@ export const actions: ActionTree<RootState, RootState> = {
     const authUser = app.$realmApp.currentUser
     if (authUser) {
       app.$cookies.set('loggedIn', true)
-      await authUser.refreshCustomData()
 
-      commit('setUser', authUser.customData)
+      commit('setUser', await authUser.refreshCustomData())
     } else {
       app.$cookies.remove('loggedIn')
       commit('unSetUser')

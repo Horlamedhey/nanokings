@@ -8,6 +8,7 @@
       <AtomsTitledContentWIthBorder
         v-for="(detail, i) in content"
         :key="`${title.split(' ').join('-')}-detail-${i}`"
+        :id="detail.id"
         :title="detail.label"
         :content="detail.value"
         :addonText="detail.addonText"

@@ -88,9 +88,9 @@ export default defineComponent({
 <style scoped>
 .active-navbar-link,
 .hover-navbar-link:hover {
-  @apply relative after:md:w-[80%] after:w-[60%] after:h-1 after:bg-accent after:bottom-[-4px] after:left-[20%] after:md:left-[10%] after:rounded-full after:absolute;
+  @apply relative before:lg:w-[80%] before:w-[60%] before:h-1 before:bg-accent before:bottom-[-4px] before:left-[20%] before:lg:left-[10%] before:rounded-full before:absolute;
 }
 .hover-navbar-link {
-  @apply after:transition after:duration-500;
+  @apply before:transition before:duration-500 after:content-[''];
 }
 </style>

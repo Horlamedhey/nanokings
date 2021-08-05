@@ -53,12 +53,13 @@
             </div>
 
             <AtomsButton
-              class="px-4 py-2 border-2 rounded-lg  lato-bold-18 text-primary border-primary ripple-bg-primary-DEFAULT hover:text-white"
+              class="px-4 py-2 border-2 rounded-lg  lato-bold-18 border-primary ripple-bg-primary-DEFAULT hover:text-white"
               :class="
                 i === 1
                   ? 'ripple-bg-accent-DEFAULT bg-accent text-white'
-                  : ' bg-transparent'
+                  : ' bg-transparent text-primary'
               "
+              @click="subscribe(i)"
             >
               Subscribe
             </AtomsButton>
@@ -70,6 +71,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'Pricing',
   data() {
@@ -113,6 +115,26 @@ export default {
         },
       ],
     }
+  },
+  computed: {
+    ...mapState({ loggedIn: 'loggedIn', authUser: 'authUser' }),
+    subscription() {
+      return (this.authUser || {}).subscription
+    },
+  },
+  methods: {
+    subscribe(index) {
+      if (this.loggedIn) {
+        if (this.subscription) {
+          this.$router.push('/dashboard/my-account?#subscription')
+        } else {
+          // this.$router.push('/dashboard/my-account?#subscription')
+          alert(`pay for subcription pop-up - ${this.pricings[index].tier}`)
+        }
+      } else {
+        this.$router.push('/login')
+      }
+    },
   },
 }
 </script>

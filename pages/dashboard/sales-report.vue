@@ -5,13 +5,20 @@
         <h1 class="lora-bold-20 sm:lora-bold-28 text-secondary">Sales Report</h1>
           </div>
           <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
-          <AtomsButton
-            icon="AtomsIconsCircledArrowDown"
-            addOnAfter
-            class="items-center inline-block px-10 py-3 mt-6 ml-auto text-white rounded lato-bold-16 ripple-bg-primary-DEFAULT"
-          >
-            Download sheets
-          </AtomsButton>
+            <client-only>
+              <download-excel :data="tableBody" name="nanokings-sales-report" header="Nanokings Sales Report" :before-generate="toggleDownloading"  :before-finish="toggleDownloading" class="inline-block mt-6">
+                <AtomsButton
+                  icon="AtomsIconsCircledArrowDown"
+                  addOnAfter
+                  :loading="downloading"
+                  class="items-center inline-block px-10 py-3 ml-auto text-white rounded lato-bold-16 ripple-bg-primary-DEFAULT"
+                  noStop
+                >
+                  Download sheets
+                </AtomsButton>
+              </download-excel>
+            </client-only>
+
             <!-- Statistics -->
             <OrganismsStatisticsArea :amountCard="amountCardDetails" :statistics="statistics"/>
             <!-- Table -->
@@ -24,8 +31,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  reactive,
+  ref,
+  useStore,
+} from '@nuxtjs/composition-api'
 
+export interface State {
+  authUser: {
+    sales: { $numberDouble: number }
+    downloads: { $numberInt: string }
+    streams: { $numberInt: string }
+    views: { $numberInt: string }
+  }
+}
 export default defineComponent({
   name: 'SalesReport',
   layout: 'dashboard',
@@ -37,14 +58,33 @@ export default defineComponent({
   // },
 
   setup() {
+    const store = useStore<State>()
+    const user = computed(() => {
+      const { sales, downloads, streams, views } = store.state.authUser || {}
+      return { sales, downloads, streams, views }
+    })
     const statistics = ref([
-      { title: 'Downloads', value: '1,700', image: 'downloads' },
-      { title: 'Streams', value: '17,000+', addon: '+28%', image: 'streams' },
-      { title: 'Views', value: '37,000+', addon: '+70%', image: 'views' },
+      {
+        title: 'Downloads',
+        value: user.value.downloads?.$numberInt,
+        image: 'downloads',
+      },
+      {
+        title: 'Streams',
+        value: user.value.streams?.$numberInt,
+        // addon: '+28%',
+        image: 'streams',
+      },
+      {
+        title: 'Views',
+        value: user.value.views?.$numberInt,
+        // addon: '+70%',
+        image: 'views',
+      },
     ])
     const amountCardDetails = reactive({
       title: 'Total Sales',
-      amount: '529,000',
+      amount: user.value.sales?.$numberDouble,
       color: 'bg-success-light',
     })
     const tableHeadings = ref([
@@ -98,7 +138,24 @@ export default defineComponent({
         total: 'N7,432',
       },
     ])
-    return { statistics, amountCardDetails, tableHeadings, tableBody }
+    const downloading = ref(false)
+    const toggleDownloading = () => {
+      if (downloading.value) {
+        setTimeout(() => {
+          downloading.value = false
+        }, 3000)
+      } else {
+        downloading.value = true
+      }
+    }
+    return {
+      statistics,
+      amountCardDetails,
+      tableHeadings,
+      tableBody,
+      downloading,
+      toggleDownloading,
+    }
   },
 })
 </script>
