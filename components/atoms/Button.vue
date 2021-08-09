@@ -8,6 +8,7 @@
       'rounded-full': rounded,
       'cursor-default': cursorDisabled,
       'cursor-pointer': !cursorDisabled,
+      relative: loading,
     }"
     :href="href"
     :to="to"
@@ -15,7 +16,7 @@
     :target="target"
     :title="title"
     :type="type"
-    class="relative focus:outline-none my-button"
+    class="focus:outline-none my-button"
     @click="$emit('click')"
   >
     <div
@@ -49,6 +50,7 @@
       'rounded-full': rounded,
       'cursor-default': cursorDisabled,
       'cursor-pointer': !cursorDisabled,
+      relative: loading,
     }"
     :href="href"
     :to="to"
@@ -56,7 +58,7 @@
     :target="target"
     :title="title"
     :type="type"
-    class="relative focus:outline-none my-button"
+    class="focus:outline-none my-button"
     @click.stop="$emit('click')"
   >
     <div

@@ -77,14 +77,7 @@
                 alt="avatar"
               />
               <span
-                class="
-                  hidden
-                  ml-1
-                  mr-3
-                  sm:inline
-                  lato-semibold-16
-                  text-secondary-light
-                "
+                class="hidden ml-1 mr-3  sm:inline lato-semibold-16 text-secondary-light"
               >
                 {{ user.username }}
               </span>

@@ -12,12 +12,9 @@
         <h1 class="lora-bold-20 sm:lora-bold-28 text-secondary">My Account</h1>
       </div>
       <div class="px-4 mx-auto mt-6 max-w-7xl sm:px-6 md:px-8">
-        <OrganismsProfileImageArea
-          coverImage="/images/bgs/profile.svg"
-          profileImage="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixqx=Z9sX75fYfU&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-        />
+        <OrganismsProfileImageArea :coverPhoto="coverPhoto" avatar="avatar" />
         <div class="mt-24 text-center">
-          <h1 class="lato-medium-20 text-secondary">VaryAble</h1>
+          <h1 class="lato-medium-20 text-secondary">{{ username }}</h1>
           <div class="flex justify-center gap-16 mt-8 text-secondary-lighter">
             <AtomsButton
               class="lato-medium-16"
@@ -41,7 +38,7 @@
             class="flex flex-wrap justify-between gap-20"
           >
             <OrganismsProfileContentSection
-              v-for="(profileContentSection, i) in profileContentSections"
+              v-for="(profileContentSection, i) in finalProfileContentSections"
               :key="`profileContentSection-${i}`"
               :title="profileContentSection.label"
               :content="profileContentSection.children"
@@ -79,14 +76,94 @@ import {
   onMounted,
   useRoute,
   useRouter,
+  computed,
+  useStore,
 } from '@nuxtjs/composition-api'
 
+export interface State {
+  authUser: {
+    avatar: string
+    coverPhoto: string
+    username: string
+    firstName: string
+    lastName: string
+    email: string
+    phone: string
+    gender: string
+    subscription: { tier: string; active: boolean }
+    facebook: string
+    instagram: string
+    twitter: string
+    youtube: string
+    bankAccount: {
+      bankName: string
+      accountName: string
+      accountNumber: string
+    }
+  }
+}
 export default defineComponent({
   name: 'MyAccount',
   layout: 'dashboard',
   setup() {
     const route = useRoute()
     const router = useRouter()
+    const store = useStore<State>()
+    const user = computed(() => {
+      const {
+        avatar,
+        coverPhoto,
+        username,
+        firstName,
+        lastName,
+        email,
+        phone,
+        gender,
+        subscription,
+        facebook,
+        instagram,
+        twitter,
+        youtube,
+        bankAccount,
+      } = store.state.authUser || {}
+      return {
+        avatar: avatar || 'avatar',
+        coverPhoto: coverPhoto || 'cover',
+        userData: {
+          username: username || '',
+          firstName: firstName || '',
+          lastName: lastName || '',
+          email: email || '',
+          phone: phone || '',
+          gender: gender || '',
+          subscription: subscription || { tier: 'Free', active: false },
+          facebook: facebook || '',
+          instagram: instagram || '',
+          twitter: twitter || '',
+          youtube: youtube || '',
+          bankAccount: bankAccount || {
+            bankName: '',
+            accountName: '',
+            accountNumber: '',
+          },
+        },
+      }
+    })
+    const { avatar, coverPhoto } = user.value
+    const {
+      username,
+      firstName,
+      lastName,
+      email,
+      phone,
+      gender,
+      subscription,
+      facebook,
+      instagram,
+      twitter,
+      youtube,
+      bankAccount,
+    } = user.value.userData
     const editProfile = ref(!!route.value.query.edit)
     const saveSuccessModal = ref(false)
     const profileContentSections = ref([
@@ -96,19 +173,19 @@ export default defineComponent({
         name: 'personalDetails',
         label: 'Personal Details',
         children: [
-          { label: 'Username', name: 'username', value: '' },
-          { label: 'Name', name: 'name', value: '' },
+          { label: 'Username', name: 'username', value: username },
+          { label: 'Name', name: 'name', value: `${firstName} ${lastName}` },
           {
             type: 'email',
             label: 'Email',
             name: 'email',
-            value: '',
+            value: email,
           },
           {
             type: 'tel',
             label: 'Phone number',
             name: 'phoneNumber',
-            value: '',
+            value: phone,
           },
           {
             type: 'select',
@@ -116,18 +193,7 @@ export default defineComponent({
             placeholder: 'Select Gender',
             options: ['Male', 'Female'],
             name: 'gender',
-            value: '',
-          },
-          {
-            label: 'Subscription',
-            name: 'subscription',
-            id: 'subscription',
-            value: '',
-            addonText: {
-              name: '',
-              content: 'Upgrade?',
-              classes: 'lato-bold-14 text-primary',
-            },
+            value: gender,
           },
         ],
       },
@@ -137,10 +203,10 @@ export default defineComponent({
         name: 'socialMedia',
         label: 'Social Media',
         children: [
-          { label: 'Facebook', name: 'facebook', value: '' },
-          { label: 'Instagram', name: 'instagram', value: '' },
-          { label: 'Twitter', name: 'twitter', value: '' },
-          { label: 'Youtube', name: 'youtube', value: '' },
+          { label: 'Facebook', name: 'facebook', value: facebook },
+          { label: 'Instagram', name: 'instagram', value: instagram },
+          { label: 'Twitter', name: 'twitter', value: twitter },
+          { label: 'Youtube', name: 'youtube', value: youtube },
         ],
       },
       {
@@ -156,23 +222,45 @@ export default defineComponent({
             name: 'bank',
             placeholder: 'Select Bank',
             options: ['GTB'],
-            value: '',
+            value: bankAccount.bankName,
             id: 'bank',
           },
           {
             label: 'Account Name',
             name: 'accountName',
-            value: '',
+            value: bankAccount.accountName,
           },
           {
             label: 'Account Number',
             name: 'accountNumber',
-            value: '',
+            value: bankAccount.accountNumber,
           },
         ],
       },
     ])
     const form = reactive({})
+
+    const finalProfileContentSections = computed(() => {
+      return [...profileContentSections.value].map((v, i) => {
+        if (i === 0) {
+          v.children.push({
+            type: 'text',
+            label: 'Subscription',
+            name: 'subscription',
+            id: 'subscription',
+            placeholder: 'Select Bank',
+            value: subscription.tier,
+            addonText: {
+              name: '',
+              content: 'Upgrade?',
+              classes: 'lato-bold-14 text-primary',
+            },
+          } as any)
+          return v
+        }
+        return v
+      })
+    })
     onMounted(() => {
       const editQuery: string = route.value.query.edit as string
       if (editProfile.value) {
@@ -185,7 +273,16 @@ export default defineComponent({
           .scrollIntoView({ behavior: 'smooth' })
       }
     })
-    return { editProfile, profileContentSections, form, saveSuccessModal }
+    return {
+      editProfile,
+      profileContentSections,
+      finalProfileContentSections,
+      form,
+      saveSuccessModal,
+      username,
+      avatar,
+      coverPhoto,
+    }
   },
 })
 </script>

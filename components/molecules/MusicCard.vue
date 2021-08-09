@@ -11,7 +11,15 @@
     >
       <div
         v-if="showInfo"
-        class="flex flex-col justify-end h-full px-5 py-3 space-y-2 text-center text-white "
+        class="
+          flex flex-col
+          justify-end
+          h-full
+          px-5
+          py-3
+          space-y-2
+          text-center text-white
+        "
       >
         <h1 class="capitalize lato-bold-16">{{ song.title }}</h1>
         <h3 class="lato-bold-10">{{ song.date }}</h3>
