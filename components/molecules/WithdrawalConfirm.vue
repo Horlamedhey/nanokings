@@ -12,7 +12,7 @@
           You have not added your bank account details.
         </h3>
         <AtomsButton
-          class="withdraw-button"
+          class="withdraw-button lato-bold-16"
           to="/dashboard/my-account?edit=bank"
         >
           Add Account
@@ -33,7 +33,7 @@
         />
       </div>
       <AtomsButton
-        class="mt-10 withdraw-button"
+        class="mt-10 withdraw-button lato-bold-16"
         @click="$emit('processWithdrawal')"
       >
         Confirm & Withdraw
@@ -71,6 +71,6 @@ export default {
 
 <style scoped>
 .withdraw-button {
-  @apply px-4 py-3 lato-bold-16 rounded-[5px] ripple-bg-success-light text-white;
+  @apply px-4 py-3 rounded-[5px] ripple-bg-success-light text-white;
 }
 </style>
