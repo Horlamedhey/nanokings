@@ -5,7 +5,20 @@
       icon="AtomsIconsCircledCheck"
       content="Profile Saved Succesfully"
       state="success"
-      @close="closeSuccessModal"
+      @close="closeProcessModal"
+    />
+    <MoleculesBasicModal
+      :modal="subscriptionDoneModal"
+      :icon="
+        subscriptionSuccessful ? 'AtomsIconsCircledCheck' : 'AtomsIconsClose'
+      "
+      :content="
+        subscriptionSuccessful
+          ? 'Account Succesfully Upgraded'
+          : 'Account Upgrade Failed'
+      "
+      :state="subscriptionSuccessful ? 'success' : 'error'"
+      @close="closeProcessModal"
     />
     <AtomsModal :modal="subscriptionWarning.state" @close="closeModal">
       <div
@@ -27,30 +40,20 @@
       @extraAction="showOtherPlans"
     >
       <div
-        class="
-          container
-          px-4
-          mx-auto
-          mt-10
-          mb-4
-          overflow-y-auto
-          sm:px-6
-          xl:p-10
-          lg:h-auto
-        "
+        class="container px-4 mx-auto mt-12 mb-4 overflow-y-auto  sm:px-6 xl:p-10 lg:h-auto"
         :class="finalPricings.length > 1 ? ' h-[80vh]' : 'h-auto'"
       >
         <div class="flex flex-col justify-center gap-8 lg:flex-row">
           <MoleculesPricingCard
             v-for="(
-              { tier, price, planId, features, prominent }, i
+              { _id, label, price, planId, rank, features, prominent }, i
             ) in finalPricings"
             :key="`pricing-${i}`"
-            :tier="tier"
+            :tier="label"
             :price="price"
             :features="features"
             :prominent="prominent"
-            @subscribe="subscribeToPlan({ tier, price, planId })"
+            @subscribe="subscribeToPlan({ _id, label, price, planId, rank })"
           />
         </div>
       </div>
@@ -149,11 +152,12 @@ import {
 import BankAccount from '@/graphs/read/BankAccount'
 import UpdateOneUser from '@/graphs/update/UpdateOneUser'
 import UpdateOneUserWIthBank from '@/graphs/update/UpdateOneUserWIthBank'
+import changedProfileData from '~/helpers/changedProfileData'
+import SubscribeToPlan from '~/mixins/SubscribeToPlan'
 import User from '@/graphs/read/User'
 import apollo from '@/helpers/apollo'
 import capitalize from '@/helpers/capitalize'
-import changedProfileData from '~/helpers/changedProfileData'
-import SubscribeToPlan from '~/mixins/SubscribeToPlan'
+import getArrayOfObjMaxProp from '@/helpers/getArrayOfObjMaxProp'
 export interface AuthUser {
   avatar: string
   coverPhoto: string
@@ -204,6 +208,7 @@ export default defineComponent({
     const editProfile = ref(!!route.value.query.edit)
     const profileDataUnChanged = ref(true)
     const saveSuccessModal = ref(false)
+    const subscriptionDoneModal = ref(false)
     const subscriptionWarning = reactive({
       state: false,
       heading: '',
@@ -214,13 +219,15 @@ export default defineComponent({
     const banks = ref([{ name: 'Guaranty Trust Bank', code: '058' }])
     const pricings = ref([
       {
-        tier: 'Free',
+        _id: '61184e8925e5f4e02ab1c902',
+        label: 'Free',
         price: 0,
         rank: 0,
         features: [],
       },
       {
-        tier: 'Standard',
+        _id: '60e533d89cbcc5bca74436d8',
+        label: 'Standard',
         price: 15,
         rank: 1,
         planId: 13094,
@@ -233,7 +240,8 @@ export default defineComponent({
         ],
       },
       {
-        tier: 'Gold',
+        _id: '60e534239cbcc5bca74436d9',
+        label: 'Gold',
         price: 18,
         rank: 2,
         planId: 13095,
@@ -248,7 +256,8 @@ export default defineComponent({
         ],
       },
       {
-        tier: 'Premium',
+        _id: '60e5344b9cbcc5bca74436da',
+        label: 'Premium',
         price: 25,
         rank: 3,
         planId: 13096,
@@ -268,7 +277,7 @@ export default defineComponent({
       if (selectedPlan) {
         return pricings.value
           .slice(1)
-          .filter((pricing) => pricing.tier === selectedPlan)
+          .filter((pricing) => pricing.label === selectedPlan)
       }
       return []
     })
@@ -384,8 +393,13 @@ export default defineComponent({
               addonText: {
                 name: '',
                 content: 'Upgrade?',
+                disabled:
+                  user.value.subscription.tier.rank ===
+                  getArrayOfObjMaxProp(pricings.value, 'rank'),
                 action: () => (isSubscribing.value = true),
                 classes: 'lato-bold-14 text-primary',
+                disabledClasses:
+                  'lato-bold-14 text-secondary-light cursor-not-allowed',
               },
             } as any)
             return v
@@ -401,7 +415,7 @@ export default defineComponent({
       const subscriptionPlan: string = route.value.query.plan as string
       if (subscriptionPlan !== undefined) {
         const selectedPlan: number = pricings.value.find(
-          (pricing) => pricing.tier === subscriptionPlan
+          (pricing) => pricing.label === subscriptionPlan
         )?.rank as number
         const currentPlan: number = user.value.subscription.tier.rank
 
@@ -545,8 +559,9 @@ export default defineComponent({
       state.formBackup = {}
       saveSuccessModal.value = true
     }
-    const closeSuccessModal = () => {
+    const closeProcessModal = () => {
       saveSuccessModal.value = false
+      subscriptionDoneModal.value = false
       setTimeout(() => {
         editProfile.value = false
         scrollHandler('heading')
@@ -570,6 +585,7 @@ export default defineComponent({
       finalProfileContentSections,
       state,
       saveSuccessModal,
+      subscriptionDoneModal,
       basicProfile,
       pricings,
       specifiedPricings,
@@ -579,7 +595,7 @@ export default defineComponent({
       subscriptionWarning,
       updateUserImage,
       updateUserProfile,
-      closeSuccessModal,
+      closeProcessModal,
       closeModal,
       showOtherPlans,
     }

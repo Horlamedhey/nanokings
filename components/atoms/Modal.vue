@@ -38,7 +38,7 @@
           >
             <div class="max-h-[90vh]">
               <AtomsButton
-                class="absolute top-2 right-2"
+                class="absolute top-5 right-4"
                 @click="$emit('close')"
               >
                 <AtomsIconsClose class="text-secondary-light" />

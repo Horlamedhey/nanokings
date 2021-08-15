@@ -23,9 +23,11 @@
     <template v-if="addonText">
       <AtomsButton
         v-if="addonText.action"
-        :class="addonText.classes"
+        :class="
+          addonText.disabled ? addonText.disabledClasses : addonText.classes
+        "
         class="hover:opacity-80"
-        @click="addonText.action"
+        @click="addonText.disabled ? null : addonText.action()"
       >
         {{ addonText.content }}
       </AtomsButton>

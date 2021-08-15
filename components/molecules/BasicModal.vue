@@ -8,27 +8,12 @@
       aria-modal="true"
     >
       <div
-        class="
-          flex
-          items-center
-          justify-center
-          min-h-screen
-          px-4
-          pt-4
-          pb-20
-          text-center
-          sm:p-0
-        "
+        class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center  sm:p-0"
       >
         <transition name="modal-overlay">
           <div
             v-show="modal"
-            class="
-              absolute
-              inset-0
-              transition-opacity
-              bg-gray-500 bg-opacity-75
-            "
+            class="absolute inset-0 transition-opacity bg-gray-500 bg-opacity-75 "
             aria-hidden="true"
           ></div>
         </transition>
@@ -73,18 +58,16 @@
               <div class="flex items-center justify-center mx-auto">
                 <component
                   :is="icon"
-                  :class="{ 'text-success': state === 'success' }"
+                  :class="{
+                    'text-success': state === 'success',
+                    'text-error': state === 'error',
+                  }"
                   class="xs:w-10 xs:h-10"
                 ></component>
               </div>
               <div class="mt-3 text-center sm:mt-5">
                 <h3
-                  class="
-                    leading-6
-                    lato-bold-16
-                    sm:lato-bold-24
-                    text-secondary-light
-                  "
+                  class="leading-6  lato-bold-16 sm:lato-bold-24 text-secondary-light"
                   id="modal-title"
                 >
                   {{ content }}

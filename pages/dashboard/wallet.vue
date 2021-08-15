@@ -1,8 +1,8 @@
 <template>
       <main class="relative flex-1 overflow-y-auto focus:outline-none">
-        <AtomsModal :modal="withdrawModal">
+        <AtomsModal :modal="withdrawModal" @close="withdrawModal = false" >
           <div class="min-w-[300px] sm:p-6 px-4 pt-5 pb-4">
-            <MoleculesWithdrawalConfirm @close="withdrawModal = false" @processWithdrawal="processWithdrawal"/>
+            <MoleculesWithdrawalConfirm@processWithdrawal="processWithdrawal"/>
           </div>
         </AtomsModal>
         <MoleculesBasicModal :modal="withdrawSuccessModal" icon="AtomsIconsCircledCheck" content="Withdrawal Successful" state="success" @close="withdrawSuccessModal=false"/>

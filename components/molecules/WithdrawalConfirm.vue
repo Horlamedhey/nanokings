@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="flex justify-between lato-bold-20 text-secondary-light">
-      <h1>Withdraw Funds</h1>
-      <AtomsButton @click="$emit('close')">
+    <h1 class="flex justify-between lato-bold-20 text-secondary-light">
+      Withdraw Funds
+    </h1>
+    <!-- <AtomsButton @click="$emit('close')">
         <AtomsIconsClose />
-      </AtomsButton>
-    </div>
+      </AtomsButton> -->
     <template v-if="!bankAccount">
       <div>
         <h3 class="py-10 empty-content-text">

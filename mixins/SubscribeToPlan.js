@@ -1,4 +1,9 @@
 export default {
+  data() {
+    return {
+      subscriptionSuccessful: false,
+    }
+  },
   methods: {
     paymentData(tier, tx_ref, amount, payment_plan) {
       return {
@@ -21,27 +26,38 @@ export default {
           description: `Payment for ${tier} subscription plan.`,
           logo: 'https://res.cloudinary.com/befittinglife/image/upload/v1629037583/nanokings/logo.svg',
         },
-        onclose: () => {},
+        // onclose: this.handleSubscriptionDone,
       }
     },
 
-    subscribeToPlan({ tier, price, planId }) {
+    subscribeToPlan({ _id, label, price, planId, rank }) {
+      this.isSubscribing = false
       this.asyncPayWithFlutterwave(
-        this.paymentData(tier, new Date().getTime().toString(), price, planId)
-      ).then(({ transaction_id, customer: { email } }) => {
-        this.$axios
-          .get(
-            `https://api.flutterwave.com/v3/subscriptions?email=${email}&transaction_id=${transaction_id}&plan=${planId}`,
-            {
-              headers: {
-                authorization:
-                  'Bearer FLWSECK_TEST-bbb5b0978666ad9277bf1a10fd219bcc-X',
-              },
-            }
-          )
+        this.paymentData(label, new Date().getTime().toString(), price, planId)
+      ).then(({ transaction_id: transactionId, customer: { email } }) => {
+        this.$realmApp.currentUser.functions
+          .verifyTransaction(_id, transactionId)
           .then((res) => {
-            console.log(res)
+            const successful = res.data.status === 'successful'
+            if (successful) {
+              const { subscription: stale, ...rest } =
+                this.$store.state.authUser
+              const subscription = {
+                tier: {
+                  label,
+                  rank,
+                },
+                active: true,
+              }
+              this.$store.commit('setUser', { subscription, ...rest })
+            }
+            this.subscriptionSuccessful = successful
+            this.subscriptionDoneModal = true
           })
+        // .validateSubscription({ transactionId, email, planId })
+        // .then((res) => {
+        //   console.log(res)
+        // })
       })
     },
   },
