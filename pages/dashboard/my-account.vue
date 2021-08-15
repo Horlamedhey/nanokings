@@ -240,7 +240,7 @@ export default defineComponent({
 
     const finalProfileContentSections = computed(() => {
       return JSON.parse(JSON.stringify(profileContentSections.value)).map(
-        (v, i) => {
+        (v: any, i: number) => {
           if (i === 0) {
             v.children.push({
               type: 'text',
