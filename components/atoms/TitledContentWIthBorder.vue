@@ -20,9 +20,19 @@
     >
       {{ content }}
     </span>
-    <span v-if="addonText" :class="addonText.classes">
-      {{ addonText.content }}
-    </span>
+    <template v-if="addonText">
+      <AtomsButton
+        v-if="addonText.action"
+        :class="addonText.classes"
+        class="hover:opacity-80"
+        @click="addonText.action"
+      >
+        {{ addonText.content }}
+      </AtomsButton>
+      <span v-else :class="addonText.classes">
+        {{ addonText.content }}
+      </span>
+    </template>
   </div>
 </template>
 

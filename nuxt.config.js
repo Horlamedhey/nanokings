@@ -42,6 +42,7 @@ export default {
     'plugins/nuxt-client-init.client.js',
     'plugins/vue-apexchart.client.js',
     'plugins/vue-json-excel.client.js',
+    'plugins/flutterwave.client.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

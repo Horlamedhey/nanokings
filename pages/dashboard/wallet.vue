@@ -1,7 +1,7 @@
 <template>
       <main class="relative flex-1 overflow-y-auto focus:outline-none">
         <AtomsModal :modal="withdrawModal">
-          <div class="min-w-[300px]">
+          <div class="min-w-[300px] sm:p-6 px-4 pt-5 pb-4">
             <MoleculesWithdrawalConfirm @close="withdrawModal = false" @processWithdrawal="processWithdrawal"/>
           </div>
         </AtomsModal>

@@ -2,7 +2,7 @@
   <header
     class="fixed top-0 left-0 right-0 z-10 flex items-center flex-shrink-0 h-16"
   >
-    <AtomsButton class="ml-4 md:hidden" @click="logout">
+    <AtomsButton class="ml-4 md:hidden" to="/">
       <AtomsIconsLogo />
     </AtomsButton>
     <AtomsButton
@@ -77,14 +77,7 @@
                 alt="avatar"
               />
               <span
-                class="
-                  hidden
-                  ml-1
-                  mr-3
-                  sm:inline
-                  lato-semibold-16
-                  text-secondary-light
-                "
+                class="hidden ml-1 mr-3  sm:inline lato-semibold-16 text-secondary-light"
               >
                 {{ user.username }}
               </span>

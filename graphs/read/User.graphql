@@ -34,6 +34,7 @@ query User($id: ObjectId) {
     subscription {
       tier {
         label
+        rank
       }
       active
     }

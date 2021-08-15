@@ -7,6 +7,54 @@
       state="success"
       @close="closeSuccessModal"
     />
+    <AtomsModal :modal="subscriptionWarning.state" @close="closeModal">
+      <div
+        class="p-4 min-h-40 w-80 max-w-[85vw]"
+        :class="subscriptionWarning.color"
+      >
+        <h3 class="text-xl font-semibold">{{ subscriptionWarning.heading }}</h3>
+        <p class="mt-4 text-sm">{{ subscriptionWarning.content }}</p>
+      </div>
+    </AtomsModal>
+    <AtomsModal
+      :modal="isSubscribing"
+      :extraActionText="
+        $route.query.plan !== undefined &&
+        upgradeablePricings.length > 1 &&
+        'See other plans'
+      "
+      @close="closeModal"
+      @extraAction="showOtherPlans"
+    >
+      <div
+        class="
+          container
+          px-4
+          mx-auto
+          mt-10
+          mb-4
+          overflow-y-auto
+          sm:px-6
+          xl:p-10
+          lg:h-auto
+        "
+        :class="finalPricings.length > 1 ? ' h-[80vh]' : 'h-auto'"
+      >
+        <div class="flex flex-col justify-center gap-8 lg:flex-row">
+          <MoleculesPricingCard
+            v-for="(
+              { tier, price, planId, features, prominent }, i
+            ) in finalPricings"
+            :key="`pricing-${i}`"
+            :tier="tier"
+            :price="price"
+            :features="features"
+            :prominent="prominent"
+            @subscribe="subscribeToPlan({ tier, price, planId })"
+          />
+        </div>
+      </div>
+    </AtomsModal>
     <div class="py-6">
       <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
         <h1 id="heading" class="lora-bold-20 sm:lora-bold-28 text-secondary">
@@ -91,6 +139,7 @@ import {
   toRef,
   onMounted,
   useRoute,
+  useRouter,
   useStore,
   computed,
   useContext,
@@ -104,6 +153,7 @@ import User from '@/graphs/read/User'
 import apollo from '@/helpers/apollo'
 import capitalize from '@/helpers/capitalize'
 import changedProfileData from '~/helpers/changedProfileData'
+import SubscribeToPlan from '~/mixins/SubscribeToPlan'
 export interface AuthUser {
   avatar: string
   coverPhoto: string
@@ -113,7 +163,7 @@ export interface AuthUser {
   email: string
   phone: string
   gender: string
-  subscription: { tier: { label: string }; active: boolean }
+  subscription: { tier: { label: string; rank: number }; active: boolean }
   facebook: string
   instagram: string
   twitter: string
@@ -133,9 +183,11 @@ interface PropsData {
 export default defineComponent({
   name: 'MyAccount',
   props: { user: { type: Object as () => AuthUser, default: () => {} } },
+  mixins: [SubscribeToPlan],
   setup(props: PropsData) {
     const context = useContext()
     const route = useRoute()
+    const router = useRouter()
     const store = useStore<State>()
     // const router = useRouter()
     const apolloClient = context.app.apolloProvider!.defaultClient
@@ -152,7 +204,87 @@ export default defineComponent({
     const editProfile = ref(!!route.value.query.edit)
     const profileDataUnChanged = ref(true)
     const saveSuccessModal = ref(false)
+    const subscriptionWarning = reactive({
+      state: false,
+      heading: '',
+      content: '',
+      color: '',
+    })
+    const isSubscribing = ref(false)
     const banks = ref([{ name: 'Guaranty Trust Bank', code: '058' }])
+    const pricings = ref([
+      {
+        tier: 'Free',
+        price: 0,
+        rank: 0,
+        features: [],
+      },
+      {
+        tier: 'Standard',
+        price: 15,
+        rank: 1,
+        planId: 13094,
+        features: [
+          'Unlimited singles',
+          'Save 50%',
+          'Keep 70% of revenue',
+          'Facebook & IG Stories',
+          'Spotify, Apple Music etc.',
+        ],
+      },
+      {
+        tier: 'Gold',
+        price: 18,
+        rank: 2,
+        planId: 13095,
+        prominent: true,
+        features: [
+          'Unlimited Singles & EPs',
+          'Save 50%',
+          'Keep 80% of revenue',
+          'Facebook & IG Stories',
+          'Spotify, Apple Music etc.',
+          'Earn from Youtube Content ID',
+        ],
+      },
+      {
+        tier: 'Premium',
+        price: 25,
+        rank: 3,
+        planId: 13096,
+        features: [
+          'Unlimited singles',
+          'Unlimited EPs & Albums',
+          'Save 50%',
+          'Keep 70% of revenue',
+          'Facebook & IG Stories',
+          'Spotify, Apple Music etc.',
+          'Earn from Youtube Content ID',
+        ],
+      },
+    ])
+    const specifiedPricings = computed(() => {
+      const selectedPlan: string = route.value.query.plan as string
+      if (selectedPlan) {
+        return pricings.value
+          .slice(1)
+          .filter((pricing) => pricing.tier === selectedPlan)
+      }
+      return []
+    })
+
+    const upgradeablePricings = computed(() => {
+      return pricings.value
+        .slice(1)
+        .filter((pricing) => pricing.rank > user.value.subscription.tier.rank)
+    })
+
+    const finalPricings = computed(() => {
+      return route.value.query.plan !== undefined
+        ? specifiedPricings.value
+        : upgradeablePricings.value
+    })
+
     const profileContentSections = computed(() => {
       return [
         {
@@ -252,6 +384,7 @@ export default defineComponent({
               addonText: {
                 name: '',
                 content: 'Upgrade?',
+                action: () => (isSubscribing.value = true),
                 classes: 'lato-bold-14 text-primary',
               },
             } as any)
@@ -264,6 +397,37 @@ export default defineComponent({
     const scrollHandler = (element: any) => {
       document!.getElementById(element)?.scrollIntoView({ behavior: 'smooth' })
     }
+    const checkIfToSubscribe = () => {
+      const subscriptionPlan: string = route.value.query.plan as string
+      if (subscriptionPlan !== undefined) {
+        const selectedPlan: number = pricings.value.find(
+          (pricing) => pricing.tier === subscriptionPlan
+        )?.rank as number
+        const currentPlan: number = user.value.subscription.tier.rank
+
+        switch (true) {
+          case selectedPlan > currentPlan:
+            isSubscribing.value = true
+            break
+
+          case selectedPlan < currentPlan:
+            subscriptionWarning.heading = 'Downgrade Warning!!!'
+            subscriptionWarning.content =
+              'The plan you selected is lower than your currently subscribed plan.'
+            subscriptionWarning.color = 'text-error'
+            subscriptionWarning.state = true
+            break
+
+          default:
+            subscriptionWarning.heading = 'Hello!!!'
+            subscriptionWarning.content =
+              "You're currently on the same plan, no action will be taken."
+            subscriptionWarning.color = 'text-secondary-light'
+            subscriptionWarning.state = true
+            break
+        }
+      }
+    }
     onMounted(() => {
       const editQuery: string = route.value.query.edit as string
       if (editProfile.value) {
@@ -271,6 +435,7 @@ export default defineComponent({
       } else if (route!.value!.hash) {
         scrollHandler(route!.value!.hash.split('#')[1]!)
       }
+      checkIfToSubscribe()
     })
 
     watch(state, (curr, prev) => {
@@ -387,6 +552,17 @@ export default defineComponent({
         scrollHandler('heading')
       }, 300)
     }
+    const closeModal = () => {
+      subscriptionWarning.state = false
+      isSubscribing.value = false
+      if (route.value.query.plan) {
+        router.replace('/dashboard/my-account')
+      }
+    }
+    const showOtherPlans = () => {
+      router.replace('/dashboard/my-account')
+      isSubscribing.value = true
+    }
     return {
       editProfile,
       profileDataUnChanged,
@@ -395,9 +571,17 @@ export default defineComponent({
       state,
       saveSuccessModal,
       basicProfile,
+      pricings,
+      specifiedPricings,
+      upgradeablePricings,
+      finalPricings,
+      isSubscribing,
+      subscriptionWarning,
       updateUserImage,
       updateUserProfile,
       closeSuccessModal,
+      closeModal,
+      showOtherPlans,
     }
   },
 })

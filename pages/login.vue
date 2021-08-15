@@ -104,8 +104,9 @@ export default defineComponent({
         })
         store.commit('setUser', user)
         const redirectRoute: any = route.value.query.redirect
+        const hash: any = route.value.hash
         if (redirectRoute) {
-          router.push(redirectRoute)
+          router.push({ path: redirectRoute, hash })
         } else {
           router.push('/dashboard')
         }

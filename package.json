@@ -25,6 +25,7 @@
     "apexcharts": "^3.27.3",
     "cookie-universal-nuxt": "^2.1.5",
     "core-js": "^3.9.1",
+    "flutterwave-vue-v3": "^1.0.5",
     "graphql-tag": "^2.12.4",
     "js-cookie": "^3.0.0",
     "libphonenumber-js": "^1.9.21",

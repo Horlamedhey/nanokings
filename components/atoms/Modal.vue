@@ -2,33 +2,18 @@
   <transition name="modal-overlay">
     <div
       v-show="modal"
-      class="fixed inset-0 z-10 overflow-y-hidden sm:left-64 top-16"
+      class="fixed inset-0 z-20 overflow-y-hidden"
       aria-labelledby="modal-title"
       role="dialog"
       aria-modal="true"
     >
       <div
-        class="
-          flex
-          items-center
-          justify-center
-          min-h-screen
-          px-4
-          pt-4
-          pb-20
-          text-center
-          sm:p-0
-        "
+        class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center  sm:p-0"
       >
         <transition name="modal-overlay">
           <div
             v-show="modal"
-            class="
-              absolute
-              inset-0
-              transition-opacity
-              bg-gray-500 bg-opacity-75
-            "
+            class="absolute inset-0 transition-opacity bg-gray-500 bg-opacity-75 "
             aria-hidden="true"
           ></div>
         </transition>
@@ -42,20 +27,32 @@
         <transition name="modal-overlay">
           <div
             class="
-              px-4
-              pt-5
-              pb-4
+              max-h-[90vh] max-w-[95vw]
               overflow-hidden
               transition-all
               transform
               bg-white
               rounded-lg
               shadow-xl
-              sm:max-w-sm
-              sm:p-6
             "
           >
-            <slot v-show="modal"></slot>
+            <div class="max-h-[90vh]">
+              <AtomsButton
+                class="absolute top-2 right-2"
+                @click="$emit('close')"
+              >
+                <AtomsIconsClose class="text-secondary-light" />
+              </AtomsButton>
+              <slot v-show="modal"></slot>
+
+              <AtomsButton
+                v-if="extraActionText"
+                class="mb-2 hover:opacity-80 lato-bold-14 text-primary"
+                @click="$emit('extraAction')"
+              >
+                {{ extraActionText }}
+              </AtomsButton>
+            </div>
           </div>
         </transition>
       </div>
@@ -71,6 +68,7 @@ export default {
     icon: { type: String, default: '' },
     content: { type: String, default: '' },
     state: { type: String, default: '' },
+    extraActionText: { type: [Boolean, String], default: '' },
   },
 }
 </script>
