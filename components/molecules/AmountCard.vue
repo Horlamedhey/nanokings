@@ -17,10 +17,10 @@
 
 <script>
 export default {
-  name: 'WalletBalance',
+  name: 'AmountCard',
   props: {
     title: { type: String, required: true },
-    amount: { type: String, default: '0' },
+    amount: { type: Number, default: 0 },
     color: { type: String, default: '' },
   },
 }

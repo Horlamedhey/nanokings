@@ -1,0 +1,19 @@
+query BankAccount(
+  $bankCode: String!
+  $accountName: String!
+  $accountNumber: String!
+) {
+  bankAccount(
+    query: {
+      bankCode: $bankCode
+      accountName: $accountName
+      accountNumber: $accountNumber
+    }
+  ) {
+    _id
+    bankName
+    bankCode
+    accountName
+    accountNumber
+  }
+}

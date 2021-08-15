@@ -1,6 +1,12 @@
 <template>
-  <div class="loadingio-spinner-eclipse-434wf2pon3a">
-    <div class="ldio-qsi76kw0mz9">
+  <div
+    class="loadingio-spinner-eclipse-434wf2pon3a"
+    :style="{ width: `${size}px`, height: `${size}px` }"
+  >
+    <div
+      class="ldio-qsi76kw0mz9"
+      :style="{ transform: `translateZ(0) scale(${size / 100})` }"
+    >
       <div :style="{ boxShadow: `0 5px 0 0 ${color}` }"></div>
     </div>
   </div>
@@ -9,7 +15,10 @@
 <script>
 export default {
   name: 'Loading',
-  props: { color: { type: String, default: '#ffffff' } },
+  props: {
+    color: { type: String, default: '#ffffff' },
+    size: { type: Number, default: 30 },
+  },
 }
 </script>
 
@@ -26,8 +35,6 @@ export default {
   }
 }
 .loadingio-spinner-eclipse-434wf2pon3a {
-  width: 30px;
-  height: 30px;
   display: inline-block;
   overflow: hidden;
   background: transparent;
@@ -36,7 +43,7 @@ export default {
   width: 100%;
   height: 100%;
   position: relative;
-  transform: translateZ(0) scale(0.3);
+
   backface-visibility: hidden;
   transform-origin: 0 0; /* see note above */
 }

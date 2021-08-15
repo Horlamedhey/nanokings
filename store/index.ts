@@ -1,6 +1,9 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex'
+import apollo from '~/helpers/apollo'
+import User from '@/graphs/read/User'
 
 export const state = () => ({
+  loading: true,
   overlay: false,
   loggedIn: false,
   authUser: null,
@@ -31,6 +34,9 @@ export const mutations: MutationTree<RootState> = {
     state.authUser = null
     state.overlay = false
   },
+  setLoadState(state, loadState) {
+    state.loading = loadState
+  },
 }
 
 export const actions: ActionTree<RootState, RootState> = {
@@ -38,11 +44,22 @@ export const actions: ActionTree<RootState, RootState> = {
     const authUser = app.$realmApp.currentUser
     if (authUser) {
       app.$cookies.set('loggedIn', true)
+      const { _id: id } = await authUser.refreshCustomData()
+      await apollo(app)
+      const {
+        data: { user },
+      } = await app.apolloProvider!.defaultClient.query({
+        query: User,
+        variables: {
+          id,
+        },
+      })
 
-      commit('setUser', await authUser.refreshCustomData())
+      commit('setUser', user)
     } else {
       app.$cookies.remove('loggedIn')
       commit('unSetUser')
     }
+    commit('setLoadState', false)
   },
 }

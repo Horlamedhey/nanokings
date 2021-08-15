@@ -76,7 +76,6 @@ import apollo from '~/helpers/apollo'
 
 export default defineComponent({
   name: 'MyMusic',
-  layout: 'dashboard',
   apollo: {
     songs: {
       query: SongsQuery,

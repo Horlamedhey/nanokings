@@ -1,0 +1,41 @@
+query User($id: ObjectId) {
+  user(query: { _id: $id }) {
+    _id
+    avatar
+    coverPhoto
+    email
+    firstName
+    lastName
+    gender
+    phone
+    username
+    facebook
+    twitter
+    instagram
+    youtube
+    bankAccount {
+      accountName
+      accountNumber
+      bankName
+      bankCode
+    }
+    walletBalance
+    releases
+    streams
+    views
+    sales
+    downloads
+    transactions {
+      _id
+    }
+    songs {
+      _id
+    }
+    subscription {
+      tier {
+        label
+      }
+      active
+    }
+  }
+}

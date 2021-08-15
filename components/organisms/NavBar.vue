@@ -105,7 +105,6 @@
                 <AtomsNavItem
                   class="
                     block
-                    p-4
                     leading-5
                     text-center
                     transition
@@ -117,6 +116,7 @@
                     text-error
                     hover:bg-opacity-90
                   "
+                  contentClass="p-4"
                   @click="logout"
                 >
                   Logout
@@ -124,7 +124,6 @@
                 <AtomsNavItem
                   class="
                     block
-                    p-4
                     leading-5
                     text-center text-white
                     rounded-lg
@@ -134,6 +133,7 @@
                     ripple-bg-primary-DEFAULT
                   "
                   to="/dashboard"
+                  contentClass="p-4"
                   @click="setMenu(false)"
                 >
                   Dashboard
@@ -143,7 +143,6 @@
                 <AtomsNavItem
                   class="
                     block
-                    p-4
                     leading-5
                     text-center
                     transition
@@ -156,6 +155,7 @@
                     hover:bg-opacity-90
                   "
                   to="/login"
+                  contentClass="p-4"
                   @click="setMenu(false)"
                 >
                   Login
@@ -163,7 +163,6 @@
                 <AtomsNavItem
                   class="
                     block
-                    p-4
                     leading-5
                     text-center text-white
                     rounded-lg
@@ -172,6 +171,7 @@
                     lg:mx-2
                     ripple-bg-primary-DEFAULT
                   "
+                  contentClass="p-4"
                   to="/create-account"
                   @click="setMenu(false)"
                 >
@@ -226,8 +226,7 @@ export default defineComponent({
       setMenu(false)
       context.app.$apolloHelpers.onLogout()
       context.app.$realmApp.currentUser!.logOut().then(() => {
-        router.replace('/login')
-        store.commit('unSetUser')
+        router.replace('/login?logout=true')
       })
     }
     return {

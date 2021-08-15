@@ -507,7 +507,7 @@ import InsertOneSong from '@/graphs/create/InsertOneSong'
 import apollo from '~/helpers/apollo'
 export default defineComponent({
   name: 'CreateMusic',
-  layout: 'dashboard',
+  // layout: 'dashboard',
   setup() {
     const context = useContext()
     const apolloClient = context.app.apolloProvider!.defaultClient

@@ -1,0 +1,9 @@
+query BankAccount($id: ObjectId!) {
+  bankAccount(query: { _id: $id }) {
+    _id
+    bankName
+    bankCode
+    accountName
+    accountNumber
+  }
+}

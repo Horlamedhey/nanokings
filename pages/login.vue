@@ -57,7 +57,10 @@ import {
   useRouter,
   useRoute,
   useStore,
+  onBeforeMount,
 } from '@nuxtjs/composition-api'
+import User from '@/graphs/read/User'
+import apollo from '@/helpers/apollo'
 
 interface Form {
   email: string
@@ -73,35 +76,39 @@ export default defineComponent({
     const loading = ref(false)
     const form = ref({} as Form)
     const formErrors = ref([] as Array<string>)
+    onBeforeMount(() => {
+      if (route.value.query.logout === 'true') {
+        store.commit('unSetUser')
+      }
+    })
     const login = async () => {
       try {
         formErrors.value = []
         loading.value = true
         const { email, password } = form.value
-        const user = await context.app.$realmApp.logIn(
+        const {
+          customData: { _id: id },
+        } = await context.app.$realmApp.logIn(
           context.app.$credentials.emailPassword(email, password)
         )
 
         context.app.$cookies.set('loggedIn', true)
-        await user.refreshCustomData()
-        console.log(user.customData)
-        store.commit('setUser', user.customData)
+        await apollo(context.app)
+        const {
+          data: { user },
+        } = await context.app.apolloProvider!.defaultClient.query({
+          query: User,
+          variables: {
+            id,
+          },
+        })
+        store.commit('setUser', user)
         const redirectRoute: any = route.value.query.redirect
         if (redirectRoute) {
           router.push(redirectRoute)
         } else {
           router.push('/dashboard')
         }
-        // if (Object.keys(customData).length > 0) {
-        // } else {
-        //   await context.app.$realmApp
-        //     .currentUser!.mongoClient('mongodb-atlas')
-        //     .db('nanokings')
-        //     .collection('users')
-        //     .updateOne({ email }, { $set: { uid: id } })
-        //   await context.app.$realmApp.currentUser?.refreshCustomData()
-        //   router.push('/dashboard')
-        // }
       } catch (err) {
         formErrors.value.push(err.error)
         console.log(err.error)

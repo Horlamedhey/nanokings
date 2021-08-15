@@ -112,19 +112,22 @@
 </template>
 
 <script lang="ts">
-// import { apiKeyCredentials, mongodb, realmApp } from '@/helpers/realmAuth'
 import {
   defineComponent,
   ref,
   useContext,
   useRouter,
+  useStore,
 } from '@nuxtjs/composition-api'
+import InsertOneUser from '@/graphs/create/InsertOneUser'
+import apollo from '~/helpers/apollo'
 import countries from '@/static/data/countries.json'
 
 interface Form {
   firstName?: string
   lastName?: string
   country?: string
+  phone?: string
   email?: string
   password?: string
   password_confirm?: string
@@ -138,6 +141,8 @@ export default defineComponent({
   setup() {
     const router = useRouter()
     const context = useContext()
+    const store = useStore()
+    const apolloClient = context.app.apolloProvider!.defaultClient
     const realmApp = context.app.$realmApp
     const form = ref({} as Form)
     const formErrors = ref([] as Array<string>)
@@ -168,26 +173,21 @@ export default defineComponent({
           )
           await realmApp.logIn(context.app.$anonymousCredentials)
           const { password, ...rest } = formData
-          await realmApp
-            .currentUser!.mongoClient('mongodb-atlas')
-            .db('nanokings')
-            .collection('users')
-            .insertOne({
+
+          await apollo(context)
+          // console.log(form.value)
+          await apolloClient.mutate({
+            mutation: InsertOneUser,
+            variables: {
               ...rest,
               createdAt: new Date(),
-              downloads: 0,
-              notifications: [],
-              pendingNotifications: false,
-              sales: 0,
-              songs: [],
-              streams: 0,
-              releases: 0,
-              walletBalance: 0.0,
-              transactions: [],
-              updatedAt: new Date(),
-              views: 0,
-            })
-          await realmApp.currentUser.logOut()
+            },
+          })
+          await new Promise<void>((resolve) => {
+            realmApp.users.forEach(async (user: any) => await user.logOut())
+            resolve()
+          })
+
           if (formData.email) {
             formFilled.value.push(formData.email)
           }

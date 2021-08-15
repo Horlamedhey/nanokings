@@ -39,52 +39,49 @@ import {
   useStore,
 } from '@nuxtjs/composition-api'
 
-export interface State {
-  authUser: {
-    sales: { $numberDouble: number }
-    downloads: { $numberInt: string }
-    streams: { $numberInt: string }
-    views: { $numberInt: string }
-  }
+interface AuthUser {
+  sales: number
+  downloads: number
+  streams: number
+  views: number
+}
+
+interface PropsData {
+  user: AuthUser
 }
 export default defineComponent({
   name: 'SalesReport',
-  layout: 'dashboard',
-  // props: {
-  //   user: {
-  //     type: Object as () => User,
-  //     required: true,
-  //   },
-  // },
+  props: {
+    user: {
+      type: Object as () => AuthUser,
+      required: true,
+    },
+  },
 
-  setup() {
-    const store = useStore<State>()
-    const user = computed(() => {
-      const { sales, downloads, streams, views } = store.state.authUser || {}
-      return { sales, downloads, streams, views }
-    })
+  setup(props: PropsData) {
+    const user = ref(props.user)
     const statistics = ref([
       {
         title: 'Downloads',
-        value: user.value.downloads?.$numberInt,
+        value: user.value.downloads,
         image: 'downloads',
       },
       {
         title: 'Streams',
-        value: user.value.streams?.$numberInt,
+        value: user.value.streams,
         // addon: '+28%',
         image: 'streams',
       },
       {
         title: 'Views',
-        value: user.value.views?.$numberInt,
+        value: user.value.views,
         // addon: '+70%',
         image: 'views',
       },
     ])
     const amountCardDetails = reactive({
       title: 'Total Sales',
-      amount: user.value.sales?.$numberDouble,
+      amount: user.value.sales,
       color: 'bg-success-light',
     })
     const tableHeadings = ref([

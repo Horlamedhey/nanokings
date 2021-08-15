@@ -1,6 +1,12 @@
 <template>
   <li class="list-none cursor-pointer" @click="$emit('click', $event)">
-    <a v-if="href" :href="href" :target="target" :class="contentClass">
+    <a
+      v-if="href"
+      :href="href"
+      :target="target"
+      :class="contentClass"
+      class="inline-block"
+    >
       <component
         :is="icon"
         v-if="icon && addOnBefore"
@@ -18,6 +24,7 @@
       :to="to"
       :exact="exact"
       :class="contentClass"
+      class="inline-block"
       :active-class="activeClass"
       @click="$emit('click')"
     >
@@ -34,7 +41,12 @@
         class="w-5 h-5"
       ></component>
     </n-link>
-    <AtomsButton v-else :class="contentClass" @click="$emit('click')">
+    <AtomsButton
+      v-else
+      :class="contentClass"
+      class="inline-block"
+      @click="$emit('click')"
+    >
       <component
         :is="icon"
         v-if="icon && addOnBefore"

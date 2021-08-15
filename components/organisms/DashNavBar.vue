@@ -77,7 +77,14 @@
                 alt="avatar"
               />
               <span
-                class="hidden ml-1 mr-3  sm:inline lato-semibold-16 text-secondary-light"
+                class="
+                  hidden
+                  ml-1
+                  mr-3
+                  sm:inline
+                  lato-semibold-16
+                  text-secondary-light
+                "
               >
                 {{ user.username }}
               </span>
@@ -140,9 +147,9 @@ export default defineComponent({
     })
     const logout = () => {
       context.app.$apolloHelpers.onLogout()
-      context.app.$realmApp
-        .currentUser!.logOut()
-        .then(() => router.replace('/login'))
+      context.app.$realmApp.currentUser!.logOut().then(() => {
+        router.replace('/login?logout=true')
+      })
     }
     return { notificationsMenu, userMenu, user, scrollY, logout }
   },

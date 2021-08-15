@@ -1,22 +1,22 @@
 <template>
-  <!-- <div :style="{ height: `${navBarHeight}px` }"></div> -->
-  <!-- <AtomsOverlay></AtomsOverlay> -->
-  <div
-    class="transition duration-300 bg-[#F6F7FE] h-screen overflow-hidden flex"
-  >
-    <OrganismsDashSideMenuMobile
-      :sideMenuOpen="sideMenuOpen"
-      @close="sideMenuOpen = false"
-    />
-    <!-- Static sidebar for desktop -->
-    <OrganismsDashSideMenu class="hidden w-64 md:flex md:flex-shrink-0" />
-    <div class="flex flex-col flex-1 w-0">
-      <OrganismsDashNavBar @openSideMenu="sideMenuOpen = true" />
-      <div style="height: 70px"></div>
+  <client-only>
+    <div
+      class="transition duration-300 bg-[#F6F7FE] h-screen overflow-hidden flex"
+    >
+      <OrganismsDashSideMenuMobile
+        :sideMenuOpen="sideMenuOpen"
+        @close="sideMenuOpen = false"
+      />
+      <!-- Static sidebar for desktop -->
+      <OrganismsDashSideMenu class="hidden w-64 md:flex md:flex-shrink-0" />
+      <div class="flex flex-col flex-1 w-0">
+        <OrganismsDashNavBar @openSideMenu="sideMenuOpen = true" />
+        <div style="height: 70px"></div>
 
-      <Nuxt />
+        <Nuxt />
+      </div>
     </div>
-  </div>
+  </client-only>
 </template>
 
 <script lang="ts">

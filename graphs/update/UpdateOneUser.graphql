@@ -1,0 +1,37 @@
+mutation UpdateOneUser(
+  $id: ObjectId!
+  $email: String
+  $firstName: String
+  $lastName: String
+  $phone: String
+  $avatar: String
+  $username: String
+  $gender: String
+  $facebook: String
+  $instagram: String
+  $twitter: String
+  $youtube: String
+  $coverPhoto: String
+  $updatedAt: DateTime!
+) {
+  updateOneUser(
+    query: { _id: $id }
+    set: {
+      email: $email
+      firstName: $firstName
+      lastName: $lastName
+      phone: $phone
+      avatar: $avatar
+      username: $username
+      gender: $gender
+      facebook: $facebook
+      instagram: $instagram
+      twitter: $twitter
+      youtube: $youtube
+      coverPhoto: $coverPhoto
+      updatedAt: $updatedAt
+    }
+  ) {
+    _id
+  }
+}

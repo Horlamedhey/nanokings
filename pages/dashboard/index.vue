@@ -28,56 +28,42 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  reactive,
-  computed,
-  useStore,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, reactive } from '@nuxtjs/composition-api'
 // import { realmApp } from '~/helpers/realmAuth'
 
-export interface State {
-  authUser: {
-    username: string
-    walletBalance: { $numberDouble: number }
-    releases: { $numberInt: string }
-    streams: { $numberInt: string }
-    views: { $numberInt: string }
-    songs: Array<any>
-  }
+interface AuthUser {
+  username: string
+  walletBalance: number
+  releases: number
+  streams: number
+  views: number
+  songs: Array<any>
+}
+
+interface PropsData {
+  user: AuthUser
 }
 export default defineComponent({
   name: 'DashboardHome',
-  layout: 'dashboard',
-  // props: {
-  //   user: {
-  //     type: Object as () => User,
-  //     required: true,
-  //   },
-  // },
-  setup() {
-    const store = useStore<State>()
-    const user = computed(() => {
-      const { username, walletBalance, releases, streams, views, songs } =
-        store.state.authUser || {}
-      return { username, walletBalance, releases, streams, views, songs }
-    })
+  props: { user: { type: Object as () => AuthUser, required: true } },
+  setup(props: PropsData) {
+    const user = ref(props.user)
+
     const statistics = ref([
       {
         title: 'Releases',
-        value: user.value.releases?.$numberInt,
+        value: user.value.releases,
         image: 'releases',
       },
       {
         title: 'Streams',
-        value: user.value.streams?.$numberInt,
+        value: user.value.streams,
         // addon: '+28%',
         image: 'streams',
       },
       {
         title: 'Views',
-        value: user.value.views?.$numberInt,
+        value: user.value.views,
         // addon: '+70%',
         image: 'views',
       },
@@ -85,7 +71,7 @@ export default defineComponent({
     const releases = ref(user.value.songs || [])
     const amountCardDetails = reactive({
       title: 'Wallet Balance',
-      amount: user.value.walletBalance?.$numberDouble,
+      amount: user.value.walletBalance,
       color: 'bg-primary',
     })
     return {

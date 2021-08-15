@@ -39,40 +39,35 @@ import {
   useStore,
 } from '@nuxtjs/composition-api'
 
-export interface State {
-  authUser: {
-    sales: { $numberDouble: number }
-    walletBalance: { $numberDouble: number }
-    transactions: Array<any>
-  }
+interface AuthUser {
+  sales: number
+  walletBalance: number
+  transactions: Array<any>
+}
+
+interface PropsData {
+  user: AuthUser
 }
 export default defineComponent({
   name: 'Wallet',
-  layout: 'dashboard',
+  props: { user: { type: Object as () => AuthUser, required: true } },
 
-  setup() {
-    const store = useStore<State>()
-    const user = computed(() => {
-      const { sales, walletBalance, transactions } = store.state.authUser || {}
-      return { sales, walletBalance, transactions }
-    })
+  setup(props: PropsData) {
+    const user = ref(props.user)
     const amountCards = ref([
       {
         title: 'Available Balance',
-        amount: user.value.walletBalance?.$numberDouble,
+        amount: user.value.walletBalance,
         color: 'bg-primary',
       },
       {
         title: 'Total Sales',
-        amount: user.value.sales?.$numberDouble,
+        amount: user.value.sales,
         color: 'bg-success-light',
       },
       {
         title: 'Total Withdrawn',
-        amount: (
-          user.value.walletBalance?.$numberDouble -
-          user.value.walletBalance?.$numberDouble
-        ).toString(),
+        amount: user.value.walletBalance - user.value.walletBalance,
         color: 'bg-accent-light',
       },
     ])
