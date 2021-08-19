@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import Vue from 'vue'
-// import moment from 'moment'
+import moment from 'moment'
 
-// Vue.filter('timeago', (value) => {
-//   return moment(value).fromNow()
-// })
+Vue.filter('timeago', (value) => {
+  return moment(value).fromNow()
+})
 
 // Vue.filter('formatDate', (value) => {
 //   return moment(value).format('D MMMM YYYY')

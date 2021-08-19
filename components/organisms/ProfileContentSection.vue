@@ -11,6 +11,7 @@
         :id="detail.id"
         :title="detail.label"
         :content="detail.value"
+        :altContent="detail.altValue"
         :addonText="detail.addonText"
       />
     </div>

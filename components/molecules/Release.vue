@@ -1,7 +1,18 @@
 <template>
   <div
     class="w-[291px] h-[126px] rounded-[10px] overflow-hidden"
-    :style="{ backgroundImage: `url(/images/releases/${release.image}.png)` }"
+    :style="{
+      backgroundImage: `url(${$cloudinary.image.url(
+        `nanokings/artwork/${release.artWork}`,
+        {
+          crop: 'lfill',
+          width: 291,
+          height: 126,
+          format: 'webp',
+          radius: '10',
+        }
+      )})`,
+    }"
   >
     <div
       class="
@@ -23,11 +34,14 @@
         <div class="flex items-center mt-2">
           <AtomsIconsClock class="w-[15px] h-[15px]" />
           <span class="inline-block ml-1 lato-medium-14">
-            {{ release.time }}
+            {{ release.createdAt | timeago }}
           </span>
         </div>
       </div>
-      <AtomsButton class="lato-medium-14">
+      <AtomsButton
+        class="lato-medium-14"
+        :to="`/dashboard/my-music/${release.uid}`"
+      >
         <span class="border-b">View stats</span>
       </AtomsButton>
     </div>

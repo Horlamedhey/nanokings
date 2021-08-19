@@ -16,33 +16,17 @@ export default {
         this.authUser
       return { username, walletBalance, releases, streams, views, songs }
     },
-    // userMusic() {
-    //   const {
-    //     username,
-    //     walletBalance,
-    //     releases,
-    //     streams,
-    //     views,
-    //     songs,
-    //     avatar,
-    //   } = this.authUser
-    //   return {
-    //     username,
-    //     walletBalance,
-    //     releases,
-    //     streams,
-    //     views,
-    //     son,
-    //     avatargs,
-    //   }
-    // },
+    userMusic() {
+      const { subscription, songs } = this.authUser
+      return { subscription, songs }
+    },
     userSalesReport() {
       const { sales, downloads, streams, views } = this.authUser
       return { sales, downloads, streams, views }
     },
     userWallet() {
-      const { sales, walletBalance, transactions } = this.authUser
-      return { sales, walletBalance, transactions }
+      const { sales, walletBalance, transactions, bankAccount } = this.authUser
+      return { sales, walletBalance, transactions, bankAccount }
     },
     userAccount() {
       const {
@@ -97,8 +81,8 @@ export default {
         case '/dashboard/sales-report':
           return this.userSalesReport
 
-        default:
-          return this.userDashboard
+        case '/dashboard/wallet':
+          return this.userWallet
       }
     },
   },

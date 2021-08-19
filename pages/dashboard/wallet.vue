@@ -2,10 +2,19 @@
       <main class="relative flex-1 overflow-y-auto focus:outline-none">
         <AtomsModal :modal="withdrawModal" @close="withdrawModal = false" >
           <div class="min-w-[300px] sm:p-6 px-4 pt-5 pb-4">
-            <MoleculesWithdrawalConfirm@processWithdrawal="processWithdrawal"/>
+            <MoleculesWithdrawalConfirm :bankAccount="bankAccount" @close="finishWithdrawal"/>
           </div>
         </AtomsModal>
         <MoleculesBasicModal :modal="withdrawSuccessModal" icon="AtomsIconsCircledCheck" content="Withdrawal Successful" state="success" @close="withdrawSuccessModal=false"/>
+        <!-- <AtomsModal :modal="subscriptionWarning.state" @close="closeModal">
+      <div
+        class="p-4 min-h-40 w-80 max-w-[85vw]"
+        :class="subscriptionWarning.color"
+      >
+        <h3 class="text-xl font-semibold">{{ subscriptionWarning.heading }}</h3>
+        <p class="mt-4 text-sm">{{ subscriptionWarning.content }}</p>
+      </div>
+    </AtomsModal> -->
         <div class="py-6">
           <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
         <h1 class="lora-bold-20 sm:lora-bold-28 text-secondary">Wallet</h1>
@@ -43,6 +52,12 @@ interface AuthUser {
   sales: number
   walletBalance: number
   transactions: Array<any>
+  bankAccount: {
+    bankName: string
+    bankCode: string
+    accountName: string
+    accountNumber: string
+  }
 }
 
 interface PropsData {
@@ -54,6 +69,7 @@ export default defineComponent({
 
   setup(props: PropsData) {
     const user = ref(props.user)
+    const bankAccount = computed(() => user.value.bankAccount)
     const amountCards = ref([
       {
         title: 'Available Balance',
@@ -103,17 +119,21 @@ export default defineComponent({
     )
     const withdrawModal = ref(false)
     const withdrawSuccessModal = ref(false)
-    const processWithdrawal = () => {
+    const finishWithdrawal = (status: boolean) => {
       withdrawModal.value = false
-      withdrawSuccessModal.value = true
+      if (status) {
+        withdrawSuccessModal.value = true
+      } else {
+      }
     }
     return {
       amountCards,
       tableHeadings,
       tableBody,
+      bankAccount,
       withdrawModal,
       withdrawSuccessModal,
-      processWithdrawal,
+      finishWithdrawal,
     }
   },
 })

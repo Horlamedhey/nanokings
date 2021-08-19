@@ -15,7 +15,15 @@
       {{ title }}
     </span>
     <span
-      class="truncate text-secondary lato-semibold-14"
+      v-if="typeof content === 'object'"
+      class="capitalize truncate text-secondary lato-semibold-14"
+      :class="contentClasses"
+    >
+      {{ altContent }}
+    </span>
+    <span
+      v-else
+      class="capitalize truncate text-secondary lato-semibold-14"
       :class="contentClasses"
     >
       {{ content }}
@@ -44,7 +52,8 @@ export default {
 
   props: {
     title: { type: String, required: true },
-    content: { type: String, required: true },
+    content: { type: [String, Object], required: true },
+    altContent: { type: String, default: '' },
     addonText: { type: Object, default: () => {} },
     titleClasses: { type: String, default: '' },
     contentClasses: { type: String, default: '' },

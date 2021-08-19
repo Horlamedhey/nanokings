@@ -34,7 +34,7 @@
       </div>
       <AtomsButton
         class="mt-10 withdraw-button lato-bold-16"
-        @click="$emit('processWithdrawal')"
+        @click="processWithdrawal"
       >
         Confirm & Withdraw
       </AtomsButton>
@@ -46,24 +46,27 @@
 import { mapState } from 'vuex'
 export default {
   name: 'WithdrawalConfirm',
-  data() {
-    return {
-      withdrawalInfoData: [
-        { title: 'Withdraw To', content: 'Guarantee Trust Bank' },
-        { title: 'Account Name', content: 'Jacey Wiliams' },
-        { title: 'Account Number', content: '0213424221' },
+  props: { bankAccount: { type: Object, default: () => {} } },
+  computed: {
+    withdrawalInfoData() {
+      return [
+        { title: 'Withdraw To', content: this.bankAccount.bankName || '' },
+        { title: 'Account Name', content: this.bankAccount.accountName || '' },
+        {
+          title: 'Account Number',
+          content: this.bankAccount.accountNumber || '',
+        },
         {
           title: 'Amount',
-          content: 'N12,000',
+          content: '$12,000',
           contentClasses: 'xs:text-success-light',
         },
-      ],
-    }
+      ]
+    },
   },
-  computed: {
-    ...mapState(['authUser']),
-    bankAccount() {
-      return (this.authUser || {}).bankAccount
+  methods: {
+    processWithdrawal() {
+      this.$emit('close', true)
     },
   },
 }

@@ -26,10 +26,7 @@
         <AtomsButton
           v-if="viewDetails"
           class="border border-white lato-bold-12 rounded-[3px] py-[6px]"
-          :to="`/dashboard/my-music/${song.title
-            .toLowerCase()
-            .split(' ')
-            .join('-')}`"
+          :to="`/dashboard/my-music/${song.uid}`"
         >
           View details
         </AtomsButton>

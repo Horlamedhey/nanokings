@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex flex-wrap justify-center gap-12 mt-16  lg:justify-between xl:space-y-0"
-  >
+  <div class="flex flex-wrap justify-between gap-12 mt-16 xl:space-y-0">
     <MoleculesAmountCard
       v-for="(amountCard, i) in amountCards"
       :key="`amountCard-${i}`"

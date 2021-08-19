@@ -5,7 +5,7 @@
       icon="AtomsIconsCircledCheck"
       content="Music Created Succesfully"
       state="success"
-      @close="modal = false"
+      @close="closeModal"
     />
     <div class="py-6">
       <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
@@ -66,15 +66,7 @@
                       @click="removeFile('artwork')"
                     >
                       <AtomsIconsClose
-                        class="
-                          w-8
-                          h-8
-                          p-1
-                          transition-colors
-                          duration-300
-                          text-error
-                          hover:text-white
-                        "
+                        class="w-8 h-8 p-1 transition-colors duration-300  text-error hover:text-white"
                       ></AtomsIconsClose>
                     </AtomsButton>
                   </div>
@@ -91,16 +83,7 @@
                     "
                   >
                     <div
-                      class="
-                        flex flex-col
-                        items-center
-                        justify-between
-                        w-full
-                        h-full
-                        py-10
-                        transition
-                        duration-300
-                      "
+                      class="flex flex-col items-center justify-between w-full h-full py-10 transition duration-300 "
                       :class="{
                         'opacity-0 group-hover:opacity-100 ': !!form.artwork,
                       }"
@@ -128,16 +111,7 @@
                       <AtomsButton
                         type="button"
                         :disabled="isLoading"
-                        class="
-                          inline-block
-                          px-10
-                          py-3
-                          mt-6
-                          text-white
-                          rounded
-                          lato-semibold-16
-                          ripple-bg-primary-DEFAULT
-                        "
+                        class="inline-block px-10 py-3 mt-6 text-white rounded  lato-semibold-16 ripple-bg-primary-DEFAULT"
                       >
                         Upload Artwork
                       </AtomsButton>
@@ -162,15 +136,7 @@
                 >
                   <template v-slot:file="file">
                     <div
-                      class="
-                        absolute
-                        inset-0
-                        flex
-                        items-center
-                        justify-between
-                        text-secondary-lighter
-                        my-formulate-input-field
-                      "
+                      class="absolute inset-0 flex items-center justify-between  text-secondary-lighter my-formulate-input-field"
                     >
                       <span class="truncate">{{ file.file.name }}</span>
                       <AtomsButton
@@ -187,15 +153,7 @@
                         @click="removeFile('musicFile')"
                       >
                         <AtomsIconsClose
-                          class="
-                            w-8
-                            h-8
-                            p-1
-                            transition-colors
-                            duration-300
-                            text-error
-                            hover:text-white
-                          "
+                          class="w-8 h-8 p-1 transition-colors duration-300  text-error hover:text-white"
                         ></AtomsIconsClose>
                       </AtomsButton>
                     </div>
@@ -203,13 +161,7 @@
                   <template v-slot:uploadAreaMask>
                     <div
                       :disabled="isLoading"
-                      class="
-                        flex
-                        items-center
-                        justify-between
-                        text-secondary-lighter
-                        my-formulate-input-field
-                      "
+                      class="flex items-center justify-between  text-secondary-lighter my-formulate-input-field"
                       :class="{
                         'opacity-0': ![null, undefined].includes(
                           form.musicFile
@@ -237,15 +189,7 @@
                 >
                   <template v-slot:file="file">
                     <div
-                      class="
-                        absolute
-                        inset-0
-                        flex
-                        items-center
-                        justify-between
-                        text-center text-secondary-lighter
-                        my-formulate-input-field
-                      "
+                      class="absolute inset-0 flex items-center justify-between text-center  text-secondary-lighter my-formulate-input-field"
                     >
                       <span class="truncate">{{ file.file.name }}</span>
                       <AtomsButton
@@ -262,15 +206,7 @@
                         @click="removeFile('lyricsFile')"
                       >
                         <AtomsIconsClose
-                          class="
-                            w-8
-                            h-8
-                            p-1
-                            transition-colors
-                            duration-300
-                            text-error
-                            hover:text-white
-                          "
+                          class="w-8 h-8 p-1 transition-colors duration-300  text-error hover:text-white"
                         ></AtomsIconsClose>
                       </AtomsButton>
                     </div>
@@ -278,13 +214,7 @@
                   <template v-slot:uploadAreaMask>
                     <div
                       :disabled="isLoading"
-                      class="
-                        flex
-                        items-center
-                        justify-between
-                        text-center text-secondary-lighter
-                        my-formulate-input-field
-                      "
+                      class="flex items-center justify-between text-center  text-secondary-lighter my-formulate-input-field"
                       :class="{
                         'opacity-0': ![null, undefined].includes(
                           form.lyricsFile
@@ -317,7 +247,7 @@
                   validation="bail|required"
                 />
               </div>
-              <div class="w-full lg:w-[48%]">
+              <!-- <div class="w-full lg:w-[48%]">
                 <FormulateInput
                   :disabled="isLoading"
                   type="text"
@@ -326,7 +256,7 @@
                   name="musicLink"
                   validation="bail|required"
                 />
-              </div>
+              </div> -->
               <div class="w-full lg:w-[48%]">
                 <FormulateInput
                   :disabled="isLoading"
@@ -334,8 +264,8 @@
                   label="Music Type"
                   placeholder="Select type"
                   name="musicType"
-                  :options="musicTypes"
-                  validation="bail|required|alpha"
+                  :options="finalMusicTypes"
+                  validation="bail|required"
                 />
               </div>
               <div class="w-full lg:w-[48%]">
@@ -346,18 +276,17 @@
                   placeholder="Select genre"
                   name="primaryGenre"
                   :options="genres"
-                  validation="bail|required|alphanumeric"
+                  validation="bail|required"
                 />
               </div>
               <div class="w-full lg:w-[48%]">
                 <FormulateInput
                   :disabled="isLoading"
                   type="select"
-                  label="Secondary genre"
+                  label="Secondary genre (Optional)"
                   placeholder="Select genre"
                   name="secondaryGenre"
                   :options="genres"
-                  validation="bail|required|alphanumeric"
                 />
               </div>
               <div class="w-full lg:w-[48%]">
@@ -381,19 +310,17 @@
                   label="Label name (Optional)"
                   placeholder="Mavins"
                   name="labelName"
-                  validation="bail|optional|alpha"
                 />
               </div>
-              <div class="w-full lg:w-[48%]">
+              <!-- <div class="w-full lg:w-[48%]">
                 <FormulateInput
                   :disabled="isLoading"
                   type="text"
                   label="UPC/EAN code (Optional)"
                   placeholder=""
                   name="upcean"
-                  validation="bail|optional|alpha"
                 />
-              </div>
+              </div> -->
               <div class="w-full lg:w-[48%]">
                 <FormulateInput
                   :disabled="isLoading"
@@ -401,7 +328,6 @@
                   label="Recording location (Optional)"
                   placeholder="Lagos, Nigeria"
                   name="recordLocation"
-                  validation="bail|optional|alpha"
                 />
               </div>
               <div class="w-full lg:w-[48%]">
@@ -411,7 +337,7 @@
                   label="Song writer"
                   placeholder="Johnny Drille"
                   name="writer"
-                  validation="bail|required|alpha"
+                  validation="bail|required"
                 />
               </div>
               <div class="w-full lg:w-[48%]">
@@ -422,7 +348,7 @@
                   placeholder="Adekunle Gold, Olamide, etc."
                   help="Separate multiple names with comma (,)"
                   name="creatives"
-                  validation="bail|required|alpha"
+                  validation="bail|required"
                 />
               </div>
 
@@ -438,11 +364,7 @@
                   <template v-slot:label>
                     <label for="worldwide">
                       <span
-                        class="
-                          sm:lato-normal-20
-                          lato-normal-18
-                          text-secondary-light
-                        "
+                        class=" sm:lato-normal-20 lato-normal-18 text-secondary-light"
                       >
                         Want this release sold worldwide?
                       </span>
@@ -462,11 +384,7 @@
                   <template v-slot:label>
                     <label for="previouslyReleased">
                       <span
-                        class="
-                          sm:lato-normal-20
-                          lato-normal-18
-                          text-secondary-light
-                        "
+                        class=" sm:lato-normal-20 lato-normal-18 text-secondary-light"
                       >
                         Previously Released?
                       </span>
@@ -496,8 +414,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
-import musicTypes from '@/static/data/musicTypes.json'
+import {
+  computed,
+  defineComponent,
+  ref,
+  useContext,
+  useRouter,
+  useStore,
+} from '@nuxtjs/composition-api'
+import musicTypesJson from '@/static/data/musicTypes.json'
 import genres from '@/static/data/genres.json'
 import {
   InsertOneSongMutation,
@@ -505,14 +430,44 @@ import {
 } from '@/types/types'
 import InsertOneSong from '@/graphs/create/InsertOneSong'
 import apollo from '~/helpers/apollo'
+interface AuthUser {
+  subscription: { tier: { label: string }; rank: number; active: boolean }
+}
+interface State {
+  authUser: AuthUser
+}
+interface MusicType {
+  label: string
+  value: string
+  ranks: number[]
+  disabled?: boolean
+}
 export default defineComponent({
   name: 'CreateMusic',
-  // layout: 'dashboard',
+  middleware: ({ store, redirect, app, route }) => {
+    if (process.client && !store.state.authUser.subscription.active) {
+      return redirect('/dashboard/my-music')
+    }
+  },
   setup() {
     const context = useContext()
+    const router = useRouter()
     const apolloClient = context.app.apolloProvider!.defaultClient
     const form = ref({} as { [key: string]: any })
     const modal = ref(false)
+    const store = useStore<State>()
+    const musicTypes = ref(musicTypesJson as MusicType[])
+    const finalMusicTypes = computed(() =>
+      musicTypes.value.map((v) => {
+        if (
+          !v.ranks.includes(store.state.authUser.subscription.rank) ||
+          !store.state.authUser.subscription.active
+        ) {
+          v.disabled = true
+        }
+        return v
+      })
+    )
     const removeFile = (fileName: string) => {
       const inputField = <HTMLInputElement>document.getElementById(fileName)
       form.value[fileName] = null
@@ -526,6 +481,12 @@ export default defineComponent({
       option: any
     ) => {
       // console.log(file, progress, error, option)
+      const splitName = file.name.split('.')
+      const name = splitName
+        .slice(0, splitName.length - 1)
+        .join('.')
+        .split(' ')
+        .join('_')
       const readData = (f: any) =>
         new Promise((resolve) => {
           const reader = new FileReader()
@@ -540,14 +501,16 @@ export default defineComponent({
         {
           timestamp,
           folder: 'nanokings/artwork',
-          upload_preset: 'nanokings',
+          upload_preset: 'nanokings-artworks',
+          public_id: name,
         }
       )
       if (signature) {
         /* upload the converted data */
         const { public_id } = await context.app.$cloudinary.upload(data, {
           folder: 'nanokings/artwork',
-          upload_preset: 'nanokings',
+          upload_preset: 'nanokings-artworks',
+          public_id: name,
           timestamp,
           signature,
           api_key: '169241722441159',
@@ -561,6 +524,12 @@ export default defineComponent({
       error: any,
       option: any
     ) => {
+      const splitName = file.name.split('.')
+      const name = splitName
+        .slice(0, splitName.length - 1)
+        .join('.')
+        .split(' ')
+        .join('_')
       // console.log(file, progress, error, option)
       const readData = (f: any) =>
         new Promise((resolve) => {
@@ -577,6 +546,7 @@ export default defineComponent({
           timestamp,
           folder: 'nanokings/songs',
           upload_preset: 'nanokings-others',
+          public_id: name,
         }
       )
       if (signature) {
@@ -585,6 +555,7 @@ export default defineComponent({
           folder: 'nanokings/songs',
           upload_preset: 'nanokings-others',
           resource_type: 'video',
+          public_id: name,
           timestamp,
           signature,
           api_key: '169241722441159',
@@ -598,6 +569,12 @@ export default defineComponent({
       error: any,
       option: any
     ) => {
+      const splitName = file.name.split('.')
+      const name = splitName
+        .slice(0, splitName.length - 1)
+        .join('.')
+        .split(' ')
+        .join('_')
       // console.log(file, progress, error, option)
       const readData = (f: any) =>
         new Promise((resolve) => {
@@ -614,6 +591,7 @@ export default defineComponent({
           timestamp,
           folder: 'nanokings/lyrics',
           upload_preset: 'nanokings-others',
+          public_id: name,
         }
       )
       if (signature) {
@@ -622,6 +600,7 @@ export default defineComponent({
           folder: 'nanokings/lyrics',
           upload_preset: 'nanokings-others',
           resource_type: 'raw',
+          public_id: name,
           timestamp,
           signature,
           api_key: '169241722441159',
@@ -658,6 +637,7 @@ export default defineComponent({
           mutation: InsertOneSong,
           variables: {
             ...rest,
+            uid: rest.songTitle.split(' ').join('-').toLowerCase(),
             releasedOn: new Date(dateTime),
             artwork,
             musicFile,
@@ -665,19 +645,23 @@ export default defineComponent({
             user: context.app.$realmApp.currentUser.customData._id,
             createdAt: new Date(),
             updatedAt: new Date(),
-          } as InsertOneSongMutationVariables,
+          },
         })
 
         modal.value = true
-        formulate.reset('create-music')
+        // formulate.reset('create-music')
         // TODO Refresh user custom data
       } catch (err) {
         console.log(err, err.message)
       }
     }
+    const closeModal = () => {
+      modal.value = false
+      router.replace('/dashboard/my-music')
+    }
     return {
       form,
-      musicTypes,
+      finalMusicTypes,
       genres,
       modal,
       removeFile,
@@ -685,6 +669,7 @@ export default defineComponent({
       uploadImage,
       uploadSong,
       uploadLyrics,
+      closeModal,
     }
   },
 })

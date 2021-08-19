@@ -119,6 +119,11 @@ button.my-formulate-input-field {
 .formulate-input[data-classification='select'] select option {
   @apply text-secondary-light;
 }
+.formulate-input[data-classification='select']
+  select
+  option[disabled='disabled'] {
+  @apply text-secondary-lightest;
+}
 .formulate-input[data-classification='select'] .formulate-input-element {
   position: relative;
 }

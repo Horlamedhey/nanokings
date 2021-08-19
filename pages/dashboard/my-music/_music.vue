@@ -54,7 +54,9 @@ export default defineComponent({
     song: {
       query: SongQuery,
       variables() {
-        return { title: this.$route.params.music }
+        return {
+          uid: this.$route.params.music,
+        }
       },
       prefetch: false,
     },

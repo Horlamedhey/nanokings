@@ -30,12 +30,16 @@ query User($id: ObjectId) {
     }
     songs {
       _id
+      title
+      uid
+      artWork
+      createdAt
     }
     subscription {
       tier {
         label
-        rank
       }
+      rank
       active
     }
   }

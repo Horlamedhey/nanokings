@@ -1,1 +1,9 @@
-["Singles", "EP", "Album"]
+[
+  {
+    "label": "Single",
+    "value": "Single",
+    "ranks": [0, 1, 2, 3]
+  },
+  { "label": "EP", "value": "EP", "ranks": [2, 3] },
+  { "label": "Album", "value": "Album", "ranks": [3] }
+]

@@ -6,9 +6,10 @@
       </div>
       <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
         <AtomsButton
-          to="/dashboard/my-music/create-music"
+          :to="subscriptionIsActive ? '/dashboard/my-music/create-music' : null"
           icon="AtomsIconsAdd"
           addOnAfter
+          :disabled="!subscriptionIsActive"
           class="items-center inline-block px-10 py-3 mt-6 ml-auto text-white rounded  lato-bold-16 ripple-bg-primary-DEFAULT"
         >
           Create new
@@ -32,7 +33,7 @@
         <client-only>
           <div v-if="$apollo.loading">Loading...</div>
           <div
-            v-else-if="songs.length === 0"
+            v-else-if="user.songs.length === 0"
             class="flex items-center justify-center h-40 text-xl text-center  text-secondary-lighter"
           >
             You have not added any song yet.
@@ -43,7 +44,7 @@
             class="flex flex-wrap justify-center gap-10  sm:justify-start my-14 xl:mb-0"
           >
             <MoleculesMusicCard
-              v-for="(song, i) in songs"
+              v-for="(song, i) in user.songs"
               :key="`song-${i}`"
               :song="song"
               viewDetails
@@ -74,23 +75,25 @@ import { useQuery, useResult } from '@vue/apollo-composable/dist'
 import SongsQuery from '@/graphs/read/Songs'
 import apollo from '~/helpers/apollo'
 
-export default defineComponent({
+export default {
   name: 'MyMusic',
-  apollo: {
-    songs: {
-      query: SongsQuery,
-      variables() {
-        return { user: this.$realmApp.currentUser.customData._id }
-      },
-      prefetch: false,
-    },
-  },
+  props: { user: { type: Object, required: true } },
   data() {
     return {
       songs: [],
-      filterItems: [{ title: 'All' }, { title: 'Songs' }, { title: 'Albums' }],
+      filterItems: [
+        { title: 'All' },
+        { title: 'Singles' },
+        { title: 'EPs' },
+        { title: 'Albums' },
+      ],
       filterMenu: false,
     }
+  },
+  computed: {
+    subscriptionIsActive() {
+      return this.user.subscription.active
+    },
   },
   async fetch() {
     await apollo(this)
@@ -127,5 +130,5 @@ export default defineComponent({
   //   }
   // },
   fetchOnServer: false,
-})
+}
 </script>

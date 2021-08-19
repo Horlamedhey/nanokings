@@ -36,7 +36,7 @@ export default {
         this.paymentData(label, new Date().getTime().toString(), price, planId)
       ).then(({ transaction_id: transactionId, customer: { email } }) => {
         this.$realmApp.currentUser.functions
-          .verifyTransaction(_id, transactionId)
+          .verifyTransaction(_id, rank, transactionId)
           .then((res) => {
             const successful = res.data.status === 'successful'
             if (successful) {
@@ -45,9 +45,9 @@ export default {
               const subscription = {
                 tier: {
                   label,
-                  rank,
                 },
                 active: true,
+                rank,
               }
               this.$store.commit('setUser', { subscription, ...rest })
             }

@@ -3,14 +3,15 @@ mutation InsertOneSong(
   $musicFile: String!
   $lyricsFile: String
   $songTitle: String!
+  $uid: String!
   $artistName: String!
-  $musicLink: String!
+  # $musicLink: String!
   $musicType: String!
   $primaryGenre: String!
-  $secondaryGenre: String!
+  $secondaryGenre: String
   $releasedOn: DateTime!
   $labelName: String
-  $upcean: String
+  # $upcean: String
   $recordLocation: String
   $writer: String!
   $creatives: String!
@@ -26,14 +27,15 @@ mutation InsertOneSong(
       music: $musicFile
       lyrics: $lyricsFile
       title: $songTitle
+      uid: $uid
       artiste: $artistName
-      musicLink: $musicLink
+      # musicLink: $musicLink
       type: $musicType
       genre: $primaryGenre
       secondaryGenre: $secondaryGenre
       releasedOn: $releasedOn
       label: $labelName
-      upcEan: $upcean
+      # upcEan: $upcean
       location: $recordLocation
       writer: $writer
       creatives: $creatives

@@ -40,7 +40,7 @@
       @extraAction="showOtherPlans"
     >
       <div
-        class="container px-4 mx-auto mt-12 mb-4 overflow-y-auto  sm:px-6 xl:p-10 lg:h-auto"
+        class="container px-4 mx-auto mt-12 mb-4 overflow-y-auto sm:px-6 xl:p-10 lg:h-auto"
         :class="finalPricings.length > 1 ? ' h-[80vh]' : 'h-auto'"
       >
         <div class="flex flex-col justify-center gap-8 lg:flex-row">
@@ -146,6 +146,7 @@ import {
   useStore,
   computed,
   useContext,
+  useFetch,
   watch,
 } from '@nuxtjs/composition-api'
 
@@ -167,13 +168,14 @@ export interface AuthUser {
   email: string
   phone: string
   gender: string
-  subscription: { tier: { label: string; rank: number }; active: boolean }
+  subscription: { tier: { label: string }; rank: number; active: boolean }
   facebook: string
   instagram: string
   twitter: string
   youtube: string
   bankAccount: {
     bankName: string
+    bankCode: string
     accountName: string
     accountNumber: string
   }
@@ -216,7 +218,22 @@ export default defineComponent({
       color: '',
     })
     const isSubscribing = ref(false)
-    const banks = ref([{ name: 'Guaranty Trust Bank', code: '058' }])
+    const banks = ref([
+      {
+        id: 1,
+        label: user.value.bankAccount.bankName,
+        value: {
+          bankCode: user.value.bankAccount.bankCode,
+          bankName: user.value.bankAccount.bankName,
+        },
+      },
+      {
+        id: 2,
+        label: 'Loading available banks...',
+        value: { bankCode: '055', bankName: 'Loading available banks...' },
+        disabled: true,
+      },
+    ])
     const pricings = ref([
       {
         _id: '61184e8925e5f4e02ab1c902',
@@ -285,7 +302,7 @@ export default defineComponent({
     const upgradeablePricings = computed(() => {
       return pricings.value
         .slice(1)
-        .filter((pricing) => pricing.rank > user.value.subscription.tier.rank)
+        .filter((pricing) => pricing.rank > user.value.subscription.rank)
     })
 
     const finalPricings = computed(() => {
@@ -356,10 +373,14 @@ export default defineComponent({
             {
               type: 'select',
               label: 'Bank',
-              name: 'bankName',
+              name: 'bank',
               placeholder: 'Select Bank',
-              options: banks.value.map((v) => v.name),
-              value: user.value.bankAccount?.bankName,
+              options: banks.value,
+              value: {
+                bankName: user.value.bankAccount?.bankName,
+                bankCode: user.value.bankAccount?.bankCode,
+              },
+              altValue: user.value.bankAccount?.bankName || '',
               id: 'bank',
             },
             {
@@ -378,7 +399,35 @@ export default defineComponent({
     })
     //  ref()
     const state = reactive({ form: {} as any, formBackup: {} })
-
+    useFetch(() => {
+      context.app.$realmApp.currentUser.functions
+        .getBanks()
+        .then((banksData: { id: number; name: string; code: string }[]) => {
+          banks.value = banksData.map(
+            ({
+              id,
+              code: bankCode,
+              name: bankName,
+            }: {
+              id: number
+              code: string
+              name: string
+            }) => ({ id, label: bankName, value: { bankCode, bankName } })
+          )
+        })
+    })
+    watch(editProfile, (curr) => {
+      if (curr) {
+        setTimeout(() => {
+          banks.value.push({
+            id: banks.value.length + 1,
+            label: 'Loading available banks...',
+            value: { bankCode: '053', bankName: 'Loading available banks...' },
+            disabled: true,
+          })
+        }, 5000)
+      }
+    })
     const finalProfileContentSections = computed(() => {
       return JSON.parse(JSON.stringify(profileContentSections.value)).map(
         (v: any, i: number) => {
@@ -394,7 +443,7 @@ export default defineComponent({
                 name: '',
                 content: 'Upgrade?',
                 disabled:
-                  user.value.subscription.tier.rank ===
+                  user.value.subscription.rank ===
                   getArrayOfObjMaxProp(pricings.value, 'rank'),
                 action: () => (isSubscribing.value = true),
                 classes: 'lato-bold-14 text-primary',
@@ -417,7 +466,7 @@ export default defineComponent({
         const selectedPlan: number = pricings.value.find(
           (pricing) => pricing.label === subscriptionPlan
         )?.rank as number
-        const currentPlan: number = user.value.subscription.tier.rank
+        const currentPlan: number = user.value.subscription.rank
 
         switch (true) {
           case selectedPlan > currentPlan:
@@ -495,12 +544,10 @@ export default defineComponent({
       await apollo(context)
 
       const formChanges = await changedProfileData(state.formBackup, state.form)
-      const { bankName, accountName, accountNumber, name, ...rest } =
-        formChanges
-      if (bankName || accountName || accountNumber) {
-        const { bankName, accountName, accountNumber } =
-          state.form.bankDetails[0]
-        const bankCode = banks.value.find((v) => v.name === bankName)?.code
+      const { bank, accountName, accountNumber, name, ...rest } = formChanges
+      if (bank || accountName || accountNumber) {
+        const { bank, accountName, accountNumber } = state.form.bankDetails[0]
+        const { bankCode, bankName } = bank
         const {
           data: { bankAccount },
         } = await apolloClient.query({

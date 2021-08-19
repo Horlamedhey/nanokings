@@ -23,6 +23,7 @@ mutation InsertOneUser(
       subscription: {
         tier: { link: "61184e8925e5f4e02ab1c902" }
         active: true
+        rank: 0
         activatedOn: $createdAt
       }
       views: 0

@@ -10,7 +10,7 @@
             <OrganismsStatisticsArea :amountCard="amountCardDetails" :statistics="statistics" class="px-4 sm:px-0"/>
 
             <div class="flex flex-col-reverse mt-12 xl:flex-row xl:space-x-12">
-            <div class="mt-24 xl:mt-0">
+            <div v-if="releases.length>0" class="mt-24 xl:mt-0">
               <h2 class="lato-semibold-20 text-secondary-light">Recent Releases</h2>
               <div v-if="releases.length>0" class="flex flex-col mt-5 space-y-4">
                 <MoleculesRelease v-for="(release, i) in releases" :key="`release-${i}`" :release="release"/>

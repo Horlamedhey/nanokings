@@ -1,11 +1,12 @@
-query Songs($title: String!) {
-  song(query: { title: $title }) {
+query Songs($uid: String!) {
+  song(query: { uid: $uid }) {
     artWork
     artiste
     creatives
     music
     releasedOn
     title
+    uid
     type
   }
 }
