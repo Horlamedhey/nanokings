@@ -66,7 +66,15 @@
                       @click="removeFile('artwork')"
                     >
                       <AtomsIconsClose
-                        class="w-8 h-8 p-1 transition-colors duration-300  text-error hover:text-white"
+                        class="
+                          w-8
+                          h-8
+                          p-1
+                          transition-colors
+                          duration-300
+                          text-error
+                          hover:text-white
+                        "
                       ></AtomsIconsClose>
                     </AtomsButton>
                   </div>
@@ -83,7 +91,16 @@
                     "
                   >
                     <div
-                      class="flex flex-col items-center justify-between w-full h-full py-10 transition duration-300 "
+                      class="
+                        flex flex-col
+                        items-center
+                        justify-between
+                        w-full
+                        h-full
+                        py-10
+                        transition
+                        duration-300
+                      "
                       :class="{
                         'opacity-0 group-hover:opacity-100 ': !!form.artwork,
                       }"
@@ -111,7 +128,16 @@
                       <AtomsButton
                         type="button"
                         :disabled="isLoading"
-                        class="inline-block px-10 py-3 mt-6 text-white rounded  lato-semibold-16 ripple-bg-primary-DEFAULT"
+                        class="
+                          inline-block
+                          px-10
+                          py-3
+                          mt-6
+                          text-white
+                          rounded
+                          lato-semibold-16
+                          ripple-bg-primary-DEFAULT
+                        "
                       >
                         Upload Artwork
                       </AtomsButton>
@@ -136,7 +162,15 @@
                 >
                   <template v-slot:file="file">
                     <div
-                      class="absolute inset-0 flex items-center justify-between  text-secondary-lighter my-formulate-input-field"
+                      class="
+                        absolute
+                        inset-0
+                        flex
+                        items-center
+                        justify-between
+                        text-secondary-lighter
+                        my-formulate-input-field
+                      "
                     >
                       <span class="truncate">{{ file.file.name }}</span>
                       <AtomsButton
@@ -153,7 +187,15 @@
                         @click="removeFile('musicFile')"
                       >
                         <AtomsIconsClose
-                          class="w-8 h-8 p-1 transition-colors duration-300  text-error hover:text-white"
+                          class="
+                            w-8
+                            h-8
+                            p-1
+                            transition-colors
+                            duration-300
+                            text-error
+                            hover:text-white
+                          "
                         ></AtomsIconsClose>
                       </AtomsButton>
                     </div>
@@ -161,7 +203,13 @@
                   <template v-slot:uploadAreaMask>
                     <div
                       :disabled="isLoading"
-                      class="flex items-center justify-between  text-secondary-lighter my-formulate-input-field"
+                      class="
+                        flex
+                        items-center
+                        justify-between
+                        text-secondary-lighter
+                        my-formulate-input-field
+                      "
                       :class="{
                         'opacity-0': ![null, undefined].includes(
                           form.musicFile
@@ -189,7 +237,15 @@
                 >
                   <template v-slot:file="file">
                     <div
-                      class="absolute inset-0 flex items-center justify-between text-center  text-secondary-lighter my-formulate-input-field"
+                      class="
+                        absolute
+                        inset-0
+                        flex
+                        items-center
+                        justify-between
+                        text-center text-secondary-lighter
+                        my-formulate-input-field
+                      "
                     >
                       <span class="truncate">{{ file.file.name }}</span>
                       <AtomsButton
@@ -206,7 +262,15 @@
                         @click="removeFile('lyricsFile')"
                       >
                         <AtomsIconsClose
-                          class="w-8 h-8 p-1 transition-colors duration-300  text-error hover:text-white"
+                          class="
+                            w-8
+                            h-8
+                            p-1
+                            transition-colors
+                            duration-300
+                            text-error
+                            hover:text-white
+                          "
                         ></AtomsIconsClose>
                       </AtomsButton>
                     </div>
@@ -214,7 +278,13 @@
                   <template v-slot:uploadAreaMask>
                     <div
                       :disabled="isLoading"
-                      class="flex items-center justify-between text-center  text-secondary-lighter my-formulate-input-field"
+                      class="
+                        flex
+                        items-center
+                        justify-between
+                        text-center text-secondary-lighter
+                        my-formulate-input-field
+                      "
                       :class="{
                         'opacity-0': ![null, undefined].includes(
                           form.lyricsFile
@@ -364,7 +434,11 @@
                   <template v-slot:label>
                     <label for="worldwide">
                       <span
-                        class=" sm:lato-normal-20 lato-normal-18 text-secondary-light"
+                        class="
+                          sm:lato-normal-20
+                          lato-normal-18
+                          text-secondary-light
+                        "
                       >
                         Want this release sold worldwide?
                       </span>
@@ -384,7 +458,11 @@
                   <template v-slot:label>
                     <label for="previouslyReleased">
                       <span
-                        class=" sm:lato-normal-20 lato-normal-18 text-secondary-light"
+                        class="
+                          sm:lato-normal-20
+                          lato-normal-18
+                          text-secondary-light
+                        "
                       >
                         Previously Released?
                       </span>
@@ -623,6 +701,7 @@ export default defineComponent({
             },
           },
           lyricsFile: lyrics,
+          musicType,
           ...rest
         } = form.value
 
@@ -630,24 +709,34 @@ export default defineComponent({
           lyrics !== undefined && lyrics !== null
             ? lyrics.results[0].url
             : undefined
-
+        const variables = {
+          ...rest,
+          uid: rest.songTitle.split(' ').join('-').toLowerCase(),
+          releasedOn: new Date(dateTime),
+          artwork,
+          musicType,
+          musicFile,
+          lyricsFile,
+          user: context.app.$realmApp.currentUser.customData._id,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }
         await apollo(context)
         // console.log(form.value)
         await apolloClient.mutate({
           mutation: InsertOneSong,
-          variables: {
-            ...rest,
-            uid: rest.songTitle.split(' ').join('-').toLowerCase(),
-            releasedOn: new Date(dateTime),
-            artwork,
-            musicFile,
-            lyricsFile,
-            user: context.app.$realmApp.currentUser.customData._id,
-            createdAt: new Date(),
-            updatedAt: new Date(),
+          variables,
+        })
+        store.commit('addSong', {
+          subscription: store.state.authUser.subscription,
+          song: {
+            title: rest.songTitle,
+            uid: variables.uid,
+            artWork: variables.artwork,
+            musicType,
+            createdAt: variables.createdAt,
           },
         })
-
         modal.value = true
         // formulate.reset('create-music')
         // TODO Refresh user custom data

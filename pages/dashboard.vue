@@ -14,7 +14,14 @@ export default {
     userDashboard() {
       const { username, walletBalance, releases, streams, views, songs } =
         this.authUser
-      return { username, walletBalance, releases, streams, views, songs }
+      return {
+        username,
+        walletBalance,
+        releases,
+        streams,
+        views,
+        songs: songs.slice(0, 3),
+      }
     },
     userMusic() {
       const { subscription, songs } = this.authUser
@@ -68,20 +75,20 @@ export default {
       }
     },
     user() {
-      switch (this.$route.path) {
-        case '/dashboard':
+      switch (this.$route.name) {
+        case 'dashboard':
           return this.userDashboard
 
-        case '/dashboard/my-account':
+        case 'dashboard-my-account':
           return this.userAccount
 
-        case '/dashboard/my-music':
+        case 'dashboard-my-music':
           return this.userMusic
 
-        case '/dashboard/sales-report':
+        case 'dashboard-sales-report':
           return this.userSalesReport
 
-        case '/dashboard/wallet':
+        case 'dashboard-wallet':
           return this.userWallet
       }
     },

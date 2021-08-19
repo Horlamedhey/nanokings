@@ -45,10 +45,9 @@ interface PropsData {
 }
 export default defineComponent({
   name: 'DashboardHome',
-  props: { user: { type: Object as () => AuthUser, required: true } },
+  props: { user: { type: Object as () => AuthUser, default: () => {} } },
   setup(props: PropsData) {
     const user = ref(props.user)
-
     const statistics = ref([
       {
         title: 'Releases',

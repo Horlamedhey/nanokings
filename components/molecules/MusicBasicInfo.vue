@@ -26,7 +26,7 @@
       <div>
         <h2 class="text-secondary-lightest lato-medium-20">Type</h2>
         <h2 class="mt-3 lato-semibold-20 text-secondary-light">
-          {{ song.type }}
+          {{ song.musicType }}
         </h2>
       </div>
       <div>

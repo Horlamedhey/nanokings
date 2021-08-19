@@ -1,6 +1,14 @@
 <template>
   <div
-    class="flex flex-col items-center space-y-2 text-center  sm:flex-row sm:text-left sm:space-y-0 sm:space-x-8"
+    class="
+      flex flex-col
+      items-center
+      space-y-2
+      text-center
+      sm:flex-row
+      sm:text-left
+      sm:space-y-0 sm:space-x-8
+    "
   >
     <div class="lato-normal-16">
       <span class="text-secondary-lighter">

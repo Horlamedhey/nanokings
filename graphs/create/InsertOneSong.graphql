@@ -30,7 +30,7 @@ mutation InsertOneSong(
       uid: $uid
       artiste: $artistName
       # musicLink: $musicLink
-      type: $musicType
+      musicType: $musicType
       genre: $primaryGenre
       secondaryGenre: $secondaryGenre
       releasedOn: $releasedOn
@@ -46,9 +46,6 @@ mutation InsertOneSong(
       updatedAt: $updatedAt
     }
   ) {
-    title
-    user {
-      firstName
-    }
+    _id
   }
 }
