@@ -1,11 +1,11 @@
 <template>
       <main class="relative flex-1 overflow-y-auto focus:outline-none">
         <AtomsModal :modal="withdrawModal" @close="withdrawModal = false" >
-          <div class="min-w-[300px] sm:p-6 px-4 pt-5 pb-4">
-            <MoleculesWithdrawalConfirm :bankAccount="bankAccount" @close="finishWithdrawal"/>
+          <div class="w-[450px] max-w-full sm:p-6 px-4 pt-5 pb-4">
+            <MoleculesWithdrawalConfirm :bankAccount="bankAccount":walletBalance="walletBalance" @close="finishWithdrawal"/>
           </div>
         </AtomsModal>
-        <MoleculesBasicModal :modal="withdrawSuccessModal" icon="AtomsIconsCircledCheck" content="Withdrawal Successful" state="success" @close="withdrawSuccessModal=false"/>
+        <MoleculesBasicModal :modal="withdrawalSuccessModal.show" :icon="withdrawalSuccessModal.icon" :content="withdrawalSuccessModal.message" :state="withdrawalSuccessModal.status" @close="withdrawalSuccessModal.show=false"/>
         <!-- <AtomsModal :modal="subscriptionWarning.state" @close="closeModal">
       <div
         class="p-4 min-h-40 w-80 max-w-[85vw]"
@@ -32,7 +32,7 @@
             <OrganismsAmountCardsArea :amountCards="amountCards"/>
             <!-- Table -->
             <client-only>
-            <MoleculesDataTableWithAltHead class="mt-10" lastColumnClass="text-success text-error" tableHeadingTitle="Latest Transactions" :tableHeadings="tableHeadings" :tableBody="tableBody" />
+            <MoleculesDataTableWithAltHead class="mt-10" lastColumnClass="text-success text-error text-right" tableHeadingTitle="Transactions" :tableHeadings="tableHeadings" :tableBody="tableBody" />
             </client-only>
         </div>
         </div>
@@ -45,8 +45,11 @@ import {
   computed,
   defineComponent,
   ref,
+  reactive,
   useStore,
+  watch,
 } from '@nuxtjs/composition-api'
+import processTransactionsArray from '@/helpers/processTransactionsArray'
 
 interface AuthUser {
   sales: number
@@ -60,6 +63,9 @@ interface AuthUser {
   }
 }
 
+interface State {
+  authUser: any
+}
 interface PropsData {
   user: AuthUser
 }
@@ -68,9 +74,10 @@ export default defineComponent({
   props: { user: { type: Object as () => AuthUser, required: true } },
 
   setup(props: PropsData) {
-    const user = ref(props.user)
+    const store = useStore<State>()
+    const user = computed(() => store.state.authUser)
     const bankAccount = computed(() => user.value.bankAccount)
-    const amountCards = ref([
+    const amountCards = computed(() => [
       {
         title: 'Available Balance',
         amount: user.value.walletBalance,
@@ -83,56 +90,44 @@ export default defineComponent({
       },
       {
         title: 'Total Withdrawn',
-        amount: user.value.walletBalance - user.value.walletBalance,
+        amount: user.value.withdrawn,
         color: 'bg-accent-light',
       },
     ])
     const tableHeadings = ref(['Date', 'Status', 'Amount (NGN)'])
-    const tableBody = ref(
-      user.value.transactions || [
-        {
-          date: 'Yesterday',
-          status: 'Withdrawal completed',
-          amount: 'N12,360',
-        },
-        {
-          date: 'Yesterday',
-          status: 'Withdrawal initiated',
-          amount: '-N12,360',
-        },
-        {
-          date: '02 April 2021',
-          status: 'Withdrawal completed',
-          amount: 'N12,360',
-        },
-        {
-          date: '02 April 2021',
-          status: 'Withdrawal initiated',
-          amount: '-N12,360',
-        },
-        {
-          date: '14 March 2021',
-          status: 'Withdrawal completed',
-          amount: 'N12,360',
-        },
-      ]
-    )
+    const tableBody = computed(() => {
+      return processTransactionsArray(user.value.transactions)
+    })
     const withdrawModal = ref(false)
-    const withdrawSuccessModal = ref(false)
+    const withdrawalSuccessModal = reactive({
+      show: false,
+      status: 'success',
+      message: 'Withdrawal Successful',
+      icon: 'AtomsIconsCircledCheck',
+    })
     const finishWithdrawal = (status: boolean) => {
       withdrawModal.value = false
+
       if (status) {
-        withdrawSuccessModal.value = true
+        withdrawalSuccessModal.status = 'success'
+        withdrawalSuccessModal.message = 'Withdrawal Initiated'
+        withdrawalSuccessModal.icon = 'AtomsIconsCircledCheck'
       } else {
+        withdrawalSuccessModal.status = 'error'
+        withdrawalSuccessModal.message = 'Withdrawal Declined'
+        withdrawalSuccessModal.icon = 'AtomsIconsClose'
       }
+      withdrawalSuccessModal.show = true
     }
+    watch(user.value, (curr) => console.log(curr.transactions))
     return {
       amountCards,
       tableHeadings,
       tableBody,
       bankAccount,
+      walletBalance: user.value.walletBalance,
       withdrawModal,
-      withdrawSuccessModal,
+      withdrawalSuccessModal,
       finishWithdrawal,
     }
   },

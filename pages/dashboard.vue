@@ -33,7 +33,28 @@ export default {
     },
     userWallet() {
       const { sales, walletBalance, transactions, bankAccount } = this.authUser
-      return { sales, walletBalance, transactions, bankAccount }
+      return {
+        sales,
+        walletBalance,
+        transactions: transactions.map(
+          ({ __typename, createdAt, amount, type: status }) => ({
+            date: this.$options.filters.timeago(createdAt),
+            status,
+            amount: {
+              value: `${
+                status === 'withdrawal' ? '-' : ''
+              }${this.$options.filters.currencyFormatter(amount)}`,
+              classes:
+                status === 'subscription'
+                  ? ''
+                  : status === 'withdrawal'
+                  ? 'text-error'
+                  : 'text-success',
+            },
+          })
+        ),
+        bankAccount,
+      }
     },
     userAccount() {
       const {

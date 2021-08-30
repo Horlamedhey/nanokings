@@ -20,13 +20,17 @@ query User($id: ObjectId) {
       bankCode
     }
     walletBalance
+    withdrawn
     releases
     streams
     views
     sales
     downloads
     transactions {
-      _id
+      # _id
+      createdAt
+      type
+      amount
     }
     songs {
       _id

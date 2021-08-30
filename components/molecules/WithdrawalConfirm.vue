@@ -19,7 +19,7 @@
         </AtomsButton>
       </div>
     </template>
-    <template v-else>
+    <template v-else-if="confirm">
       <p class="mt-4 text-left lato-normal-14 text-secondary-light">
         Please review your withdrawal details before confirming your withdrawal
       </p>
@@ -32,21 +32,75 @@
           :contentClasses="withdrawalInfoDatum.contentClasses"
         />
       </div>
+
       <AtomsButton
+        :loading="loading"
         class="mt-10 withdraw-button lato-bold-16"
         @click="processWithdrawal"
       >
         Confirm & Withdraw
       </AtomsButton>
     </template>
+    <template v-else>
+      <p class="mt-4 text-left lato-normal-14 text-secondary-light">
+        Please input amount to withdraw below
+      </p>
+      <FormulateForm
+        v-model="form"
+        name="withdraw-amount"
+        #default="{ hasErrors }"
+        class="mt-8 text-left"
+        @submit="proceedWithdraw"
+      >
+        <div class="w-full">
+          <FormulateInput
+            type="number"
+            label="Amount"
+            placeholder="Enter Amount"
+            name="amount"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            :validation="`bail|required|number|min:10|max:${walletBalance}`"
+            :validation-messages="{
+              min: 'Minimum withdrawal is $10',
+              max: 'Insufficient balance!',
+            }"
+          >
+            <!-- <template #prefix> me </template>
+            <input /> -->
+          </FormulateInput>
+        </div>
+        <div class="max-w-xs mx-auto mt-10">
+          <FormulateInput
+            type="submit"
+            name="submitButton"
+            :disabled="hasErrors"
+          >
+            <span class="mr-1 lato-bold-16">Withdraw</span>
+          </FormulateInput>
+        </div>
+      </FormulateForm>
+    </template>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import processTransactionsArray from '@/helpers/processTransactionsArray'
 export default {
   name: 'WithdrawalConfirm',
-  props: { bankAccount: { type: Object, default: () => {} } },
+  props: {
+    bankAccount: { type: Object, default: () => {} },
+    walletBalance: { type: Number, default: 0 },
+  },
+  data() {
+    return {
+      form: { amount: 0 },
+      amount: 0,
+      confirm: false,
+      loading: false,
+    }
+  },
   computed: {
     withdrawalInfoData() {
       return [
@@ -58,15 +112,54 @@ export default {
         },
         {
           title: 'Amount',
-          content: '$12,000',
+          content: this.$options.filters.currencyFormatter(this.amount),
           contentClasses: 'xs:text-success-light',
         },
       ]
     },
   },
   methods: {
-    processWithdrawal() {
-      this.$emit('close', true)
+    proceedWithdraw() {
+      this.amount = parseFloat(this.form.amount)
+      this.confirm = true
+    },
+    async processWithdrawal() {
+      this.loading = true
+      await this.$realmApp.currentUser.refreshCustomData()
+      this.$realmApp.currentUser.functions
+        .processWithdrawal(
+          this.amount,
+          this.bankAccount.bankCode,
+          this.bankAccount.accountNumber
+        )
+        .then((res) => {
+          if (res) {
+            const { walletBalance, transactions, ...rest } =
+              this.$store.state.authUser
+
+            this.$store.commit('setUser', {
+              walletBalance: walletBalance - this.amount,
+              transactions: [
+                {
+                  createdAt: new Date(),
+                  type: 'withdrawal initiated',
+                  amount: this.amount,
+                },
+                ...transactions,
+              ],
+              ...rest,
+            })
+            this.loading = false
+            // this.confirm = false
+            this.form = { amount: 0 }
+            this.amount = 0
+            this.confirm = false
+            this.loading = false
+            this.$emit('close', true)
+          } else {
+            this.$emit('close', false)
+          }
+        })
     },
   },
 }

@@ -7,7 +7,16 @@
           <div
             v-for="(tableRow, i) in tableBody"
             :key="`tableRow-${i}`"
-            class="px-6 py-4 bg-white divide-y rounded-md shadow  divide-secondary-lightest verflow-hidden"
+            class="
+              px-6
+              py-4
+              bg-white
+              divide-y
+              rounded-md
+              shadow
+              divide-secondary-lightest
+              verflow-hidden
+            "
           >
             <div
               v-for="(tableDataValue, tableDataName, i) in tableRow"
@@ -18,18 +27,30 @@
                 {{ tableDataName }}
               </span>
               <span
-                class="inline-block text-secondary-light"
+                class="
+                  inline-block
+                  text-secondary-light
+                  first-letter:capitalize
+                "
                 :class="{
-                  [tableDataValue[0] !== '-'
-                    ? lastColumnClass.split(' ')[0]
-                    : lastColumnClass.split(' ')[1]]:
-                    i === Object.values(tableRow).length - 1,
+                  'text-right': i === Object.values(tableRow).length - 1,
+                  [tableDataValue.classes]: typeof tableDataValue === 'object',
                 }"
               >
-                {{ tableDataValue }}
+                {{
+                  typeof tableDataValue === 'object'
+                    ? tableDataValue.value
+                    : tableDataValue
+                }}
               </span>
             </div>
           </div>
+          <h3
+            v-if="tableBody.length === 0"
+            class="py-10 text-center empty-content-text"
+          >
+            There are no transactions to show.
+          </h3>
         </div>
         <div class="hidden overflow-hidden shadow sm:rounded-md lg:block">
           <table class="min-w-full">
@@ -40,7 +61,13 @@
                   v-for="(tableHeading, i) in tableHeadings"
                   :key="`tableHeading-${i}`"
                   scope="col"
-                  class="px-6 py-3 text-left  lato-medium-14 text-secondary-lighter"
+                  class="
+                    px-6
+                    py-3
+                    text-left
+                    lato-medium-14
+                    text-secondary-lighter
+                  "
                 >
                   {{ tableHeading }}
                 </th>
@@ -51,15 +78,25 @@
                 <td
                   v-for="(tableDataValue, tableDataName, i) in tableRow"
                   :key="`tableData-${tableDataName}-${i}`"
-                  class="px-6 py-4  text-secondary-light lato-medium-14 whitespace-nowrap"
+                  class="
+                    px-6
+                    py-4
+                    text-secondary-light
+                    lato-medium-14
+                    whitespace-nowrap
+                    first-letter:capitalize
+                  "
                   :class="{
-                    [tableDataValue[0] !== '-'
-                      ? lastColumnClass.split(' ')[0]
-                      : lastColumnClass.split(' ')[1]]:
-                      i === Object.values(tableRow).length - 1,
+                    'text-right': i === Object.values(tableRow).length - 1,
+                    [tableDataValue.classes]:
+                      typeof tableDataValue === 'object',
                   }"
                 >
-                  {{ tableDataValue }}
+                  {{
+                    typeof tableDataValue === 'object'
+                      ? tableDataValue.value
+                      : tableDataValue
+                  }}
                 </td>
               </tr>
             </tbody>

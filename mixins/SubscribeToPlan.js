@@ -40,8 +40,11 @@ export default {
           .then((res) => {
             const successful = res.data.status === 'successful'
             if (successful) {
-              const { subscription: stale, ...rest } =
-                this.$store.state.authUser
+              const {
+                subscription: stale,
+                transactions,
+                ...rest
+              } = this.$store.state.authUser
               const subscription = {
                 tier: {
                   label,
@@ -49,7 +52,18 @@ export default {
                 active: true,
                 rank,
               }
-              this.$store.commit('setUser', { subscription, ...rest })
+              this.$store.commit('setUser', {
+                subscription,
+                transactions: [
+                  {
+                    amount: price,
+                    type: 'subscription',
+                    createdAt: new Date(),
+                  },
+                  ...transactions,
+                ],
+                ...rest,
+              })
             }
             this.subscriptionSuccessful = successful
             this.subscriptionDoneModal = true

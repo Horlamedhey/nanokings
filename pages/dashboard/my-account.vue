@@ -40,7 +40,17 @@
       @extraAction="showOtherPlans"
     >
       <div
-        class="container px-4 mx-auto mt-12 mb-4 overflow-y-auto  sm:px-6 xl:p-10 lg:h-auto"
+        class="
+          container
+          px-4
+          mx-auto
+          mt-12
+          mb-4
+          overflow-y-auto
+          sm:px-6
+          xl:p-10
+          lg:h-auto
+        "
         :class="finalPricings.length > 1 ? ' h-[80vh]' : 'h-auto'"
       >
         <div class="flex flex-col justify-center gap-8 lg:flex-row">

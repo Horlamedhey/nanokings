@@ -28,6 +28,7 @@ mutation InsertOneUser(
       }
       views: 0
       walletBalance: 0.0
+      withdrawn: 0.0
       transactions: { link: [] }
       createdAt: $createdAt
       updatedAt: $createdAt
