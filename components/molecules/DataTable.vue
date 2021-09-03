@@ -87,7 +87,7 @@
                     first-letter:capitalize
                   "
                   :class="{
-                    'text-right': i === Object.values(tableRow).length - 1,
+                    [lastColumnClass]: i === Object.values(tableRow).length - 1,
                     [tableDataValue.classes]:
                       typeof tableDataValue === 'object',
                   }"

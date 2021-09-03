@@ -37,6 +37,13 @@ query User($id: ObjectId) {
       title
       uid
       artWork
+      salesHistory {
+        date
+        streams
+        downloads
+        views
+        sales
+      }
       createdAt
     }
     subscription {

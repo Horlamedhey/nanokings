@@ -32,7 +32,7 @@
             <OrganismsAmountCardsArea :amountCards="amountCards"/>
             <!-- Table -->
             <client-only>
-            <MoleculesDataTableWithAltHead class="mt-10" lastColumnClass="text-success text-error text-right" tableHeadingTitle="Transactions" :tableHeadings="tableHeadings" :tableBody="tableBody" />
+            <MoleculesDataTableWithAltHead class="mt-10" lastColumnClass="text-success text-error" tableHeadingTitle="Transactions" :tableHeadings="tableHeadings" :tableBody="tableBody" />
             </client-only>
         </div>
         </div>
@@ -54,6 +54,7 @@ import processTransactionsArray from '@/helpers/processTransactionsArray'
 interface AuthUser {
   sales: number
   walletBalance: number
+  withdrawn: number
   transactions: Array<any>
   bankAccount: {
     bankName: string
@@ -72,10 +73,11 @@ interface PropsData {
 export default defineComponent({
   name: 'Wallet',
   props: { user: { type: Object as () => AuthUser, required: true } },
+  mixins: [],
 
   setup(props: PropsData) {
     const store = useStore<State>()
-    const user = computed(() => store.state.authUser)
+    const user = computed(() => props.user)
     const bankAccount = computed(() => user.value.bankAccount)
     const amountCards = computed(() => [
       {
@@ -94,10 +96,8 @@ export default defineComponent({
         color: 'bg-accent-light',
       },
     ])
-    const tableHeadings = ref(['Date', 'Status', 'Amount (NGN)'])
-    const tableBody = computed(() => {
-      return processTransactionsArray(user.value.transactions)
-    })
+    const tableHeadings = ref(['Date', 'Status', 'Amount (USD)'])
+    const tableBody = computed(() => user.value.transactions)
     const withdrawModal = ref(false)
     const withdrawalSuccessModal = reactive({
       show: false,
@@ -119,7 +119,7 @@ export default defineComponent({
       }
       withdrawalSuccessModal.show = true
     }
-    watch(user.value, (curr) => console.log(curr.transactions))
+    // watch(user.value, (curr) => console.log(curr.transactions))
     return {
       amountCards,
       tableHeadings,

@@ -34,7 +34,7 @@
         <div class="flex items-center mt-2">
           <AtomsIconsClock class="w-[15px] h-[15px]" />
           <span class="inline-block ml-1 lato-medium-14">
-            {{ release.createdAt | timeago }}
+            {{ release.createdAt | calendar }}
           </span>
         </div>
       </div>

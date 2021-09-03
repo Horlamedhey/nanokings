@@ -44,6 +44,14 @@ interface AuthUser {
   downloads: number
   streams: number
   views: number
+  salesHistory: {
+    date: string
+    views: number
+    downloads: number
+    strems: number
+    sales: number
+    __typename: string
+  }[]
 }
 
 interface PropsData {
@@ -89,52 +97,9 @@ export default defineComponent({
       'Streams',
       'Downloads',
       'Views',
-      'Total (NGN)',
+      'Total',
     ])
-    const tableBody = ref([
-      {
-        date: 'April 2021',
-        streams: '2,432',
-        downloads: '12,432',
-        views: '7,432',
-        total: 'N7,432',
-      },
-      {
-        date: 'March 2021',
-        streams: '2,432',
-        downloads: '12,432',
-        views: '7,432',
-        total: 'N7,432',
-      },
-      {
-        date: 'Febuary 2021',
-        streams: '2,432',
-        downloads: '12,432',
-        views: '7,432',
-        total: 'N7,432',
-      },
-      {
-        date: 'January 2021',
-        streams: '2,432',
-        downloads: '12,432',
-        views: '7,432',
-        total: 'N7,432',
-      },
-      {
-        date: 'December 2020',
-        streams: '2,432',
-        downloads: '12,432',
-        views: '7,432',
-        total: 'N7,432',
-      },
-      {
-        date: 'November 2020',
-        streams: '2,432',
-        downloads: '12,432',
-        views: '7,432',
-        total: 'N7,432',
-      },
-    ])
+    const tableBody = ref(user.value.salesHistory)
     const downloading = ref(false)
     const toggleDownloading = () => {
       if (downloading.value) {
@@ -145,6 +110,19 @@ export default defineComponent({
         downloading.value = true
       }
     }
+    // const rep = computed(() =>
+    //   user.value.songs[0].salesHistory.reduce((prevVal, curr) => {
+    //     const sameDatePrevVal = prevVal.find((v) => v.date === curr.date)
+    //     if (sameDatePrevVal) {
+    //       return prevVal.map((u) => {
+    //         if (u === sameDatePrevVal) {
+    //           u.views += curr.views
+    //         }
+    //       })
+    //     }
+    //     return [...prevVal]
+    //   }, {})
+    // )
     return {
       statistics,
       amountCardDetails,

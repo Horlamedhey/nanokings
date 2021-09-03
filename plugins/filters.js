@@ -26,9 +26,9 @@ Vue.filter('timeago', (value) => {
 //   return moment(value).format('Do MMMM, YYYY')
 // })
 
-// Vue.filter('formatChatDate', (value) => {
-//   return moment(value).calendar()
-// })
+Vue.filter('calendar', (value) => {
+  return moment(value).format('DD MMM, YYYY')
+})
 
 // Vue.filter('formatTime', (value) => {
 //   return moment(value).format('hh:mma')

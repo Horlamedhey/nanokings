@@ -8,12 +8,27 @@
       aria-modal="true"
     >
       <div
-        class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center  sm:p-0"
+        class="
+          flex
+          items-center
+          justify-center
+          min-h-screen
+          px-4
+          pt-4
+          pb-20
+          text-center
+          sm:p-0
+        "
       >
         <transition name="modal-overlay">
           <div
             v-show="modal"
-            class="absolute inset-0 transition-opacity bg-gray-500 bg-opacity-75 "
+            class="
+              absolute
+              inset-0
+              transition-opacity
+              bg-gray-500 bg-opacity-75
+            "
             aria-hidden="true"
           ></div>
         </transition>
@@ -38,6 +53,7 @@
           >
             <div class="max-h-[90vh]">
               <AtomsButton
+                v-if="dismissible"
                 class="absolute top-5 right-4"
                 @click="$emit('close')"
               >
@@ -65,6 +81,7 @@ export default {
   name: 'Modal',
   props: {
     modal: { type: Boolean, required: true },
+    dismissible: { type: Boolean, default: true },
     icon: { type: String, default: '' },
     content: { type: String, default: '' },
     state: { type: String, default: '' },

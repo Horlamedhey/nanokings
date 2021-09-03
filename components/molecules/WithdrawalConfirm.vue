@@ -86,7 +86,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import processTransactionsArray from '@/helpers/processTransactionsArray'
 export default {
   name: 'WithdrawalConfirm',
   props: {
@@ -155,6 +154,7 @@ export default {
             this.amount = 0
             this.confirm = false
             this.loading = false
+            this.$forceUpdate()
             this.$emit('close', true)
           } else {
             this.$emit('close', false)

@@ -15,7 +15,8 @@
             {{ tableHeadingTitle }}
           </th>
           <th scope="col"></th>
-          <th scope="col" class="px-6 py-3 text-right">
+          <th scope="col"></th>
+          <!-- <th scope="col" class="px-6 py-3 text-right">
             <MoleculesDropdown
               id="walletFilter-menu-button"
               :show="filterDropdown"
@@ -24,7 +25,7 @@
               buttonClasses="ml-auto"
               @toggle="filterDropdown = !filterDropdown"
             />
-          </th>
+          </th> -->
         </tr>
       </thead>
     </template>
@@ -34,16 +35,16 @@
           scope="col"
           class="text-left lato-semibold-18 text-secondary-lighter"
         >
-          Latest Transactions
+          {{ tableHeadingTitle }}
         </h2>
-        <MoleculesDropdown
+        <!-- <MoleculesDropdown
           id="walletFilter-menu-button"
           :show="filterDropdown"
           title="Recent"
           :items="[]"
           buttonClasses="ml-auto"
           @toggle="filterDropdown = !filterDropdown"
-        />
+        /> -->
       </div>
     </template>
   </MoleculesDataTable>

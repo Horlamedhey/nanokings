@@ -10,7 +10,6 @@ export default {
         tx_ref,
         amount,
         currency: 'USD',
-        payment_options: 'card,ussd',
         payment_plan,
         meta: {
           counsumer_id: this.$realmApp.currentUser.customData._id,
@@ -32,42 +31,46 @@ export default {
 
     subscribeToPlan({ _id, label, price, planId, rank }) {
       this.isSubscribing = false
+      this.subscriptionLoading = true
       this.asyncPayWithFlutterwave(
         this.paymentData(label, new Date().getTime().toString(), price, planId)
       ).then(({ transaction_id: transactionId, customer: { email } }) => {
-        this.$realmApp.currentUser.functions
-          .verifyTransaction(_id, rank, transactionId)
-          .then((res) => {
-            const successful = res.data.status === 'successful'
-            if (successful) {
-              const {
-                subscription: stale,
-                transactions,
-                ...rest
-              } = this.$store.state.authUser
-              const subscription = {
-                tier: {
-                  label,
-                },
-                active: true,
-                rank,
-              }
-              this.$store.commit('setUser', {
-                subscription,
-                transactions: [
-                  {
-                    amount: price,
-                    type: 'subscription',
-                    createdAt: new Date(),
+        setTimeout(() => {
+          this.$realmApp.currentUser.functions
+            .verifyTransaction(_id, rank, transactionId)
+            .then((res) => {
+              const successful = res.data.status === 'successful'
+              if (successful) {
+                const {
+                  subscription: stale,
+                  transactions,
+                  ...rest
+                } = this.$store.state.authUser
+                const subscription = {
+                  tier: {
+                    label,
                   },
-                  ...transactions,
-                ],
-                ...rest,
-              })
-            }
-            this.subscriptionSuccessful = successful
-            this.subscriptionDoneModal = true
-          })
+                  active: true,
+                  rank,
+                }
+                this.$store.commit('setUser', {
+                  subscription,
+                  transactions: [
+                    {
+                      amount: price,
+                      type: 'subscription',
+                      createdAt: new Date(),
+                    },
+                    ...transactions,
+                  ],
+                  ...rest,
+                })
+              }
+              this.subscriptionSuccessful = successful
+              this.subscriptionLoading = false
+              this.subscriptionDoneModal = true
+            })
+        }, 5000)
         // .validateSubscription({ transactionId, email, planId })
         // .then((res) => {
         //   console.log(res)

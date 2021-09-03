@@ -121,7 +121,7 @@ export const actions: ActionTree<RootState, RootState> = {
         },
       })
       if (user.songs) {
-        user.song = user.songs.reverse()
+        user.songs = user.songs.reverse()
       }
       commit('setUser', user)
     } else {

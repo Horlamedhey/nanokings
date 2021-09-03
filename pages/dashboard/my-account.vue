@@ -29,6 +29,11 @@
         <p class="mt-4 text-sm">{{ subscriptionWarning.content }}</p>
       </div>
     </AtomsModal>
+    <AtomsModal :modal="subscriptionLoading" :dismissible="false">
+      <div class="p-4 h-80 w-80 max-w-[85vw] flex items-center justify-center">
+        <AtomsLoading color="#1240DD" :size="60" />
+      </div>
+    </AtomsModal>
     <AtomsModal
       :modal="isSubscribing"
       :extraActionText="
@@ -228,6 +233,7 @@ export default defineComponent({
       color: '',
     })
     const isSubscribing = ref(false)
+    const subscriptionLoading = ref(false)
     const banks = ref([
       {
         id: 1,
@@ -257,7 +263,7 @@ export default defineComponent({
         label: 'Standard',
         price: 15,
         rank: 1,
-        planId: 13094,
+        planId: 13655,
         features: [
           'Unlimited singles',
           'Save 50%',
@@ -271,7 +277,7 @@ export default defineComponent({
         label: 'Gold',
         price: 18,
         rank: 2,
-        planId: 13095,
+        planId: 13656,
         prominent: true,
         features: [
           'Unlimited Singles & EPs',
@@ -287,7 +293,7 @@ export default defineComponent({
         label: 'Premium',
         price: 25,
         rank: 3,
-        planId: 13096,
+        planId: 13657,
         features: [
           'Unlimited singles',
           'Unlimited EPs & Albums',
@@ -652,6 +658,7 @@ export default defineComponent({
       finalPricings,
       isSubscribing,
       subscriptionWarning,
+      subscriptionLoading,
       updateUserImage,
       updateUserProfile,
       closeProcessModal,

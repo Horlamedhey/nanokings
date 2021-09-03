@@ -10,7 +10,14 @@
       <div class="relative ml-4 sm:ml-6">
         <div>
           <AtomsButton
-            class="flex items-center max-w-xs text-sm  focus:outline-none text-secondary-lighter"
+            class="
+              flex
+              items-center
+              max-w-xs
+              text-sm
+              focus:outline-none
+              text-secondary-lighter
+            "
             id="filter-menu-button"
             aria-expanded="false"
             aria-haspopup="true"
@@ -28,29 +35,56 @@
         <transition name="slide-y">
           <div
             v-show="filterMenu"
-            class="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md  my-shadow ring-1 ring-black ring-opacity-5 focus:outline-none"
+            class="
+              absolute
+              right-0
+              w-48
+              py-1
+              mt-2
+              origin-top-right
+              bg-white
+              rounded-md
+              my-shadow
+              ring-1 ring-black ring-opacity-5
+              focus:outline-none
+              z-[1]
+            "
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="filter-menu-button"
             tabindex="-1"
           >
-            <AtomsButton
-              class="flex w-full px-4 py-2 space-x-3 transition duration-300  hover:ripple-bg-primary-DEFAULT text-primary hover:text-white lato-semibold-16"
+            <!-- <AtomsButton
+              class="flex w-full px-4 py-2 space-x-3 transition duration-300 hover:ripple-bg-primary-DEFAULT text-primary hover:text-white lato-semibold-16"
               @click="filterAnalytics('Today')"
             >
               <span class="">Today</span>
             </AtomsButton>
             <AtomsButton
-              class="flex w-full px-4 py-2 space-x-3 transition duration-300  hover:ripple-bg-primary-DEFAULT text-primary hover:text-white lato-semibold-16"
+              class="flex w-full px-4 py-2 space-x-3 transition duration-300 hover:ripple-bg-primary-DEFAULT text-primary hover:text-white lato-semibold-16"
               @click="filterAnalytics('This Week')"
             >
               <span class="">This Week</span>
-            </AtomsButton>
+            </AtomsButton> -->
             <AtomsButton
-              class="flex w-full px-4 py-2 space-x-3 transition duration-300  hover:ripple-bg-primary-DEFAULT text-primary hover:text-white lato-semibold-16"
-              @click="filterAnalytics('This Month')"
+              v-for="(filterItem, i) in ['All', 'Last Month', 'This Month']"
+              :key="`filterItem-${i}`"
+              class="
+                flex
+                w-full
+                px-4
+                py-2
+                space-x-3
+                transition
+                duration-300
+                hover:ripple-bg-primary-DEFAULT
+                text-primary
+                hover:text-white
+                lato-semibold-16
+              "
+              @click="filterAnalytics(filterItem)"
             >
-              <span class="">This Month</span>
+              <span class="">{{ filterItem }}</span>
             </AtomsButton>
           </div>
         </transition>
@@ -58,7 +92,14 @@
     </div>
     <!-- Chart -->
     <div
-      class="flex flex-col justify-between gap-4 mt-8  lg:items-center lg:flex-row"
+      class="
+        flex flex-col
+        justify-between
+        gap-4
+        mt-8
+        lg:items-center
+        lg:flex-row
+      "
     >
       <div class="flex-1">
         <h2 class="lato-bold-16 text-secondary-lighter">
@@ -95,15 +136,15 @@ export default {
   data() {
     return {
       filterMenu: false,
-      filterOption: 'Today',
+      filterOption: 'All',
       series: [
         {
           name: 'Views',
-          data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
+          data: [44, 55],
         },
         {
           name: 'Streams',
-          data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
+          data: [76, 85],
         },
       ],
       chartOptions: {
@@ -147,20 +188,7 @@ export default {
           colors: ['transparent'],
         },
         xaxis: {
-          categories: [
-            '00:00',
-            '02:00',
-            '04:00',
-            '06:00',
-            '08:00',
-            '10:00',
-            '12:00',
-            '14:00',
-            '16:00',
-            '18:00',
-            '20:00',
-            '22:00',
-          ],
+          categories: ['15th', '31th'],
         },
         yaxis: {},
         fill: {
@@ -216,19 +244,37 @@ export default {
           this.chartOptions = {
             xaxis: {
               categories: [
-                '1st',
-                '3rd',
-                '6th',
-                '9th',
-                '12th',
+                // '1st',
+                // '3rd',
+                // '6th',
+                // '9th',
+                // '12th',
                 '15th',
-                '18th',
-                '21th',
-                '24th',
-                '27th',
-                '30th',
+                // '18th',
+                // '21th',
+                // '24th',
+                // '27th',
+                // '30th',
                 '31th',
               ],
+            },
+            ...rest,
+          }
+          break
+
+        case 'Last Month':
+          this.chartOptions = {
+            xaxis: {
+              categories: ['15th', '31th'],
+            },
+            ...rest,
+          }
+          break
+
+        case 'All':
+          this.chartOptions = {
+            xaxis: {
+              categories: ["Jan 15th, '21", "May 31th, '22"],
             },
             ...rest,
           }
@@ -237,6 +283,38 @@ export default {
         default:
           break
       }
+    },
+  },
+  computed: {
+    chartDatas() {
+      const data = [
+        {
+          date: '2021-09-02T03:14:05.000+00:00',
+          streams: 500,
+          views: 123,
+        },
+        {
+          date: '2021-08-22T03:14:05.000+00:00',
+          streams: 468,
+          views: 243,
+        },
+        {
+          date: '2021-08-02T03:14:05.000+00:00',
+          streams: 1234,
+          views: 4544,
+        },
+      ]
+      const all = data.reduce(
+        (prevVal, curr) => {
+          return {
+            streams: [...prevVal.streams, curr.streams],
+            views: [...prevVal.views, curr.views],
+            dates: [...prevVal.dates, curr.date],
+          }
+        },
+        { streams: [], views: [], dates: [] }
+      )
+      return all
     },
   },
   methods: {

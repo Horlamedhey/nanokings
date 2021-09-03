@@ -734,6 +734,7 @@ export default defineComponent({
             uid: variables.uid,
             artWork: variables.artwork,
             musicType,
+            salesHistory: [],
             createdAt: variables.createdAt,
           },
         })
