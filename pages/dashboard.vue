@@ -27,8 +27,7 @@ export default {
           })
           return prevVal
         }, [])
-        .map(({ __typename, sales, date, ...rest }) => ({
-          date: this.$options.filters.calendar(date),
+        .map(({ __typename, sales, ...rest }) => ({
           ...rest,
           sales: this.$options.filters.currencyFormatter(sales),
         }))
@@ -57,7 +56,10 @@ export default {
         downloads,
         streams,
         views,
-        salesHistory: this.salesHistory,
+        salesHistory: this.salesHistory.map(({ date, ...rest }) => ({
+          date: this.$options.filters.calendar(date),
+          ...rest,
+        })),
       }
     },
     userWallet() {

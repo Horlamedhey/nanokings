@@ -6,6 +6,22 @@ Vue.filter('timeago', (value) => {
   return moment(value).fromNow()
 })
 
+Vue.filter('dateOfMonth', (value) => {
+  return moment(value).format('Do')
+})
+
+Vue.filter('isThisMonth', (value) => {
+  return moment().isSame(value, 'month')
+})
+
+Vue.filter('isLastMonth', (value) => {
+  return moment(moment().subtract(1, 'month')).isSame(value, 'month')
+})
+
+Vue.filter('chartFullDate', (value) => {
+  return moment(value).format("MMM Do, 'YY")
+})
+
 // Vue.filter('formatDate', (value) => {
 //   return moment(value).format('D MMMM YYYY')
 // })
@@ -94,4 +110,8 @@ Vue.filter('currencyFormatter', (value) => {
   })
 
   return formatter.format(value)
+})
+
+Vue.filter('numberFormatter', (value) => {
+  return value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ', ')
 })

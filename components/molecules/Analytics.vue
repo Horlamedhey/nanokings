@@ -10,14 +10,7 @@
       <div class="relative ml-4 sm:ml-6">
         <div>
           <AtomsButton
-            class="
-              flex
-              items-center
-              max-w-xs
-              text-sm
-              focus:outline-none
-              text-secondary-lighter
-            "
+            class="flex items-center max-w-xs text-sm  focus:outline-none text-secondary-lighter"
             id="filter-menu-button"
             aria-expanded="false"
             aria-haspopup="true"
@@ -69,19 +62,8 @@
             <AtomsButton
               v-for="(filterItem, i) in ['All', 'Last Month', 'This Month']"
               :key="`filterItem-${i}`"
-              class="
-                flex
-                w-full
-                px-4
-                py-2
-                space-x-3
-                transition
-                duration-300
-                hover:ripple-bg-primary-DEFAULT
-                text-primary
-                hover:text-white
-                lato-semibold-16
-              "
+              class="flex w-full px-4 py-2 space-x-3 transition duration-300  hover:ripple-bg-primary-DEFAULT text-primary hover:text-white lato-semibold-16"
+              :class="{ 'bg-primary text-white': filterItem === filterOption }"
               @click="filterAnalytics(filterItem)"
             >
               <span class="">{{ filterItem }}</span>
@@ -92,14 +74,7 @@
     </div>
     <!-- Chart -->
     <div
-      class="
-        flex flex-col
-        justify-between
-        gap-4
-        mt-8
-        lg:items-center
-        lg:flex-row
-      "
+      class="flex flex-col justify-between gap-4 mt-8  lg:items-center lg:flex-row"
     >
       <div class="flex-1">
         <h2 class="lato-bold-16 text-secondary-lighter">
@@ -117,12 +92,35 @@
       </div>
       <div class="text-center rounded-[10px] my-shadow-analytics py-4 px-5">
         <h1 class="lato-bold-16 text-secondary-dark">Total</h1>
-        <h1 class="mt-4 lato-bold-48 text-secondary-dark">160k</h1>
+        <h1 class="mt-4 lato-bold-48 text-secondary-dark">
+          {{ totalStreamsAndViews }}
+        </h1>
         <h2 class="mt-2 lato-normal-11 text-secondary-lighter">
           Total views x Streams
         </h2>
         <h2 class="mt-4 lato-normal-16 text-secondary-lighter">
-          Views <span class="text-success-light">53%</span>
+          Views
+          <span
+            :class="
+              viewsPercent > streamsPercent
+                ? 'text-success-light'
+                : 'text-secondary-dark'
+            "
+          >
+            {{ viewsPercent }}%
+          </span>
+        </h2>
+        <h2 class="mt-4 lato-normal-16 text-secondary-lighter">
+          Streams
+          <span
+            :class="
+              streamsPercent > viewsPercent
+                ? 'text-success-light'
+                : 'text-secondary-dark'
+            "
+          >
+            {{ streamsPercent }}%
+          </span>
         </h2>
         <nuxt-img src="/images/chart.svg" format="webp" class="m-auto mt-8" />
       </div>
@@ -133,6 +131,9 @@
 <script>
 export default {
   name: 'Analytics',
+  props: {
+    chartData: { type: Object, default: () => {} },
+  },
   data() {
     return {
       filterMenu: false,
@@ -140,11 +141,11 @@ export default {
       series: [
         {
           name: 'Views',
-          data: [44, 55],
+          data: [],
         },
         {
           name: 'Streams',
-          data: [76, 85],
+          data: [],
         },
       ],
       chartOptions: {
@@ -188,7 +189,7 @@ export default {
           colors: ['transparent'],
         },
         xaxis: {
-          categories: ['15th', '31th'],
+          categories: [],
         },
         yaxis: {},
         fill: {
@@ -196,125 +197,148 @@ export default {
         },
         tooltip: {
           y: {
-            formatter: function (val) {
-              return '$ ' + val + ' thousands'
+            formatter: (val) => {
+              return this.$options.filters.numberFormatter(val)
             },
           },
         },
       },
     }
   },
-  props: {
-    chartData: { type: Object, default: () => {} },
-  },
   watch: {
-    filterOption(newVal) {
-      const { xaxis, ...rest } = this.chartOptions
-      switch (newVal) {
-        case 'Today':
-          this.chartOptions = {
-            xaxis: {
-              categories: [
-                '00:00',
-                '02:00',
-                '04:00',
-                '06:00',
-                '08:00',
-                '10:00',
-                '12:00',
-                '14:00',
-                '16:00',
-                '18:00',
-                '20:00',
-                '22:00',
-              ],
-            },
-            ...rest,
-          }
-          break
-        case 'This Week':
-          this.chartOptions = {
-            xaxis: {
-              categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            },
-            ...rest,
-          }
-          break
-        case 'This Month':
-          this.chartOptions = {
-            xaxis: {
-              categories: [
-                // '1st',
-                // '3rd',
-                // '6th',
-                // '9th',
-                // '12th',
-                '15th',
-                // '18th',
-                // '21th',
-                // '24th',
-                // '27th',
-                // '30th',
-                '31th',
-              ],
-            },
-            ...rest,
-          }
-          break
+    filterOption: {
+      immediate: true,
+      handler(newVal) {
+        const { xaxis, ...rest } = this.chartOptions
+        switch (newVal) {
+          case 'Today':
+            this.chartOptions = {
+              xaxis: {
+                categories: [
+                  '00:00',
+                  '02:00',
+                  '04:00',
+                  '06:00',
+                  '08:00',
+                  '10:00',
+                  '12:00',
+                  '14:00',
+                  '16:00',
+                  '18:00',
+                  '20:00',
+                  '22:00',
+                ],
+              },
+              ...rest,
+            }
+            break
+          case 'This Week':
+            this.chartOptions = {
+              xaxis: {
+                categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+              },
+              ...rest,
+            }
+            break
+          case 'This Month':
+            this.chartOptions = {
+              xaxis: {
+                categories: this.finalChartData.thisMonth.dates,
+              },
+              ...rest,
+            }
+            this.series = this.finalChartData.thisMonth.series
+            break
 
-        case 'Last Month':
-          this.chartOptions = {
-            xaxis: {
-              categories: ['15th', '31th'],
-            },
-            ...rest,
-          }
-          break
+          case 'Last Month':
+            this.chartOptions = {
+              xaxis: {
+                categories: this.finalChartData.lastMonth.dates,
+              },
+              ...rest,
+            }
+            this.series = this.finalChartData.lastMonth.series
+            break
 
-        case 'All':
-          this.chartOptions = {
-            xaxis: {
-              categories: ["Jan 15th, '21", "May 31th, '22"],
-            },
-            ...rest,
-          }
-          break
+          case 'All':
+            this.chartOptions = {
+              xaxis: {
+                categories: this.finalChartData.all.dates,
+              },
+              ...rest,
+            }
+            this.series = this.finalChartData.all.series
+            break
 
-        default:
-          break
-      }
+          default:
+            break
+        }
+      },
     },
   },
   computed: {
-    chartDatas() {
-      const data = [
-        {
-          date: '2021-09-02T03:14:05.000+00:00',
-          streams: 500,
-          views: 123,
-        },
-        {
-          date: '2021-08-22T03:14:05.000+00:00',
-          streams: 468,
-          views: 243,
-        },
-        {
-          date: '2021-08-02T03:14:05.000+00:00',
-          streams: 1234,
-          views: 4544,
-        },
-      ]
-      const all = data.reduce(
-        (prevVal, curr) => {
-          return {
-            streams: [...prevVal.streams, curr.streams],
-            views: [...prevVal.views, curr.views],
-            dates: [...prevVal.dates, curr.date],
+    finalChartData() {
+      const reduceFunction = (arr) =>
+        arr.reduce(
+          (prevVal, curr) => {
+            return {
+              series: [
+                {
+                  name: 'Streams',
+                  data: [...prevVal.series[0].data, curr.streams],
+                },
+                {
+                  name: 'Views',
+                  data: [...prevVal.series[1].data, curr.views],
+                },
+              ],
+              dates: [...prevVal.dates, curr.date],
+            }
+          },
+          {
+            series: [
+              { name: 'Streams', data: [] },
+              { name: 'Views', data: [] },
+            ],
+            dates: [],
           }
-        },
-        { streams: [], views: [], dates: [] }
+        )
+      const lastMonth = reduceFunction(
+        this.chartData.salesHistory
+          .filter((v) => this.$options.filters.isLastMonth(v.date))
+          .map(({ date, ...rest }) => ({
+            date: this.$options.filters.dateOfMonth(date),
+            ...rest,
+          }))
       )
-      return all
+
+      const thisMonth = reduceFunction(
+        this.chartData.salesHistory
+          .filter((v) => this.$options.filters.isThisMonth(v.date))
+          .map(({ date, ...rest }) => ({
+            date: this.$options.filters.dateOfMonth(date),
+            ...rest,
+          }))
+      )
+      const all = reduceFunction(
+        this.chartData.salesHistory.map(({ date, ...rest }) => ({
+          date: this.$options.filters.chartFullDate(date),
+          ...rest,
+        }))
+      )
+      return { lastMonth, thisMonth, all }
+    },
+    totalStreamsAndViews() {
+      const total = this.chartData.streams + this.chartData.views
+      return total >= 1000 ? `${total / 1000}k` : total
+    },
+    viewsPercent() {
+      const total = this.chartData.streams + this.chartData.views
+      return Math.round((this.chartData.views / total) * 100)
+    },
+    streamsPercent() {
+      const total = this.chartData.streams + this.chartData.views
+      return Math.round((this.chartData.streams / total) * 100)
     },
   },
   methods: {

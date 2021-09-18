@@ -19,7 +19,7 @@
               <h3 class="empty-content-text">You have not released any songs yet.</h3>
               </div>
             </div>
-            <MoleculesAnalytics :chartData="{}" class="mt-12 xl:flex-1"/>
+            <MoleculesAnalytics :chartData="{salesHistory, streams, views}"  class="mt-12 xl:flex-1"/>
             </div>
           </div>
         </div>
@@ -38,6 +38,7 @@ interface AuthUser {
   streams: number
   views: number
   songs: Array<any>
+  salesHistory: Array<any>
 }
 
 interface PropsData {
@@ -68,6 +69,9 @@ export default defineComponent({
       },
     ])
     const releases = ref(user.value.songs || [])
+    const salesHistory = ref(user.value.salesHistory || [])
+    const streams = ref(user.value.streams || 0)
+    const views = ref(user.value.views || 0)
     const amountCardDetails = reactive({
       title: 'Wallet Balance',
       amount: user.value.walletBalance,
@@ -77,6 +81,9 @@ export default defineComponent({
       username: user.value.username,
       statistics,
       releases,
+      salesHistory,
+      streams,
+      views,
       amountCardDetails,
     }
   },
